@@ -7,13 +7,11 @@ namespace WallThrough.Gameplay
 {
     public class QuicktimeWall : MonoBehaviour
     {
-
-        public GameObject quickTimeMenu;
+        [SerializeField]
+        private GameObject quickTimeMenu;
         public enum ColourMap { Red, Orange, Yellow, Green, Blue, Purple };
-        int[] colourCode = new int[4];
-
-        public List<int> codeInput;
-
+        private int[] colourCode = new int[4];
+        private string colourString;
         bool isInteracting = false;
 
 
@@ -22,10 +20,6 @@ namespace WallThrough.Gameplay
         {
             isInteracting = false;
             quickTimeMenu.SetActive(false);
-
-
-            // Init colourArray
-            codeInput = new List<int> { };
 
             for (int i = 0; i < colourCode.Length; i++)
             {
@@ -41,11 +35,12 @@ namespace WallThrough.Gameplay
             }
 
             // Join the enum names into string
-            string result = string.Join(" ", colourNames.ToArray());
+            colourString = string.Join(" ", colourNames.ToArray());
             string intResult = string.Join(" ", colourCode);
 
             // result of colour code
-            Debug.Log("Colour Names: " + result);
+            Debug.Log("### Wall Number " + UnityEngine.Random.Range(0, 1000));
+            Debug.Log("Colour Names: " + colourString);
             Debug.Log("Integer Values: " + intResult);
         }
 
@@ -60,27 +55,15 @@ namespace WallThrough.Gameplay
                 Debug.Log("Pressing T");
                 //replace with moving down animation
                 Destroy(transform.parent.gameObject);
-            }
-
-            if (codeInput.Count >= 4)
-            {
-                // Convert the colourCode array to enum names
-                List<string> colourNames = new List<string>();
-                foreach (int code in codeInput)
-                {
-                    colourNames.Add(Enum.GetName(typeof(ColourMap), code));
-                }
-
-                Debug.Log("added 4 things: " + string.Join(" ", colourNames.ToArray()));
-
-                codeInput.Clear();
-            }
+            }   
         }
 
         private void OnCollisionEnter(Collision collision)
         {
             quickTimeMenu.SetActive(true);
             isInteracting = true;
+
+            quickTimeMenu.GetComponent<QuickTimeMenu>().SetCurrentWall(this.gameObject);
         }
 
         private void OnCollisionExit(Collision collision)
@@ -89,9 +72,19 @@ namespace WallThrough.Gameplay
             isInteracting = false;
         }
 
-        public void InputColour(int colour)
+        public void CompareCodes(List<int> codeInput)
         {
-            codeInput.Add(colour);
+            for(int i = 0; i < 4; i++)
+            {
+                if (codeInput[i] != colourCode[i])
+                {
+                    Debug.Log("Input was incorrect, correct input should've been: " + colourString);
+                    return;
+                }               
+                Debug.Log("Input was correct, destroying door");
+                quickTimeMenu.SetActive(false);
+                Destroy(transform.parent.gameObject);        
+            }
         }
     }
 }
