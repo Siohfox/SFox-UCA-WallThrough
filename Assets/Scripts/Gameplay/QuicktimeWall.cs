@@ -1,38 +1,98 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuicktimeWall : MonoBehaviour
+namespace WallThrough.Gameplay
 {
-    int[] ColourArray = { };
-    public GameObject quickTimeMenu;
-
-    // Start is called before the first frame update
-    void Start()
+    public class QuicktimeWall : MonoBehaviour
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        public GameObject quickTimeMenu;
+        public enum ColourMap { Red, Orange, Yellow, Green, Blue, Purple };
+        int[] colourCode = new int[4];
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision);
-        quickTimeMenu.SetActive(true);
-    }
+        public List<int> codeInput;
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if(Input.GetKeyDown(KeyCode.T))
+        bool isInteracting = false;
+
+
+        // Start is called before the first frame update
+        void Start()
         {
-            Debug.Log("Pressing T");
-            //replace with moving down animation
-            Destroy(transform.parent.gameObject);
+            isInteracting = false;
+            quickTimeMenu.SetActive(false);
+
+
+            // Init colourArray
+            codeInput = new List<int> { };
+
+            for (int i = 0; i < colourCode.Length; i++)
+            {
+                // Generate a random number between 0 and the number of enum values
+                colourCode[i] = UnityEngine.Random.Range(0, Enum.GetValues(typeof(ColourMap)).Length);
+            }
+
+            // Convert the colourCode array to enum names
+            List<string> colourNames = new List<string>();
+            foreach (int code in colourCode)
+            {
+                colourNames.Add(Enum.GetName(typeof(ColourMap), code));
+            }
+
+            // Join the enum names into string
+            string result = string.Join(" ", colourNames.ToArray());
+            string intResult = string.Join(" ", colourCode);
+
+            // result of colour code
+            Debug.Log("Colour Names: " + result);
+            Debug.Log("Integer Values: " + intResult);
         }
-        Debug.Log("Staying");
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (!isInteracting) return;
+
+            // Test code
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                Debug.Log("Pressing T");
+                //replace with moving down animation
+                Destroy(transform.parent.gameObject);
+            }
+
+            if (codeInput.Count >= 4)
+            {
+                // Convert the colourCode array to enum names
+                List<string> colourNames = new List<string>();
+                foreach (int code in codeInput)
+                {
+                    colourNames.Add(Enum.GetName(typeof(ColourMap), code));
+                }
+
+                Debug.Log("added 4 things: " + string.Join(" ", colourNames.ToArray()));
+
+                codeInput.Clear();
+            }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            quickTimeMenu.SetActive(true);
+            isInteracting = true;
+        }
+
+        private void OnCollisionExit(Collision collision)
+        {
+            quickTimeMenu.SetActive(false);
+            isInteracting = false;
+        }
+
+        public void InputColour(int colour)
+        {
+            codeInput.Add(colour);
+        }
     }
 }
+
