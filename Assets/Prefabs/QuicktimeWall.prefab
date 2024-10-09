@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 6049053437354516427}
   - component: {fileID: 1251964559423063493}
   - component: {fileID: 8362946291365728090}
+  - component: {fileID: -4944706491654449588}
   m_Layer: 0
   m_Name: QuicktimeWall
   m_TagString: Untagged
@@ -216,6 +217,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &-4944706491654449588
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3608613932425727389}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8bda49a9f1ee7ca4595ef88cf83f4388, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3697241060343980774
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,6 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quickTimeMenu: {fileID: 0}
+  wallAnimator: {fileID: 0}
 --- !u!1 &4116531374099955959
 GameObject:
   m_ObjectHideFlags: 0

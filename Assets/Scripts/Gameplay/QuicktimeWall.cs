@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using WallThrough.Gameplay.Interactable;
 
@@ -9,6 +10,9 @@ namespace WallThrough.Gameplay
     {
         [SerializeField]
         private GameObject quickTimeMenu;
+
+        [SerializeField]
+        private Animator wallAnimator;
 
         // Enum representing the colors
         public enum ColourMap { Red, Orange, Yellow, Green, Blue, Purple };
@@ -21,6 +25,13 @@ namespace WallThrough.Gameplay
         private void Start()
         {
             InitializeQuickTimeEvent();
+
+            wallAnimator = GetComponentInParent<Animator>();
+
+            if (wallAnimator == null)
+            {
+                Debug.LogError("Animator component not found!");
+            }
         }
 
         // Initialize the quick time event
@@ -91,7 +102,8 @@ namespace WallThrough.Gameplay
 
             Debug.Log("Input was correct, destroying door");
             DeactivateQuickTimeMenu();
-            Destroy(transform.parent.gameObject);
+            wallAnimator.SetBool("Open", true);
+            GetComponentInParent<Collider>().enabled = false;
         }
 
         public void InteractionStart()
