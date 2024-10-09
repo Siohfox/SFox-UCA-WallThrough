@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,80 +8,99 @@ namespace WallThrough.Gameplay
     {
         [SerializeField]
         private GameObject quickTimeMenu;
+
+        // Enum representing the colors
         public enum ColourMap { Red, Orange, Yellow, Green, Blue, Purple };
+
         private int[] colourCode = new int[4];
         private string colourString;
-        bool isInteracting = false;
-
+        private bool isInteracting = false;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
+        {
+            InitializeQuickTimeEvent();
+        }
+
+        // Initialize the quick time event
+        private void InitializeQuickTimeEvent()
         {
             isInteracting = false;
             quickTimeMenu.SetActive(false);
+            GenerateColourCode();
+            DebugColourInfo();
+        }
 
+        // Generate a random colour code
+        private void GenerateColourCode()
+        {
             for (int i = 0; i < colourCode.Length; i++)
             {
-                // Generate a random number between 0 and the number of enum values
                 colourCode[i] = UnityEngine.Random.Range(0, Enum.GetValues(typeof(ColourMap)).Length);
             }
+        }
 
-            // Convert the colourCode array to enum names
+        // Log colour names and their integer values
+        private void DebugColourInfo()
+        {
             List<string> colourNames = new List<string>();
             foreach (int code in colourCode)
             {
                 colourNames.Add(Enum.GetName(typeof(ColourMap), code));
             }
 
-            // Join the enum names into string
-            colourString = string.Join(" ", colourNames.ToArray());
+            colourString = string.Join(" ", colourNames);
             string intResult = string.Join(" ", colourCode);
-
-            // Result of colour code
             Debug.Log("Colour Names: " + colourString);
-            //Debug.Log("Integer Values: " + intResult);
+            Debug.Log("Integer Values: " + intResult);
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (!isInteracting) return;
         }
 
         private void OnCollisionEnter(Collision collision)
         {
-            quickTimeMenu.SetActive(true);
-            isInteracting = true;
-
-            quickTimeMenu.GetComponent<QuickTimeMenu>().SetCurrentWall(this.gameObject);
+            ActivateQuickTimeMenu();
         }
 
         private void OnCollisionExit(Collision collision)
+        {
+            DeactivateQuickTimeMenu();
+        }
+
+        // Activate the quick time menu
+        private void ActivateQuickTimeMenu()
+        {
+            quickTimeMenu.SetActive(true);
+            isInteracting = true;
+            quickTimeMenu.GetComponent<QuickTimeMenu>().SetCurrentWall(this.gameObject);
+        }
+
+        // Deactivate the quick time menu
+        private void DeactivateQuickTimeMenu()
         {
             quickTimeMenu.SetActive(false);
             isInteracting = false;
         }
 
+        // Compare the input code with the generated colour code
         public void CompareCodes(List<int> codeInput)
         {
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < colourCode.Length; i++)
             {
                 if (codeInput[i] != colourCode[i])
                 {
                     Debug.Log("Input was incorrect, correct input should've been: " + colourString);
                     return;
                 }
-
-                if(i >= 3)
-                {
-                    Debug.Log("Input was correct, destroying door");
-                    quickTimeMenu.SetActive(false);
-
-                    // Finally open the door
-                    Destroy(transform.parent.gameObject);
-                }                
             }
+
+            Debug.Log("Input was correct, destroying door");
+            DeactivateQuickTimeMenu();
+            Destroy(transform.parent.gameObject);
         }
     }
 }
-

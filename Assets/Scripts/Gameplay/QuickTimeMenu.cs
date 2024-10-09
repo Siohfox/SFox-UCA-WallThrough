@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static WallThrough.Gameplay.QuicktimeWall;
@@ -8,32 +7,43 @@ namespace WallThrough.Gameplay
 {
     public class QuickTimeMenu : MonoBehaviour
     {
+        private const int RequiredInputs = 4; // Number of inputs needed
         public List<int> codeInput = new List<int>();
-        public QuicktimeWall quickTimeWallScript;
+        private QuicktimeWall quickTimeWallScript;
 
         private void Update()
         {
-
-            // Checks if you've input 4 colour codes already, if true: compare to door code
-            if (codeInput.Count >= 4)
+            // Check if the required number of colour codes has been input
+            if (codeInput.Count >= RequiredInputs)
             {
-                List<string> colourNames = new List<string>();
-                foreach (int code in codeInput) colourNames.Add(Enum.GetName(typeof(ColourMap), code));
-
-                Debug.Log("Your input: " + string.Join(" ", colourNames.ToArray()));
-                quickTimeWallScript.CompareCodes(codeInput);
-                codeInput.Clear();
+                ProcessInput();
             }
         }
 
-        // Public Input for Buttons
-        public void InputColour(int colour) => codeInput.Add(colour);
-
-        // Sets the current wall as the one being interacted with, then gets its script
-        public void SetCurrentWall(GameObject gameObject)
+        // Process the input when enough colour codes have been entered
+        private void ProcessInput()
         {
-            quickTimeWallScript = gameObject.GetComponent<QuicktimeWall>();
+            List<string> colourNames = new List<string>();
+            foreach (int code in codeInput)
+            {
+                colourNames.Add(Enum.GetName(typeof(ColourMap), code));
+            }
+
+            Debug.Log("Your input: " + string.Join(" ", colourNames));
+            quickTimeWallScript.CompareCodes(codeInput);
+            codeInput.Clear();
+        }
+
+        // Public method to input colour codes
+        public void InputColour(int colour)
+        {
+            codeInput.Add(colour);
+        }
+
+        // Set the current wall being interacted with and get its script
+        public void SetCurrentWall(GameObject wallObject)
+        {
+            quickTimeWallScript = wallObject.GetComponent<QuicktimeWall>();
         }
     }
 }
-
