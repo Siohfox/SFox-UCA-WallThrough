@@ -73,7 +73,6 @@ namespace WallThrough.Gameplay
 
         public void CompareCodes(List<int> codeInput)
         {
-            bool matching = false;
             for(int i = 0; i < 4; i++)
             {
                 if (codeInput[i] != colourCode[i])
