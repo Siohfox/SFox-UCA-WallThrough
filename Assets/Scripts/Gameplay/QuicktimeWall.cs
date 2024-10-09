@@ -74,16 +74,23 @@ namespace WallThrough.Gameplay
 
         public void CompareCodes(List<int> codeInput)
         {
+            bool matching = false;
             for(int i = 0; i < 4; i++)
             {
                 if (codeInput[i] != colourCode[i])
                 {
                     Debug.Log("Input was incorrect, correct input should've been: " + colourString);
                     return;
-                }               
-                Debug.Log("Input was correct, destroying door");
-                quickTimeMenu.SetActive(false);
-                Destroy(transform.parent.gameObject);        
+                }
+
+                if(i >= 3)
+                {
+                    Debug.Log("Input was correct, destroying door");
+                    quickTimeMenu.SetActive(false);
+
+                    // Finally open the door
+                    Destroy(transform.parent.gameObject);
+                }                
             }
         }
     }
