@@ -38,10 +38,9 @@ namespace WallThrough.Gameplay
             colourString = string.Join(" ", colourNames.ToArray());
             string intResult = string.Join(" ", colourCode);
 
-            // result of colour code
-            Debug.Log("### Wall Number " + UnityEngine.Random.Range(0, 1000));
+            // Result of colour code
             Debug.Log("Colour Names: " + colourString);
-            Debug.Log("Integer Values: " + intResult);
+            //Debug.Log("Integer Values: " + intResult);
         }
 
         // Update is called once per frame
