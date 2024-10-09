@@ -47,14 +47,6 @@ namespace WallThrough.Gameplay
         void Update()
         {
             if (!isInteracting) return;
-
-            // Test code
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                Debug.Log("Pressing T");
-                //replace with moving down animation
-                Destroy(transform.parent.gameObject);
-            }   
         }
 
         private void OnCollisionEnter(Collision collision)
