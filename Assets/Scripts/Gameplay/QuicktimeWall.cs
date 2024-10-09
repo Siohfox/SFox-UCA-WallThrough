@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using WallThrough.Gameplay.Interactable;
 
 namespace WallThrough.Gameplay
 {
-    public class QuicktimeWall : MonoBehaviour
+    public class QuicktimeWall : MonoBehaviour, IInteractable
     {
         [SerializeField]
         private GameObject quickTimeMenu;
@@ -52,23 +53,13 @@ namespace WallThrough.Gameplay
             colourString = string.Join(" ", colourNames);
             string intResult = string.Join(" ", colourCode);
             Debug.Log("Colour Names: " + colourString);
-            Debug.Log("Integer Values: " + intResult);
+            //Debug.Log("Integer Values: " + intResult);
         }
 
         // Update is called once per frame
         private void Update()
         {
             if (!isInteracting) return;
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            ActivateQuickTimeMenu();
-        }
-
-        private void OnCollisionExit(Collision collision)
-        {
-            DeactivateQuickTimeMenu();
         }
 
         // Activate the quick time menu
@@ -101,6 +92,16 @@ namespace WallThrough.Gameplay
             Debug.Log("Input was correct, destroying door");
             DeactivateQuickTimeMenu();
             Destroy(transform.parent.gameObject);
+        }
+
+        public void InteractionStart()
+        {
+            ActivateQuickTimeMenu();
+        }
+
+        public void InteractionEnd()
+        {
+            DeactivateQuickTimeMenu();
         }
     }
 }
