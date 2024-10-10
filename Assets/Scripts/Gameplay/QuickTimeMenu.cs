@@ -7,14 +7,14 @@ namespace WallThrough.Gameplay
 {
     public class QuickTimeMenu : MonoBehaviour
     {
-        private const int RequiredInputs = 4; // Number of inputs needed
+        private int requiredInputs;
         public List<int> codeInput = new List<int>();
         private QuickTimeWall quickTimeWallScript;
 
         private void Update()
         {
             // Check if the required number of colour codes has been input
-            if (codeInput.Count >= RequiredInputs)
+            if (codeInput.Count >= requiredInputs)
             {
                 ProcessInput();
             }
@@ -47,9 +47,11 @@ namespace WallThrough.Gameplay
         }
 
         // Set the current wall being interacted with and get its script
-        public void SetCurrentWall(GameObject wallObject)
+        public void SetCurrentWall(GameObject wallObject, int requiredInputs)
         {
             quickTimeWallScript = wallObject.GetComponent<QuickTimeWall>();
+            Debug.Log("Required inputs: " + requiredInputs);
+            this.requiredInputs = requiredInputs; 
         }
     }
 }

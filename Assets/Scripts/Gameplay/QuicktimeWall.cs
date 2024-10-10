@@ -17,9 +17,11 @@ namespace WallThrough.Gameplay
         // Enum representing the colors
         public enum ColourMap { Red, Orange, Yellow, Green, Blue, Purple };
 
-        private int[] colourCode = new int[4];
+        private int[] colourCode;
         private string colourString;
         private bool isInteracting = false;
+
+        private int requiredInputs = 4;
 
         private void Awake()
         {
@@ -44,6 +46,8 @@ namespace WallThrough.Gameplay
         // Generate a random colour code
         private void GenerateColourCode()
         {
+            colourCode = new int[UnityEngine.Random.Range(2, 6)];
+            requiredInputs = colourCode.Length;
             for (int i = 0; i < colourCode.Length; i++)
             {
                 colourCode[i] = UnityEngine.Random.Range(0, Enum.GetValues(typeof(ColourMap)).Length);
@@ -76,7 +80,7 @@ namespace WallThrough.Gameplay
         {
             quickTimeMenu.SetActive(true);
             isInteracting = true;
-            quickTimeMenu.GetComponent<QuickTimeMenu>().SetCurrentWall(this.gameObject);
+            quickTimeMenu.GetComponent<QuickTimeMenu>().SetCurrentWall(gameObject, requiredInputs);
         }
 
         // Deactivate the quick time menu
