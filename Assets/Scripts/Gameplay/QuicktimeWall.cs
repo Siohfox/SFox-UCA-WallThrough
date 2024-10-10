@@ -21,17 +21,15 @@ namespace WallThrough.Gameplay
         private string colourString;
         private bool isInteracting = false;
 
+        private void Awake()
+        {
+            quickTimeMenu = FindObjectOfType<QuickTimeMenu>().gameObject;
+        }
+
         // Start is called before the first frame update
         private void Start()
         {
             InitializeQuickTimeEvent();
-
-            wallAnimator = GetComponentInParent<Animator>();
-
-            if (wallAnimator == null)
-            {
-                Debug.LogError("Animator component not found!");
-            }
         }
 
         // Initialize the quick time event
