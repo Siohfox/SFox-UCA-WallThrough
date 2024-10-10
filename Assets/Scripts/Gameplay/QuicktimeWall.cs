@@ -6,7 +6,7 @@ using WallThrough.Gameplay.Interactable;
 
 namespace WallThrough.Gameplay
 {
-    public class QuicktimeWall : MonoBehaviour, IInteractable
+    public class QuickTimeWall : MonoBehaviour, IInteractable
     {
         [SerializeField]
         private GameObject quickTimeMenu;
@@ -114,6 +114,7 @@ namespace WallThrough.Gameplay
         public void InteractionEnd()
         {
             DeactivateQuickTimeMenu();
+            quickTimeMenu.GetComponent<QuickTimeMenu>().ClearInput();
         }
     }
 }

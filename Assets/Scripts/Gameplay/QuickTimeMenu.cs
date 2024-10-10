@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static WallThrough.Gameplay.QuicktimeWall;
+using static WallThrough.Gameplay.QuickTimeWall;
 
 namespace WallThrough.Gameplay
 {
@@ -9,7 +9,7 @@ namespace WallThrough.Gameplay
     {
         private const int RequiredInputs = 4; // Number of inputs needed
         public List<int> codeInput = new List<int>();
-        private QuicktimeWall quickTimeWallScript;
+        private QuickTimeWall quickTimeWallScript;
 
         private void Update()
         {
@@ -31,7 +31,7 @@ namespace WallThrough.Gameplay
 
             Debug.Log("Your input: " + string.Join(" ", colourNames));
             quickTimeWallScript.CompareCodes(codeInput);
-            codeInput.Clear();
+            ClearInput();
         }
 
         // Public method to input colour codes
@@ -40,10 +40,16 @@ namespace WallThrough.Gameplay
             codeInput.Add(colour);
         }
 
+        public void ClearInput()
+        {
+            codeInput.Clear();
+            Debug.Log("clearing input");
+        }
+
         // Set the current wall being interacted with and get its script
         public void SetCurrentWall(GameObject wallObject)
         {
-            quickTimeWallScript = wallObject.GetComponent<QuicktimeWall>();
+            quickTimeWallScript = wallObject.GetComponent<QuickTimeWall>();
         }
     }
 }
