@@ -23,7 +23,6 @@ namespace WallThrough.Gameplay
 
         public void InteractionStart()
         {
-            Debug.Log("interaction starting");
             if (!IsCompleted)
             {
                 AudioManager.Instance.PlaySound(completeSound, 1.0f, src);
@@ -39,7 +38,7 @@ namespace WallThrough.Gameplay
         public void CompleteObjective()
         {
             IsCompleted = true;
-            Debug.Log($"{gameObject.name} completed!");
+            //Debug.Log($"{gameObject.name} completed!");
         }
     }
 }

@@ -58,10 +58,22 @@ namespace WallThrough.Audio
         /// <param name="source"></param>
         public void PlaySound(AudioClip clip, float volume, AudioSource source)
         {
-            if (source != null)
+            try
             {
-                source.volume = volume;
-                source.PlayOneShot(clip);
+                if (source && clip)
+                {
+                    source.volume = volume;
+                    source.PlayOneShot(clip);
+                }
+                else
+                {
+                    Debug.LogWarning("Missing source or clip");
+                    return;
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error in PlaySound: {e.Message}");
             }
         }
     }

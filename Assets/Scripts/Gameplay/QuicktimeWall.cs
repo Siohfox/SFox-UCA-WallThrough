@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
 using WallThrough.Gameplay.Interactable;
+using WallThrough.Audio;
 
 namespace WallThrough.Gameplay
 {
     public class QuickTimeWall : MonoBehaviour, IInteractable
     {
-        [SerializeField]
         private GameObject quickTimeMenu;
 
         [SerializeField]
         private Animator wallAnimator;
+
+        [SerializeField]
+        private AudioClip wallOpenClip;
+        [SerializeField]
+        private AudioClip codeSuccess;
+        private AudioSource src;
 
         // Enum representing the colors
         public enum ColourMap { Red, Orange, Yellow, Green, Blue, Purple };
@@ -26,6 +32,8 @@ namespace WallThrough.Gameplay
         private void Awake()
         {
             quickTimeMenu = FindObjectOfType<QuickTimeMenu>().gameObject;
+            src = GetComponent<AudioSource>();
+            if (!src) Debug.LogWarning("No audio source found");
         }
 
         // Start is called before the first frame update
@@ -102,10 +110,17 @@ namespace WallThrough.Gameplay
                 }
             }
 
-            Debug.Log("Input was correct, destroying door");
+            //Debug.Log("Input was correct, destroying door");
+            WallSuccess();
+        }
+
+        private void WallSuccess()
+        {
             DeactivateQuickTimeMenu();
             wallAnimator.SetBool("Open", true);
             GetComponentInParent<Collider>().enabled = false;
+            AudioManager.Instance.PlaySound(codeSuccess, 1.0f, src);
+            AudioManager.Instance.PlaySound(wallOpenClip, 1.0f, src);
         }
 
         public void InteractionStart()

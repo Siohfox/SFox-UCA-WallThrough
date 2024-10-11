@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static WallThrough.Gameplay.QuickTimeWall;
+using WallThrough.Audio;
 
 namespace WallThrough.Gameplay
 {
@@ -10,6 +11,19 @@ namespace WallThrough.Gameplay
         private int requiredInputs;
         public List<int> codeInput = new();
         private QuickTimeWall quickTimeWallScript;
+
+        [SerializeField]
+        private AudioClip buttonClick;
+        private AudioSource src;
+
+        private void Start()
+        {
+            src = GetComponent<AudioSource>();
+            if (!src)
+            {
+                Debug.LogWarning("No audio source found");
+            }
+        }
 
         private void Update()
         {
@@ -38,12 +52,13 @@ namespace WallThrough.Gameplay
         public void InputColour(int colour)
         {
             codeInput.Add(colour);
+            AudioManager.Instance.PlaySound(buttonClick, 1.0f, src);
         }
 
         public void ClearInput()
         {
             codeInput.Clear();
-            Debug.Log("Clearing input");
+            //Debug.Log("Clearing input");
         }
 
         // Set the current wall being interacted with and get its script
