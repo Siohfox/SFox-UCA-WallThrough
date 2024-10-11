@@ -10,6 +10,8 @@ namespace WallThrough.Gameplay
     {
         [SerializeField]
         private GameObject winText;
+        [SerializeField]
+        private GameObject adviceText;
         private ObjectiveManager objectiveManager;
 
         private void Start()
@@ -21,11 +23,20 @@ namespace WallThrough.Gameplay
         {
             if (objectiveManager.CheckObjectives())
                 winText.SetActive(true);
+            else
+                StartCoroutine(GiveAdvice());
         }
 
         public void InteractionEnd()
         {
             // stuff
+        }
+
+        private IEnumerator GiveAdvice()
+        {
+            adviceText.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            adviceText.SetActive(false);
         }
     }
 }
