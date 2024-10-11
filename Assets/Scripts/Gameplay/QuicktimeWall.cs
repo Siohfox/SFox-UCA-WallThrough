@@ -7,7 +7,7 @@ using WallThrough.Audio;
 
 namespace WallThrough.Gameplay
 {
-    public class QuickTimeWall : MonoBehaviour, IInteractable
+    public class QuickTimeWall : Objective, IInteractable
     {
         private GameObject quickTimeMenu;
 
@@ -119,6 +119,10 @@ namespace WallThrough.Gameplay
             DeactivateQuickTimeMenu();
             wallAnimator.SetBool("Open", true);
             GetComponentInParent<Collider>().enabled = false;
+            if (!IsCompleted)
+            {
+                base.CompleteObjective();
+            }
             AudioManager.Instance.PlaySound(codeSuccess, 1.0f, src);
             AudioManager.Instance.PlaySound(wallOpenClip, 1.0f, src);
         }

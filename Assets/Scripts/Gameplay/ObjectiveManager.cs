@@ -12,6 +12,7 @@ namespace WallThrough.Gameplay
         private void Start()
         {
             objectives = new List<Objective>(FindObjectsOfType<Objective>());
+            objectives.AddRange(FindObjectsOfType<Collectable>());
         }
         private void Update()
         {

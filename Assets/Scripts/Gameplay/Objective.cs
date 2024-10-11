@@ -1,10 +1,10 @@
 using UnityEngine;
-using WallThrough.Gameplay.Interactable;
+
 using WallThrough.Audio;
 
 namespace WallThrough.Gameplay
 {
-    public class Objective : MonoBehaviour, IInteractable
+    public class Objective : MonoBehaviour
     {
         public bool IsCompleted { get; private set; } = false;
 
@@ -21,24 +21,11 @@ namespace WallThrough.Gameplay
             }
         }
 
-        public void InteractionStart()
-        {
-            if (!IsCompleted)
-            {
-                AudioManager.Instance.PlaySound(completeSound, 1.0f, src);
-                CompleteObjective();
-            }
-        }
-
-        public void InteractionEnd()
-        {
-            // Logic for ending the interaction
-        }
-
-        public void CompleteObjective()
+        public virtual void CompleteObjective()
         {
             IsCompleted = true;
-            //Debug.Log($"{gameObject.name} completed!");
+            AudioManager.Instance.PlaySound(completeSound, 1.0f, src);
+            Debug.Log($"{gameObject.name} completed!");
         }
     }
 }
