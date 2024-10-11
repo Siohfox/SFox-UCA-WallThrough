@@ -57,14 +57,14 @@ namespace WallThrough.Gameplay
         // Log colour names and their integer values
         private void DebugColourInfo()
         {
-            List<string> colourNames = new List<string>();
+            List<string> colourNames = new();
             foreach (int code in colourCode)
             {
                 colourNames.Add(Enum.GetName(typeof(ColourMap), code));
             }
 
             colourString = string.Join(" ", colourNames);
-            string intResult = string.Join(" ", colourCode);
+            //string intResult = string.Join(" ", colourCode);
             Debug.Log("Colour Names: " + colourString);
             //Debug.Log("Integer Values: " + intResult);
         }

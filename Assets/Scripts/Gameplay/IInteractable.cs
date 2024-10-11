@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace WallThrough.Gameplay.Interactable
 {
-    // Script needs to be added next to monobehaviour, requires InteractionStart() function
+    // Script needs to be added next to monobehaviour
     public interface IInteractable
     {
         public void InteractionStart();

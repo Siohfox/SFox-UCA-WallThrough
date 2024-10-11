@@ -8,7 +8,7 @@ namespace WallThrough.Gameplay
     public class QuickTimeMenu : MonoBehaviour
     {
         private int requiredInputs;
-        public List<int> codeInput = new List<int>();
+        public List<int> codeInput = new();
         private QuickTimeWall quickTimeWallScript;
 
         private void Update()
@@ -23,13 +23,13 @@ namespace WallThrough.Gameplay
         // Process the input when enough colour codes have been entered
         private void ProcessInput()
         {
-            List<string> colourNames = new List<string>();
+            List<string> colourNames = new();
             foreach (int code in codeInput)
             {
                 colourNames.Add(Enum.GetName(typeof(ColourMap), code));
             }
 
-            Debug.Log("Your input: " + string.Join(" ", colourNames));
+            //Debug.Log("Your input: " + string.Join(" ", colourNames));
             quickTimeWallScript.CompareCodes(codeInput);
             ClearInput();
         }
@@ -43,14 +43,13 @@ namespace WallThrough.Gameplay
         public void ClearInput()
         {
             codeInput.Clear();
-            Debug.Log("clearing input");
+            Debug.Log("Clearing input");
         }
 
         // Set the current wall being interacted with and get its script
         public void SetCurrentWall(GameObject wallObject, int requiredInputs)
         {
             quickTimeWallScript = wallObject.GetComponent<QuickTimeWall>();
-            Debug.Log("Required inputs: " + requiredInputs);
             this.requiredInputs = requiredInputs; 
         }
     }
