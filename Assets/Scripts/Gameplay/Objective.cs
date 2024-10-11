@@ -11,7 +11,7 @@ namespace WallThrough.Gameplay
         public virtual void CompleteObjective()
         {
             IsCompleted = true;
-            Debug.Log($"{gameObject.name} completed!");
+            //Debug.Log($"{gameObject.name} completed!");
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -10,14 +11,18 @@ namespace WallThrough.Gameplay
     public class QuickTimeWall : Objective, IInteractable
     {
         private GameObject quickTimeMenu;
+        private GameObject failCross;
 
         [SerializeField]
         private Animator wallAnimator;
+
 
         [SerializeField]
         private AudioClip wallOpenClip;
         [SerializeField]
         private AudioClip codeSuccess;
+        [SerializeField]
+        private AudioClip codeFail;
 
         // Enum representing the colors
         public enum ColourMap { Red, Orange, Yellow, Green, Blue, Purple };
@@ -31,6 +36,7 @@ namespace WallThrough.Gameplay
         private void Awake()
         {
             quickTimeMenu = FindObjectOfType<QuickTimeMenu>().gameObject;
+            failCross = GameObject.Find("FailCross").gameObject;            
             src = GetComponent<AudioSource>();
             if (!src) Debug.LogWarning("No audio source found");
         }
@@ -46,6 +52,7 @@ namespace WallThrough.Gameplay
         {
             isInteracting = false;
             quickTimeMenu.SetActive(false);
+            failCross.SetActive(false);
             GenerateColourCode();
             DebugColourInfo();
         }
@@ -104,7 +111,7 @@ namespace WallThrough.Gameplay
             {
                 if (codeInput[i] != colourCode[i])
                 {
-                    Debug.Log("Input was incorrect, correct input should've been: " + colourString);
+                    WallFail();
                     return;
                 }
             }
@@ -124,6 +131,23 @@ namespace WallThrough.Gameplay
             }
             AudioManager.Instance.PlaySound(codeSuccess, 1.0f, src);
             AudioManager.Instance.PlaySound(wallOpenClip, 1.0f, src);
+        }
+
+        private void WallFail()
+        {
+            if(failCross)
+            {
+                StartCoroutine(FailCrossShow());
+            }
+            Debug.Log("Input was incorrect, correct input should've been: " + colourString);
+        }
+
+        private IEnumerator FailCrossShow()
+        {
+            failCross.SetActive(true);
+            AudioManager.Instance.PlaySound(codeFail, 1.0f, src);
+            yield return new WaitForSeconds(1);
+            failCross.SetActive(false);
         }
 
         public void InteractionStart()
