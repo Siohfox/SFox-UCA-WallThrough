@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47dd2e1798ac804c8d81954b867243e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  completeSound: {fileID: 0}
   wallAnimator: {fileID: 6450742568098438463}
   wallOpenClip: {fileID: 8300000, guid: 0399e0d4aec0f7e47a85cf56779ea9ac, type: 3}
   codeSuccess: {fileID: 8300000, guid: 16ba1f87276882f41bf315ced1ec17be, type: 3}

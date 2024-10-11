@@ -1,17 +1,27 @@
-
 using WallThrough.Gameplay.Interactable;
 using UnityEngine;
+using WallThrough.Audio;
 
 namespace WallThrough.Gameplay
 {
     public class Collectable : Objective, IInteractable
     {
+        [SerializeField]
+        private AudioClip collectClip;
+
+        private void Awake()
+        {
+            src = GetComponent<AudioSource>();
+            if (!src) Debug.LogWarning("No audio source found");
+        }
+
         public void InteractionStart()
         {
             if (!IsCompleted)
             {
-                Destroy(gameObject);
+                AudioManager.Instance.PlaySound(collectClip, 1.0f, src);
                 base.CompleteObjective();
+                Destroy(gameObject);
             }
         }
 

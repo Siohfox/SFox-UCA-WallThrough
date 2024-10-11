@@ -62,6 +62,7 @@ namespace WallThrough.Audio
             {
                 if (source && clip)
                 {
+                    Debug.Log($"playing sound {clip}");
                     source.volume = volume;
                     source.PlayOneShot(clip);
                 }

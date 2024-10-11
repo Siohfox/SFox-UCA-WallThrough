@@ -18,7 +18,6 @@ namespace WallThrough.Gameplay
         private AudioClip wallOpenClip;
         [SerializeField]
         private AudioClip codeSuccess;
-        private AudioSource src;
 
         // Enum representing the colors
         public enum ColourMap { Red, Orange, Yellow, Green, Blue, Purple };

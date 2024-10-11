@@ -12,14 +12,9 @@ namespace WallThrough.Gameplay
         private void Start()
         {
             objectives = new List<Objective>(FindObjectsOfType<Objective>());
-            objectives.AddRange(FindObjectsOfType<Collectable>());
-        }
-        private void Update()
-        {
-            CheckObjectives();
         }
 
-        private void CheckObjectives()
+        public bool CheckObjectives()
         {
             completedObjectives = 0;
 
@@ -33,13 +28,10 @@ namespace WallThrough.Gameplay
 
             if(completedObjectives >= objectives.Count)
             {
-                OpenEndPortal();
+                return true;
             }
-        }
 
-        private void OpenEndPortal()
-        {
-            Debug.Log("All objectives completed, opening portal!");
+            return false;
         }
     }
 }
