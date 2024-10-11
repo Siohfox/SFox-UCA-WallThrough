@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace WallThrough.Audio
@@ -9,6 +7,7 @@ namespace WallThrough.Audio
         public static AudioManager Instance { get; private set; }
 
         private AudioSource musicSource;
+
 
         private void Awake()
         {
