@@ -13,6 +13,9 @@ namespace WallThrough.Gameplay
         private GameObject quickTimeMenu;
         private GameObject failCross;
 
+        public FloodManager floodManager; // Reference to the FloodManager
+        public Room room; // Reference to the room connected to this door
+
         [SerializeField]
         private Animator wallAnimator;
 
@@ -36,7 +39,8 @@ namespace WallThrough.Gameplay
         private void Awake()
         {
             quickTimeMenu = FindObjectOfType<QuickTimeMenu>().gameObject;
-            failCross = GameObject.Find("FailCross").gameObject;            
+            failCross = GameObject.Find("FailCross").gameObject;
+            floodManager = GameObject.Find("FloodManager").GetComponent<FloodManager>();
             src = GetComponent<AudioSource>();
             if (!src) Debug.LogWarning("No audio source found");
         }
@@ -131,6 +135,7 @@ namespace WallThrough.Gameplay
             }
             AudioManager.Instance.PlaySound(codeSuccess, 1.0f, src);
             AudioManager.Instance.PlaySound(wallOpenClip, 1.0f, src);
+            floodManager.OpenDoor(room);
         }
 
         private void WallFail()
