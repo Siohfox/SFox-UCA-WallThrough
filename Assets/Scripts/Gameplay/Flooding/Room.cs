@@ -14,5 +14,10 @@ namespace WallThrough.Gameplay
             newPosition.y = height; // Adjust for the water plane's height
             waterPlane.transform.position = newPosition;
         }
+
+        public float GetCurrentWaterHeight()
+        {
+            return waterPlane.transform.position.y; // Return the current height of the water plane
+        }
     }
 }
