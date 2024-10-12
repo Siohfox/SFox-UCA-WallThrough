@@ -5,6 +5,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 using WallThrough.Gameplay.Interactable;
 using WallThrough.Audio;
+using WallThrough.Graphics;
 
 namespace WallThrough.Gameplay
 {
@@ -135,6 +136,7 @@ namespace WallThrough.Gameplay
             }
             AudioManager.Instance.PlaySound(codeSuccess, 1.0f, src);
             AudioManager.Instance.PlaySound(wallOpenClip, 1.0f, src);
+            CameraShake.Instance.ShakeCamera(4f, 2f);
             floodManager.OpenDoor(room);
         }
 
