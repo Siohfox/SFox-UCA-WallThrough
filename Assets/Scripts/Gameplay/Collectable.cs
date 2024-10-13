@@ -1,6 +1,7 @@
 using WallThrough.Gameplay.Interactable;
 using UnityEngine;
 using WallThrough.Audio;
+using WallThrough.Events;
 
 namespace WallThrough.Gameplay
 {
@@ -17,12 +18,21 @@ namespace WallThrough.Gameplay
 
         public void InteractionStart()
         {
-            if (!IsCompleted)
+            if (!IsCompleted) // Ensure the objective isn't already completed
             {
-                // Use AudioManager to play the sound at the collectable's position
+                // Play sound effect
                 AudioManager.Instance.PlaySoundAtPosition(collectClip, 1.0f, transform.position);
 
+                // Complete the objective
                 base.CompleteObjective();
+
+                // Trigger the objective completed event
+                if (ObjectiveManager.Instance)
+                {
+                    GameEvents.TriggerObjectiveCompleted(ObjectiveManager.Instance.GetCompeletedObjectives().ToString());
+                }
+
+                // Disable the collectable
                 gameObject.SetActive(false);
             }
         }
