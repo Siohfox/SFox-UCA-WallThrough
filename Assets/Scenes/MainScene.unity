@@ -3743,6 +3743,9 @@ MonoBehaviour:
   initialWaterHeight: 0
   floodRate: 0.1
   maxWaterHeight: 5
+  transitionSpeed: 0.5
+  test1: 0
+  test2: 0
 --- !u!4 &1601617951
 Transform:
   m_ObjectHideFlags: 0
@@ -4843,7 +4846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2831974699134616858, guid: d9b3ef622078236468378b38f3033029, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.1
+      value: -12.5
       objectReference: {fileID: 0}
     - target: {fileID: 2831974699134616858, guid: d9b3ef622078236468378b38f3033029, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5534,7 +5537,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ef3a14309d7ae4f97f33bda9db85e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 6
+  acceleration: 12
+  deceleration: 7
 --- !u!1 &2035822770
 GameObject:
   m_ObjectHideFlags: 0
