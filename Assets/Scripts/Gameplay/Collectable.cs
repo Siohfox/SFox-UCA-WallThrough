@@ -19,9 +19,11 @@ namespace WallThrough.Gameplay
         {
             if (!IsCompleted)
             {
-                AudioManager.Instance.PlaySound(collectClip, 1.0f, src);
+                // Use AudioManager to play the sound at the collectable's position
+                AudioManager.Instance.PlaySoundAtPosition(collectClip, 1.0f, transform.position);
+
                 base.CompleteObjective();
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
 

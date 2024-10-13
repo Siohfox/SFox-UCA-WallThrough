@@ -8,6 +8,9 @@ namespace WallThrough.Audio
 
         private AudioSource musicSource;
 
+        [SerializeField]
+        private GameObject soundEffectPrefab;
+
 
         private void Awake()
         {
@@ -75,6 +78,31 @@ namespace WallThrough.Audio
             catch (System.Exception e)
             {
                 Debug.LogError($"Error in PlaySound: {e.Message}");
+            }
+        }
+
+        public void PlaySoundAtPosition(AudioClip clip, float volume, Vector3 position)
+        {
+            // Instantiate the sound effect prefab at the specified position
+            GameObject soundEffectInstance = Instantiate(soundEffectPrefab, position, Quaternion.identity);
+
+            // Access the AudioSource component from the instantiated prefab
+            AudioSource audioSource = soundEffectInstance.GetComponent<AudioSource>();
+
+            if (audioSource != null)
+            {
+                audioSource.clip = clip;
+                audioSource.volume = volume;
+                audioSource.spatialBlend = 1.0f; // Set to 3D sound
+                audioSource.Play();
+
+                // Destroy the sound effect instance after it finishes playing
+                Destroy(soundEffectInstance, clip.length);
+            }
+            else
+            {
+                Debug.LogWarning("No AudioSource found on sound effect prefab!");
+                Destroy(soundEffectInstance); // Clean up if there's no AudioSource
             }
         }
     }

@@ -248,3 +248,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectClip: {fileID: 8300000, guid: 13518fff6b6924d44963deda312d4852, type: 3}
+  soundEffectPrefab: {fileID: 686755747245491239, guid: 3df0dbf9947dd9940be4b74703be8e0d, type: 3}
