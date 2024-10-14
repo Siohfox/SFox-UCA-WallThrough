@@ -11,11 +11,6 @@ namespace WallThrough.Gameplay
         public float maxWaterHeight = 10f; // Maximum water height for the room
         public float transitionSpeed = 0.5f; // Speed of transition when balancing water levels higher is faster
 
-        [SerializeField]
-        private int test1;
-        [SerializeField]
-        private int test2;
-
         // This one should not be exposed to inspector
         private int test3;
 

@@ -14,6 +14,8 @@ namespace WallThrough.Gameplay
         {
             src = GetComponent<AudioSource>();
             if (!src) Debug.LogWarning("No audio source found");
+
+            SetObjectiveType(ObjectiveType.Collectable);
         }
 
         public void InteractionStart()

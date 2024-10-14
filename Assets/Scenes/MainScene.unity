@@ -4113,7 +4113,7 @@ MonoBehaviour:
   - {fileID: 681084239}
   initialWaterHeight: 0
   floodRate: 0.1
-  maxWaterHeight: 5
+  maxWaterHeight: 4.8
   transitionSpeed: 0.5
   test1: 0
   test2: 0
@@ -5342,7 +5342,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -75.377075, y: -38.07715}
+  m_AnchoredPosition: {x: -75.37695, y: -38.07715}
   m_SizeDelta: {x: 357.8436, y: 89.4609}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1931628440
@@ -5511,7 +5511,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 669.9022, y: 175.1424}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1939164994

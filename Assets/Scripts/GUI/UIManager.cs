@@ -23,7 +23,6 @@ namespace WallThrough.UI
 
         private void UpdateObjectiveUI(string objective)
         {
-            Debug.Log("Updating objective ui with count " + objective.ToString());
             objectiveText.text = $"Objective Complete: {objective}/5"; // Should be updated to find objective max instead of hardcode
         }
 
