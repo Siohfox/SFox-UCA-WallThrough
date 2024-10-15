@@ -21,10 +21,7 @@ namespace WallThrough.Gameplay
             Type = type;
         }
 
-        public ObjectiveType GetObjectiveType()
-        {
-            return Type;
-        }
+        public ObjectiveType GetObjectiveType() => Type;
 
         public virtual void CompleteObjective()
         {

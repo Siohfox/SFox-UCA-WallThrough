@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
@@ -12,16 +13,18 @@ public class Movement : MonoBehaviour
     public float deceleration = 10f;
     private Vector3 currentVelocity;
 
+    
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
         currentVelocity = Vector3.zero; // Start with no movement
     }
 
-    public void Move(float x, float z)
+    public void Move(Vector2 moveDir)
     {
         // Calculate target velocity based on input
-        Vector3 targetVelocity = new Vector3(x, 0, z).normalized * moveSpeed;
+        Vector3 targetVelocity = new Vector3(moveDir.x, 0, moveDir.y).normalized * moveSpeed;
 
         // Smoothly transition to the target velocity using acceleration/deceleration
         if (targetVelocity.magnitude > 0)
