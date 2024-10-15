@@ -5,7 +5,6 @@ using UnityEngine;
 using WallThrough.Gameplay.Interactable;
 using WallThrough.Audio;
 using WallThrough.Graphics;
-using WallThrough.Events;
 
 namespace WallThrough.Gameplay
 {
@@ -133,7 +132,7 @@ namespace WallThrough.Gameplay
             if (!IsCompleted)
             {
                 base.CompleteObjective();
-                GameEvents.TriggerObjectiveCompleted(ObjectiveManager.Instance.GetCompeletedObjectives().ToString());
+                ObjectiveManager.TriggerObjectiveCompleted(ObjectiveManager.Instance.GetCompeletedObjectives().ToString());
             }
             AudioManager.Instance.PlaySound(codeSuccess, 1.0f, src);
             AudioManager.Instance.PlaySound(wallOpenClip, 1.0f, src);

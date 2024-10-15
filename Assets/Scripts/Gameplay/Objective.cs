@@ -1,5 +1,4 @@
 using UnityEngine;
-using WallThrough.Events;
 
 namespace WallThrough.Gameplay
 {

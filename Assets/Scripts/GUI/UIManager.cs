@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using WallThrough.Events;
 using TMPro;
+using WallThrough.Gameplay;
 
 
 namespace WallThrough.UI
@@ -13,12 +13,12 @@ namespace WallThrough.UI
 
         private void OnEnable()
         {
-            GameEvents.OnObjectiveCompleted += UpdateObjectiveUI;
+            ObjectiveManager.OnObjectiveCompleted += UpdateObjectiveUI;
         }
 
         private void OnDisable()
         {
-            GameEvents.OnObjectiveCompleted -= UpdateObjectiveUI;
+            ObjectiveManager.OnObjectiveCompleted -= UpdateObjectiveUI;
         }
 
         private void UpdateObjectiveUI(string objective)

@@ -1,7 +1,7 @@
 using WallThrough.Gameplay.Interactable;
 using UnityEngine;
 using WallThrough.Audio;
-using WallThrough.Events;
+
 
 namespace WallThrough.Gameplay
 {
@@ -31,7 +31,7 @@ namespace WallThrough.Gameplay
                 // Trigger the objective completed event
                 if (ObjectiveManager.Instance)
                 {
-                    GameEvents.TriggerObjectiveCompleted(ObjectiveManager.Instance.GetCompeletedObjectives().ToString());
+                    ObjectiveManager.TriggerObjectiveCompleted(ObjectiveManager.Instance.GetCompeletedObjectives().ToString());
                 }
 
                 // Disable the collectable

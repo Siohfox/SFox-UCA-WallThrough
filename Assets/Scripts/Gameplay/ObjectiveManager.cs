@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using WallThrough.Events;
 using System;
 
 namespace WallThrough.Gameplay
@@ -12,6 +11,19 @@ namespace WallThrough.Gameplay
 
         public List<Objective> objectives;
         private int completedObjectives = 0;
+
+        public static event Action<string> OnObjectiveCompleted;
+        public static event Action<string> OnObjectiveUpdate;
+
+        public static void TriggerObjectiveCompleted(string objective)
+        {
+            OnObjectiveCompleted?.Invoke(objective);
+        }
+
+        public static void TriggerObjectiveUpdate(string message)
+        {
+            OnObjectiveUpdate?.Invoke(message);
+        }
 
         private void Awake()
         {
@@ -29,7 +41,7 @@ namespace WallThrough.Gameplay
         {
             objectives = new List<Objective>(FindObjectsOfType<Objective>());
             UpdateObjectiveCompletion();
-            GameEvents.TriggerObjectiveCompleted(completedObjectives.ToString());
+            TriggerObjectiveCompleted(completedObjectives.ToString());
         }
 
         public bool CheckObjectives()

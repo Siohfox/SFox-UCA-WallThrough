@@ -830,6 +830,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2864538248493128530, guid: 6bd2f4902e08ff242a6dd6bdb360e1ba, type: 3}
   m_PrefabInstance: {fileID: 1666068706}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &397411106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 397411107}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &397411107
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397411106}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &489640551
 GameObject:
   m_ObjectHideFlags: 0
@@ -4115,8 +4146,6 @@ MonoBehaviour:
   floodRate: 0.1
   maxWaterHeight: 4.8
   transitionSpeed: 0.5
-  test1: 0
-  test2: 0
 --- !u!4 &1601617951
 Transform:
   m_ObjectHideFlags: 0
@@ -6678,3 +6707,4 @@ SceneRoots:
   - {fileID: 1381150084}
   - {fileID: 625996742}
   - {fileID: 1791083109}
+  - {fileID: 397411107}
