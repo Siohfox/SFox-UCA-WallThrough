@@ -31,7 +31,7 @@ namespace WallThrough.Gameplay
                 // Trigger the objective completed event
                 if (ObjectiveManager.Instance)
                 {
-                    ObjectiveManager.TriggerObjectiveCompleted(ObjectiveManager.Instance.GetCompeletedObjectives().ToString());
+                    ObjectiveManager.UpdateCompletedObjectives(ObjectiveManager.Instance.GetCompeletedObjectives().ToString());
                 }
 
                 // Disable the collectable

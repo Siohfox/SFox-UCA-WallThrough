@@ -1,4 +1,5 @@
 using UnityEngine;
+using WallThrough.Utility;
 
 namespace WallThrough.Gameplay
 {
@@ -6,12 +7,12 @@ namespace WallThrough.Gameplay
     {
         WallPuzzle,
         Collectable,
-        MiniPuzzle
     }
 
     public class Objective : MonoBehaviour
     {
         public bool IsCompleted { get; private set; } = false;
+        public ObjectiveManager objectiveManager;
 
         protected AudioSource src;
         public ObjectiveType Type { get; private set; }

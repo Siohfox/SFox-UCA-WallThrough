@@ -4,6 +4,25 @@ using System;
 
 namespace WallThrough.Gameplay
 {
+    public struct ColourData
+    {
+        public Color colour;
+        public string colourName;
+    }
+
+    public class ColourManager
+    {
+        private List<ColourData> GetColourDataList(List<Color> colours, List<string> colourStrings)
+        {
+
+        }
+
+        public ColourData GetColourData(Objective objective)
+        {
+            return objective.ColourData;
+        }
+    }
+
     // Tracks player progress
     public class ObjectiveManager : MonoBehaviour
     {
@@ -15,7 +34,7 @@ namespace WallThrough.Gameplay
         public static event Action<string> OnObjectiveCompleted;
         public static event Action<string> OnObjectiveUpdate;
 
-        public static void TriggerObjectiveCompleted(string objective)
+        public static void UpdateCompletedObjectives(string objective)
         {
             OnObjectiveCompleted?.Invoke(objective);
         }
@@ -40,8 +59,12 @@ namespace WallThrough.Gameplay
         private void Start()
         {
             objectives = new List<Objective>(FindObjectsOfType<Objective>());
+            foreach (var objective in objectives)
+            {
+                objective.objectiveManager = this;
+            }
             UpdateObjectiveCompletion();
-            TriggerObjectiveCompleted(completedObjectives.ToString());
+            UpdateCompletedObjectives(completedObjectives.ToString());
         }
 
         public bool CheckObjectives()
