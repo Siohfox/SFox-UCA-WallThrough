@@ -4,25 +4,6 @@ using System;
 
 namespace WallThrough.Gameplay
 {
-    public struct ColourData
-    {
-        public Color colour;
-        public string colourName;
-    }
-
-    public class ColourManager
-    {
-        private List<ColourData> GetColourDataList(List<Color> colours, List<string> colourStrings)
-        {
-
-        }
-
-        public ColourData GetColourData(Objective objective)
-        {
-            return objective.ColourData;
-        }
-    }
-
     // Tracks player progress
     public class ObjectiveManager : MonoBehaviour
     {

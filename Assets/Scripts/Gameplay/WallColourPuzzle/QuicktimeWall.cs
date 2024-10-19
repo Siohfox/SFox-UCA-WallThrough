@@ -29,7 +29,7 @@ namespace WallThrough.Gameplay
         private AudioClip codeFail;
 
         // Enum representing the colors
-        public enum ColourMap { Red, Orange, Yellow, Green, Blue, Purple };
+        //public enum ColourMap { Red, Orange, Yellow, Green, Blue, Purple };
 
         private int[] colourCode;
         private string colourString;
@@ -69,7 +69,7 @@ namespace WallThrough.Gameplay
             requiredInputs = colourCode.Length;
             for (int i = 0; i < colourCode.Length; i++)
             {
-                colourCode[i] = UnityEngine.Random.Range(0, Enum.GetValues(typeof(ColourMap)).Length);
+                colourCode[i] = UnityEngine.Random.Range(0, ColourManager.Instance.colourData.Count);
             }
         }
 
@@ -79,7 +79,8 @@ namespace WallThrough.Gameplay
             List<string> colourNames = new();
             foreach (int code in colourCode)
             {
-                colourNames.Add(Enum.GetName(typeof(ColourMap), code));
+                ColourManager.ColourData colourData = ColourManager.Instance.GetColourData(code);
+                colourNames.Add(colourData.colourName);
             }
 
             colourString = string.Join(" ", colourNames);

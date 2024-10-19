@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static WallThrough.Gameplay.QuickTimeWall;
 using WallThrough.Audio;
+using WallThrough.Utility;
 
 namespace WallThrough.Gameplay
 {
@@ -40,10 +41,11 @@ namespace WallThrough.Gameplay
             List<string> colourNames = new();
             foreach (int code in codeInput)
             {
-                colourNames.Add(Enum.GetName(typeof(ColourMap), code));
+                var colourData = ColourManager.Instance.GetColourData(code);
+                colourNames.Add(colourData.colourName);
             }
 
-            //Debug.Log("Your input: " + string.Join(" ", colourNames));
+            Debug.Log("Your input: " + string.Join(" ", colourNames));
             quickTimeWallScript.CompareCodes(codeInput);
             ClearInput();
         }

@@ -7,7 +7,7 @@ namespace Utility
 {
     public static class Util
     {
-        // Returns a random value based on enum length
+        // Returns a random value based on enum length --- no longer enum
         public static T GetRandomEnumValue<T>() where T : Enum
         {
             Array enumValues = Enum.GetValues(typeof(T));

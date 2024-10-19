@@ -1,26 +1,51 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using WallThrough.Gameplay;
 
 namespace WallThrough.Utility
 {
-    public static class ColourManager
+    public class ColourManager : MonoBehaviour
     {
+        [System.Serializable]
         public struct ColourData
         {
             public Color colour;
             public string colourName;
         }
-        private List<ColourData> GetColourDataList(List<Color> colours, List<string> colourStrings)
-        {
 
+        public static ColourManager Instance { get; private set; }
+
+        public List<ColourData> colourData;
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+                return;
+            }
+            Instance = this;
+
+            // Initialize default colours if none assigned in Unity Inspector
+            if (colourData == null || colourData.Count == 0)
+            {
+                colourData = new List<ColourData>
+                {
+                    new ColourData {colour = Color.red, colourName = "Red"},
+                    new ColourData {colour = Color.blue, colourName = "Blue"},
+                    new ColourData {colour = Color.green, colourName = "Green"}
+                };
+            }
         }
 
-        public ColourData GetColourData(Objective objective)
+        public ColourData GetColourData(int index)
         {
-            return objective.ColourData;
+            if (index >= 0 && index < colourData.Count)
+            {
+                return colourData[index];
+            }
+
+            Debug.LogError("Colour index out of range: " + index);
+            return default;
         }
     }
 }
-
