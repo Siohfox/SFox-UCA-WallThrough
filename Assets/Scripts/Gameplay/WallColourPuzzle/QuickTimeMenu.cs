@@ -64,10 +64,10 @@ namespace WallThrough.Gameplay
         }
 
         // Set the current wall being interacted with and get its script
-        public void SetCurrentWall(GameObject wallObject, int requiredInputs)
+        public void SetCurrentWall(QuickTimeWall wall, int requiredInputs)
         {
-            quickTimeWallScript = wallObject.GetComponent<QuickTimeWall>();
-            this.requiredInputs = requiredInputs; 
+            quickTimeWallScript = wall;
+            this.requiredInputs = requiredInputs;
         }
     }
 }

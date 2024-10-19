@@ -96,11 +96,11 @@ namespace WallThrough.Gameplay
         }
 
         // Activate the quick time menu
-        private void ActivateQuickTimeMenu()
+        private void ActivateQuickTimeMenu(QuickTimeMenu menu)
         {
-            quickTimeMenu.SetActive(true);
+            menu.SetCurrentWall(this, requiredInputs); // Pass the wall reference
+            menu.gameObject.SetActive(true);
             isInteracting = true;
-            quickTimeMenu.GetComponent<QuickTimeMenu>().SetCurrentWall(gameObject, requiredInputs);
         }
 
         // Deactivate the quick time menu
@@ -161,7 +161,7 @@ namespace WallThrough.Gameplay
 
         public void InteractionStart()
         {
-            ActivateQuickTimeMenu();
+            ActivateQuickTimeMenu(quickTimeMenu.GetComponent<QuickTimeMenu>());
         }
 
         public void InteractionEnd()
