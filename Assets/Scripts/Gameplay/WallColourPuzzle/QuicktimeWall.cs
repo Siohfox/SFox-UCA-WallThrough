@@ -28,9 +28,6 @@ namespace WallThrough.Gameplay
         [SerializeField]
         private AudioClip codeFail;
 
-        // Enum representing the colors
-        //public enum ColourMap { Red, Orange, Yellow, Green, Blue, Purple };
-
         private int[] colourCode;
         private string colourString;
         private bool isInteracting = false;
@@ -44,11 +41,11 @@ namespace WallThrough.Gameplay
             floodManager = GameObject.Find("FloodManager").GetComponent<FloodManager>();
             src = GetComponent<AudioSource>();
             if (!src) Debug.LogWarning("No audio source found");
+            SetObjectiveType(ObjectiveType.WallPuzzle);
         }
 
-        // Start is called before the first frame update
         private void Start()
-        {
+        { 
             InitializeQuickTimeEvent();
         }
 
@@ -59,6 +56,7 @@ namespace WallThrough.Gameplay
             quickTimeMenu.SetActive(false);
             failCross.SetActive(false);
             GenerateColourCode();
+            if(colourCode.Length > 0) ColourCodeManager.Instance.RegisterObjective(this, colourCode);
             DebugColourInfo();
         }
 

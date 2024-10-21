@@ -60,7 +60,6 @@ namespace WallThrough.Gameplay
         public void ClearInput()
         {
             codeInput.Clear();
-            //Debug.Log("Clearing input");
         }
 
         // Set the current wall being interacted with and get its script

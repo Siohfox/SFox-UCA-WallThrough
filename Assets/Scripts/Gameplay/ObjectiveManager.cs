@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using WallThrough.Utility;
 
 namespace WallThrough.Gameplay
 {
@@ -71,6 +72,20 @@ namespace WallThrough.Gameplay
                 if (objective.IsCompleted)
                 {
                     completedObjectives++;
+
+                    // If it's a QuickTimeWall, get its colour code
+                    if (objective is QuickTimeWall quickTimeWall)
+                    {
+                        int[] colourCode = ColourCodeManager.Instance.GetColourCode(quickTimeWall);
+                        List<string> colourNames = new();
+                        foreach (int code in colourCode)
+                        {
+                            var colourData = ColourManager.Instance.GetColourData(code);
+                            colourNames.Add(colourData.colourName);
+                        }
+                        // Use colourCode as needed, e.g., logging or processing
+                        Debug.Log($"Objective {objective.transform.parent.gameObject.name} colour code: {string.Join(", ", colourNames)}");
+                    }
                 }
             }
         }
