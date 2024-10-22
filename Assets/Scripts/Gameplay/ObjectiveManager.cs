@@ -4,6 +4,13 @@ using System;
 
 namespace WallThrough.Gameplay
 {
+    [System.Serializable]
+    public struct ColourData
+    {
+        public Color colour; // The color value
+        public string colourName; // The name of the color
+    }
+
     /// <summary>
     /// Tracks player progress through objectives in the game.
     /// </summary>
@@ -16,6 +23,10 @@ namespace WallThrough.Gameplay
 
         public static event Action<string> OnObjectiveCompleted; // Event for when an objective is completed
         public static event Action<string> OnObjectiveUpdate; // Event for updating objectives
+
+        public List<ColourData> colourData; // List of color data
+
+        [SerializeField] private Dictionary<Objective, int[]> colourCodes = new(); // Dictionary to store colour codes for each wall-objective
 
         /// <summary>
         /// Updates the count of completed objectives and invokes the corresponding event.
@@ -44,6 +55,17 @@ namespace WallThrough.Gameplay
             else
             {
                 Instance = this;
+            }
+
+            // Initialize default colors if none are assigned in the Inspector
+            if (colourData == null || colourData.Count == 0)
+            {
+                colourData = new List<ColourData>
+                {
+                    new ColourData { colour = Color.red, colourName = "Red" },
+                    new ColourData { colour = Color.blue, colourName = "Blue" },
+                    new ColourData { colour = Color.green, colourName = "Green" }
+                };
             }
         }
 
@@ -86,11 +108,11 @@ namespace WallThrough.Gameplay
                     // If it's a QuickTimeWall, retrieve its colour code
                     if (objective is QuickTimeWall quickTimeWall)
                     {
-                        int[] colourCode = ColourCodeManager.Instance.GetColourCode(quickTimeWall);
+                        int[] colourCode = GetColourCode(quickTimeWall);
                         List<string> colourNames = new();
                         foreach (int code in colourCode)
                         {
-                            var colourData = ColourManager.Instance.GetColourData(code);
+                            var colourData = GetColourData(code);
                             colourNames.Add(colourData.colourName);
                         }
 
@@ -109,6 +131,45 @@ namespace WallThrough.Gameplay
         {
             UpdateObjectiveCompletion();
             return completedObjectives;
+        }
+
+        /// <summary>
+        /// Retrieves the color data at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the color data to retrieve.</param>
+        /// <returns>The corresponding ColourData, or default if out of range.</returns>
+        public ColourData GetColourData(int index)
+        {
+            if (index >= 0 && index < colourData.Count)
+            {
+                return colourData[index];
+            }
+
+            Debug.LogError("Colour index out of range: " + index);
+            return default; // Return default ColourData if index is invalid
+        }
+
+        /// <summary>
+        /// Registers an objective with its associated color code.
+        /// </summary>
+        /// <param name="objective">The objective to register.</param>
+        /// <param name="colourCode">The color code associated with the objective.</param>
+        public void RegisterObjective(Objective objective, int[] colourCode)
+        {
+            if (!colourCodes.ContainsKey(objective))
+            {
+                colourCodes[objective] = colourCode;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the color code for a given objective.
+        /// </summary>
+        /// <param name="objective">The objective for which to get the color code.</param>
+        /// <returns>The color code associated with the objective, or null if not found.</returns>
+        public int[] GetColourCode(Objective objective)
+        {
+            return colourCodes.TryGetValue(objective, out var colourCode) ? colourCode : null;
         }
     }
 }

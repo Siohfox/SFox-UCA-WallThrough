@@ -67,7 +67,7 @@ namespace WallThrough.Gameplay
 
             if (colourCode.Length > 0)
             {
-                ColourCodeManager.Instance.RegisterObjective(this, colourCode);
+                ObjectiveManager.Instance.RegisterObjective(this, colourCode);
                 miniPuzzle.InstantiateCubes(colourCode); // Instantiate cubes when generating color code
             }
 
@@ -84,7 +84,7 @@ namespace WallThrough.Gameplay
 
             for (int i = 0; i < colourCode.Length; i++)
             {
-                colourCode[i] = UnityEngine.Random.Range(0, ColourManager.Instance.colourData.Count);
+                colourCode[i] = UnityEngine.Random.Range(0, ObjectiveManager.Instance.colourData.Count);
             }
         }
 
@@ -96,7 +96,7 @@ namespace WallThrough.Gameplay
             List<string> colourNames = new();
             foreach (int code in colourCode)
             {
-                ColourManager.ColourData colourData = ColourManager.Instance.GetColourData(code);
+                ColourData colourData = ObjectiveManager.Instance.GetColourData(code);
                 colourNames.Add(colourData.colourName);
             }
 

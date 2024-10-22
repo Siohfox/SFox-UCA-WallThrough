@@ -47,7 +47,7 @@ namespace WallThrough.Gameplay
             List<string> colourNames = new();
             foreach (int code in codeInput)
             {
-                var colourData = ColourManager.Instance.GetColourData(code);
+                var colourData = ObjectiveManager.Instance.GetColourData(code);
                 colourNames.Add(colourData.colourName);
             }
 

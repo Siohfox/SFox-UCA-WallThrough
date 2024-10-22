@@ -28,7 +28,7 @@ namespace WallThrough.Gameplay
                 slots.Add(slot.transform); // Add to the slots list
 
                 // Instantiate the cube in the slot
-                Color color = ColourManager.Instance.GetColourData(colourCodes[i]).colour; // Get the color from the manager
+                Color color = ObjectiveManager.Instance.GetColourData(colourCodes[i]).colour; // Get the color from the manager
                 GameObject cube = Instantiate(cubePrefab, slot.transform); // Instantiate cube at the slot
                 cube.GetComponent<Renderer>().material.color = color; // Set the cube color
             }
