@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace WallThrough.Audio
 {
+    /// <summary>
+    /// Manages audio playback for music and sound effects in the game.
+    /// </summary>
     public class AudioManager : MonoBehaviour
     {
         public static AudioManager Instance { get; private set; }
@@ -9,8 +12,7 @@ namespace WallThrough.Audio
         private AudioSource musicSource;
 
         [SerializeField]
-        private GameObject soundEffectPrefab;
-
+        private GameObject soundEffectPrefab; // Prefab for sound effects
 
         private void Awake()
         {
@@ -30,6 +32,9 @@ namespace WallThrough.Audio
             musicSource.volume = PlayerPrefs.GetFloat("musicVolume", 0.35f);
         }
 
+        /// <summary>
+        /// Toggles playback of the music. Stops if playing, plays if stopped.
+        /// </summary>
         public void StopPlayMusic()
         {
             if (musicSource.isPlaying)
@@ -43,9 +48,10 @@ namespace WallThrough.Audio
         }
 
         /// <summary>
-        /// Plays a music clip with given clip
+        /// Plays the specified music clip at the given volume.
         /// </summary>
-        /// <param name="clip"></param>
+        /// <param name="clip">The music clip to play.</param>
+        /// <param name="volume">The volume at which to play the clip.</param>
         public void PlayMusic(AudioClip clip, float volume)
         {
             musicSource.clip = clip;
@@ -54,39 +60,33 @@ namespace WallThrough.Audio
         }
 
         /// <summary>
-        /// Plays a sound effect using the provided AudioSource at the given position
+        /// Plays a sound effect using the provided AudioSource at the specified volume.
         /// </summary>
-        /// <param name="clip"></param>
-        /// <param name="volume"></param>
-        /// <param name="source"></param>
+        /// <param name="clip">The sound effect clip to play.</param>
+        /// <param name="volume">The volume at which to play the clip.</param>
+        /// <param name="source">The AudioSource to play the sound effect from.</param>
         public void PlaySound(AudioClip clip, float volume, AudioSource source)
         {
-            try
+            if (source && clip)
             {
-                if (source && clip)
-                {
-                    //Debug.Log($"playing sound {clip}");
-                    source.volume = volume;
-                    source.PlayOneShot(clip);
-                }
-                else
-                {
-                    Debug.LogWarning("Missing source or clip");
-                    return;
-                }
+                source.volume = volume;
+                source.PlayOneShot(clip);
             }
-            catch (System.Exception e)
+            else
             {
-                Debug.LogError($"Error in PlaySound: {e.Message}");
+                Debug.LogWarning("Missing source or clip");
             }
         }
 
+        /// <summary>
+        /// Plays a sound effect at a specific position in the world.
+        /// </summary>
+        /// <param name="clip">The sound effect clip to play.</param>
+        /// <param name="volume">The volume at which to play the clip.</param>
+        /// <param name="position">The position at which to play the sound effect.</param>
         public void PlaySoundAtPosition(AudioClip clip, float volume, Vector3 position)
         {
-            // Instantiate the sound effect prefab at the specified position
             GameObject soundEffectInstance = Instantiate(soundEffectPrefab, position, Quaternion.identity);
-
-            // Access the AudioSource component from the instantiated prefab
             AudioSource audioSource = soundEffectInstance.GetComponent<AudioSource>();
 
             if (audioSource != null)
@@ -96,7 +96,6 @@ namespace WallThrough.Audio
                 audioSource.spatialBlend = 1.0f; // Set to 3D sound
                 audioSource.Play();
 
-                // Destroy the sound effect instance after it finishes playing
                 Destroy(soundEffectInstance, clip.length);
             }
             else

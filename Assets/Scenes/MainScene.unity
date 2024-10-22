@@ -825,6 +825,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &314024945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 314024946}
+  - component: {fileID: 314024947}
+  m_Layer: 0
+  m_Name: MiniPuzzleColourCube (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &314024946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314024945}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 794967396}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &314024947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314024945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubePrefab: {fileID: 947176549777336046, guid: 0afd2906b78d7c2429394dbb26187457, type: 3}
+  cubeContainer: {fileID: 314024946}
 --- !u!1 &360760209 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2864538248493128530, guid: 6bd2f4902e08ff242a6dd6bdb360e1ba, type: 3}
@@ -963,6 +1009,10 @@ PrefabInstance:
       propertyPath: room
       value: 
       objectReference: {fileID: 681084239}
+    - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
+      propertyPath: quickTimeMenu
+      value: 
+      objectReference: {fileID: 1010596721}
     - target: {fileID: 5751477536067604463, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -1668,7 +1718,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicClip: {fileID: 8300000, guid: 1af958de954fe1e46813b302d7108882, type: 3}
   volume: 0.1
-  play: 0
 --- !u!4 &654568272
 Transform:
   m_ObjectHideFlags: 0
@@ -2355,6 +2404,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &794967395
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 794967396}
+  m_Layer: 0
+  m_Name: MiniPuzzles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &794967396
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794967395}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 314024946}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &816339734 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1924526647343927166, guid: 2c76fbf76315f2a4b8bf193f48232591, type: 3}
@@ -2455,6 +2536,10 @@ PrefabInstance:
       propertyPath: room
       value: 
       objectReference: {fileID: 556844531}
+    - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
+      propertyPath: quickTimeMenu
+      value: 
+      objectReference: {fileID: 1010596721}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3179,6 +3264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b03a46821d5b8ba4298e010ecbeb4a64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requiredInputs: 0
   codeInput: 
   buttonClick: {fileID: 8300000, guid: 1aa5f5189ffaf2a47a4c5e1ba6043443, type: 3}
 --- !u!82 &1010596726
@@ -4932,6 +5018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectiveText: {fileID: 624769809}
+  wallObjectiveText: {fileID: 0}
 --- !u!4 &1791083109
 Transform:
   m_ObjectHideFlags: 0
@@ -6249,7 +6336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveActionToUse: {fileID: -2227494494570478164, guid: 65acfc835083fdf4a863892db1cdc781, type: 3}
   debugControls: 0
-  virtualJoystick: {fileID: 0}
+  virtualJoystick: {fileID: 1431898013}
 --- !u!114 &2013661595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6957,3 +7044,4 @@ SceneRoots:
   - {fileID: 397411107}
   - {fileID: 889471603}
   - {fileID: 1830261670}
+  - {fileID: 794967396}

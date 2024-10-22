@@ -12,7 +12,7 @@ namespace WallThrough.Gameplay.Pawn
         [SerializeField]
         private InputActionReference moveActionToUse;
         [SerializeField]
-        private bool debugControls = false;
+        private bool debugControls;
         [SerializeField]
         private GameObject virtualJoystick;
 
@@ -26,22 +26,29 @@ namespace WallThrough.Gameplay.Pawn
             Vector2 moveDirection;
 
             // Check if the application is running on PC or mobile
-            if (Application.platform == RuntimePlatform.WindowsPlayer ||
-                Application.platform == RuntimePlatform.LinuxPlayer ||
-                Application.platform == RuntimePlatform.OSXPlayer ||
-                Application.platform == RuntimePlatform.OSXEditor ||
-                Application.platform == RuntimePlatform.WindowsEditor ||
-                Application.platform == RuntimePlatform.LinuxEditor)
+            if (debugControls)
             {
+                // Use virtual joystick in debug mode
+                Debug.Log("Debug controls active");
+                virtualJoystick.SetActive(true);
+                moveDirection = moveActionToUse.action.ReadValue<Vector2>();
+            }
+            else if (Application.platform == RuntimePlatform.WindowsPlayer ||
+                     Application.platform == RuntimePlatform.LinuxPlayer ||
+                     Application.platform == RuntimePlatform.OSXPlayer ||
+                     Application.platform == RuntimePlatform.OSXEditor ||
+                     Application.platform == RuntimePlatform.WindowsEditor ||
+                     Application.platform == RuntimePlatform.LinuxEditor)
+            {
+                // Use keyboard controls on PC
+                virtualJoystick.SetActive(false);
                 moveDirection.x = Input.GetAxis("Horizontal");
                 moveDirection.y = Input.GetAxis("Vertical");
             }
-            else if(debugControls)
+            else // mobile
             {
-                moveDirection = moveActionToUse.action.ReadValue<Vector2>();
-            }
-            else
-            {
+                // Use virtual joystick for mobile
+                virtualJoystick.SetActive(true);
                 moveDirection = moveActionToUse.action.ReadValue<Vector2>();
             }
 

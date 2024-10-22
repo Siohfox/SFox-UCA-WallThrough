@@ -1,26 +1,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using WallThrough.Utility;
 
 namespace WallThrough.Gameplay
 {
-    // Tracks player progress
+    /// <summary>
+    /// Tracks player progress through objectives in the game.
+    /// </summary>
     public class ObjectiveManager : MonoBehaviour
     {
         public static ObjectiveManager Instance { get; private set; }
 
-        public List<Objective> objectives;
-        private int completedObjectives = 0;
+        public List<Objective> objectives; // List of objectives to track
+        private int completedObjectives = 0; // Count of completed objectives
 
-        public static event Action<string> OnObjectiveCompleted;
-        public static event Action<string> OnObjectiveUpdate;
+        public static event Action<string> OnObjectiveCompleted; // Event for when an objective is completed
+        public static event Action<string> OnObjectiveUpdate; // Event for updating objectives
 
+        /// <summary>
+        /// Updates the count of completed objectives and invokes the corresponding event.
+        /// </summary>
+        /// <param name="objective">The name of the completed objective.</param>
         public static void UpdateCompletedObjectives(string objective)
         {
             OnObjectiveCompleted?.Invoke(objective);
         }
 
+        /// <summary>
+        /// Triggers an objective update event with the provided message.
+        /// </summary>
+        /// <param name="message">The message to send with the objective update.</param>
         public static void TriggerObjectiveUpdate(string message)
         {
             OnObjectiveUpdate?.Invoke(message);
@@ -49,20 +58,21 @@ namespace WallThrough.Gameplay
             UpdateCompletedObjectives(completedObjectives.ToString());
         }
 
+        /// <summary>
+        /// Checks if all objectives are completed.
+        /// </summary>
+        /// <returns>True if all objectives are completed; otherwise, false.</returns>
         public bool CheckObjectives()
         {
             completedObjectives = 0;
-
             UpdateObjectiveCompletion();
 
-            if (completedObjectives >= objectives.Count)
-            {
-                return true;
-            }
-
-            return false;
+            return completedObjectives >= objectives.Count; // Return true if all objectives are completed
         }
 
+        /// <summary>
+        /// Updates the count of completed objectives.
+        /// </summary>
         private void UpdateObjectiveCompletion()
         {
             completedObjectives = 0;
@@ -73,7 +83,7 @@ namespace WallThrough.Gameplay
                 {
                     completedObjectives++;
 
-                    // If it's a QuickTimeWall, get its colour code
+                    // If it's a QuickTimeWall, retrieve its colour code
                     if (objective is QuickTimeWall quickTimeWall)
                     {
                         int[] colourCode = ColourCodeManager.Instance.GetColourCode(quickTimeWall);
@@ -83,13 +93,18 @@ namespace WallThrough.Gameplay
                             var colourData = ColourManager.Instance.GetColourData(code);
                             colourNames.Add(colourData.colourName);
                         }
-                        // Use colourCode as needed, e.g., logging or processing
+
+                        // Log the colour code for the completed objective
                         Debug.Log($"Objective {objective.transform.parent.gameObject.name} colour code: {string.Join(", ", colourNames)}");
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Returns the number of completed objectives.
+        /// </summary>
+        /// <returns>The count of completed objectives.</returns>
         public int GetCompeletedObjectives()
         {
             UpdateObjectiveCompletion();
