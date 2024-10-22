@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 46374835}
   - component: {fileID: 46374834}
   - component: {fileID: 46374833}
+  - component: {fileID: 46374836}
   m_Layer: 6
   m_Name: ColourCodeBtnYellow
   m_TagString: Untagged
@@ -279,19 +280,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 46374834}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1010596725}
-        m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
-        m_MethodName: InputColour
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &46374834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +319,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46374831}
   m_CullTransparentMesh: 1
+--- !u!114 &46374836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46374831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1010596725}
+          m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
+          m_MethodName: InputColour
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 2
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &81764019
 GameObject:
   m_ObjectHideFlags: 0
@@ -1876,6 +1894,7 @@ GameObject:
   - component: {fileID: 688103318}
   - component: {fileID: 688103317}
   - component: {fileID: 688103316}
+  - component: {fileID: 688103319}
   m_Layer: 6
   m_Name: ColourCodeBtnOrange
   m_TagString: Untagged
@@ -1946,19 +1965,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 688103317}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1010596725}
-        m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
-        m_MethodName: InputColour
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &688103317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1997,6 +2004,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688103314}
   m_CullTransparentMesh: 1
+--- !u!114 &688103319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688103314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1010596725}
+          m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
+          m_MethodName: InputColour
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &700709962
 GameObject:
   m_ObjectHideFlags: 0
@@ -2009,6 +2045,7 @@ GameObject:
   - component: {fileID: 700709966}
   - component: {fileID: 700709965}
   - component: {fileID: 700709964}
+  - component: {fileID: 700709967}
   m_Layer: 6
   m_Name: ColourCodeBtnRed
   m_TagString: Untagged
@@ -2079,19 +2116,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 700709965}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1010596725}
-        m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
-        m_MethodName: InputColour
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &700709965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2130,6 +2155,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 700709962}
   m_CullTransparentMesh: 1
+--- !u!114 &700709967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700709962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1010596725}
+          m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
+          m_MethodName: InputColour
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -5151,6 +5205,7 @@ GameObject:
   - component: {fileID: 1814826044}
   - component: {fileID: 1814826043}
   - component: {fileID: 1814826042}
+  - component: {fileID: 1814826045}
   m_Layer: 6
   m_Name: ColourCodeBtnBlue
   m_TagString: Untagged
@@ -5221,19 +5276,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1814826043}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1010596725}
-        m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
-        m_MethodName: InputColour
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1814826043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5272,6 +5315,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814826040}
   m_CullTransparentMesh: 1
+--- !u!114 &1814826045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814826040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1010596725}
+          m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
+          m_MethodName: InputColour
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 4
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1822835424
 GameObject:
   m_ObjectHideFlags: 0
@@ -5284,6 +5356,7 @@ GameObject:
   - component: {fileID: 1822835428}
   - component: {fileID: 1822835427}
   - component: {fileID: 1822835426}
+  - component: {fileID: 1822835429}
   m_Layer: 6
   m_Name: ColourCodeBtnGreen
   m_TagString: Untagged
@@ -5354,19 +5427,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1822835427}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1010596725}
-        m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
-        m_MethodName: InputColour
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1822835427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5405,6 +5466,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822835424}
   m_CullTransparentMesh: 1
+--- !u!114 &1822835429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822835424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1010596725}
+          m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
+          m_MethodName: InputColour
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 3
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1826938937
 GameObject:
   m_ObjectHideFlags: 0
@@ -6620,6 +6710,7 @@ GameObject:
   - component: {fileID: 2065307195}
   - component: {fileID: 2065307194}
   - component: {fileID: 2065307193}
+  - component: {fileID: 2065307196}
   m_Layer: 6
   m_Name: ColourCodeBtnPurple
   m_TagString: Untagged
@@ -6690,19 +6781,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2065307194}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1010596725}
-        m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
-        m_MethodName: InputColour
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2065307194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6741,6 +6820,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2065307191}
   m_CullTransparentMesh: 1
+--- !u!114 &2065307196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065307191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1010596725}
+          m_TargetAssemblyTypeName: WallThrough.Gameplay.QuickTimeMenu, Assembly-CSharp
+          m_MethodName: InputColour
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &2240400497961880141
 PrefabInstance:
   m_ObjectHideFlags: 0
