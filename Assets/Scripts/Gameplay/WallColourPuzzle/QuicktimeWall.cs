@@ -19,6 +19,7 @@ namespace WallThrough.Gameplay
         [SerializeField] private AudioClip wallOpenClip;
         [SerializeField] private AudioClip codeSuccess;
         [SerializeField] private AudioClip codeFail;
+        [SerializeField] private MiniPuzzleColourCube miniPuzzle;
 
         private int[] colourCode;
         private string colourString;
@@ -67,6 +68,7 @@ namespace WallThrough.Gameplay
             if (colourCode.Length > 0)
             {
                 ColourCodeManager.Instance.RegisterObjective(this, colourCode);
+                miniPuzzle.InstantiateCubes(colourCode); // Instantiate cubes when generating color code
             }
 
             DebugColourInfo();

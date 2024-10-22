@@ -851,7 +851,7 @@ Transform:
   m_GameObject: {fileID: 314024945}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -22.799, y: 2.03, z: -22.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 947176549777336046, guid: 0afd2906b78d7c2429394dbb26187457, type: 3}
-  cubeContainer: {fileID: 314024946}
+  slotPrefab: {fileID: 3320552723506370652, guid: 10dd17e8b4ce49148bb567edcb56f68c, type: 3}
 --- !u!1 &360760209 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2864538248493128530, guid: 6bd2f4902e08ff242a6dd6bdb360e1ba, type: 3}
@@ -1009,6 +1009,10 @@ PrefabInstance:
       propertyPath: room
       value: 
       objectReference: {fileID: 681084239}
+    - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
+      propertyPath: miniPuzzle
+      value: 
+      objectReference: {fileID: 788965241}
     - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
       propertyPath: quickTimeMenu
       value: 
@@ -2404,6 +2408,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &788965239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 788965240}
+  - component: {fileID: 788965241}
+  m_Layer: 0
+  m_Name: MiniPuzzleColourCube (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &788965240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788965239}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.47, y: 0.06, z: 11.13}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 794967396}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &788965241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788965239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubePrefab: {fileID: 947176549777336046, guid: 0afd2906b78d7c2429394dbb26187457, type: 3}
+  slotPrefab: {fileID: 3320552723506370652, guid: 10dd17e8b4ce49148bb567edcb56f68c, type: 3}
 --- !u!1 &794967395
 GameObject:
   m_ObjectHideFlags: 0
@@ -2434,6 +2484,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 314024946}
+  - {fileID: 1959664651}
+  - {fileID: 788965240}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &816339734 stripped
@@ -2536,6 +2588,10 @@ PrefabInstance:
       propertyPath: room
       value: 
       objectReference: {fileID: 556844531}
+    - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
+      propertyPath: miniPuzzle
+      value: 
+      objectReference: {fileID: 1959664652}
     - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
       propertyPath: quickTimeMenu
       value: 
@@ -5974,6 +6030,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1948082439}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1959664650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1959664651}
+  - component: {fileID: 1959664652}
+  m_Layer: 0
+  m_Name: MiniPuzzleColourCube (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1959664651
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959664650}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.52, y: 1.94, z: -0.27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 794967396}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1959664652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959664650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubePrefab: {fileID: 947176549777336046, guid: 0afd2906b78d7c2429394dbb26187457, type: 3}
+  slotPrefab: {fileID: 3320552723506370652, guid: 10dd17e8b4ce49148bb567edcb56f68c, type: 3}
 --- !u!1 &1967398064
 GameObject:
   m_ObjectHideFlags: 0
@@ -6874,6 +6976,10 @@ PrefabInstance:
       propertyPath: room
       value: 
       objectReference: {fileID: 741849010}
+    - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
+      propertyPath: miniPuzzle
+      value: 
+      objectReference: {fileID: 314024947}
     - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
       propertyPath: quickTimeMenu
       value: 
