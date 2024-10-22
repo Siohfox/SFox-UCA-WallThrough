@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using WallThrough.Gameplay.Interactable;
+using WallThrough.Core;
 
 namespace WallThrough.Gameplay
 {
@@ -28,7 +29,7 @@ namespace WallThrough.Gameplay
         {
             if (objectiveManager.CheckObjectives())
             {
-                winText.SetActive(true); // Show win text if objectives are completed
+                StartCoroutine(WaitForEnd());
             }
             else
             {
@@ -53,6 +54,13 @@ namespace WallThrough.Gameplay
             adviceText.SetActive(true); // Show advice text
             yield return new WaitForSeconds(2f); // Wait for 2 seconds
             adviceText.SetActive(false); // Hide advice text
+        }
+
+        private IEnumerator WaitForEnd()
+        {
+            winText.SetActive(true); // Show win text if objectives are completed (until portal object made)
+            yield return new WaitForSeconds(2f);
+            LevelManager.Instance.LoadMenu();
         }
     }
 }
