@@ -42,8 +42,7 @@ namespace WallThrough.Gameplay.Pawn
             {
                 // Use keyboard controls on PC
                 virtualJoystick.SetActive(false);
-                moveDirection.x = Input.GetAxis("Horizontal");
-                moveDirection.y = Input.GetAxis("Vertical");
+                moveDirection = moveActionToUse.action.ReadValue<Vector2>();
             }
             else // mobile
             {
