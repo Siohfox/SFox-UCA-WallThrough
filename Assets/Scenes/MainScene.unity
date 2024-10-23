@@ -753,6 +753,8 @@ MonoBehaviour:
   maxHealth: 10
   health: 0
   breath: 10
+  invincibilityTimer: 0
+  invincibilityTimerMax: 2
 --- !u!1 &235016091
 GameObject:
   m_ObjectHideFlags: 0
