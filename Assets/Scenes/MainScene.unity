@@ -831,6 +831,7 @@ MonoBehaviour:
   breathMax: 10
   invincibilityTimer: 0
   invincibilityTimerMax: 2
+  drowningState: 0
 --- !u!1 &235016091
 GameObject:
   m_ObjectHideFlags: 0
@@ -3714,7 +3715,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b9eae62d8c46c4a85b391a8168f102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeTimer: 0
+  handheldNormalExtreme: {fileID: 11400000, guid: 20a705aea2d80e0478fb89b6f43d8530, type: 2}
+  SixDShake: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -5495,7 +5497,7 @@ MonoBehaviour:
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0
   m_FrequencyGain: 1
-  mNoiseOffsets: {x: 0, y: 0, z: 0}
+  mNoiseOffsets: {x: 658.1338, y: -77.43155, z: -620.22327}
 --- !u!1 &1589517177
 GameObject:
   m_ObjectHideFlags: 0
@@ -5684,6 +5686,7 @@ MonoBehaviour:
   floodRate: 0.1
   maxWaterHeight: 4.29
   transitionSpeed: 0.5
+  playerStats: {fileID: 197479340}
 --- !u!4 &1601617951
 Transform:
   m_ObjectHideFlags: 0
