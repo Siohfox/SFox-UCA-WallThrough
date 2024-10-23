@@ -167,7 +167,7 @@ namespace WallThrough.Gameplay
 
             AudioManager.Instance.PlaySound(codeSuccess, 1.0f, GetComponent<AudioSource>());
             AudioManager.Instance.PlaySound(wallOpenClip, 1.0f, GetComponent<AudioSource>());
-            CameraShake.Instance.ShakeCamera(4f, 2f);
+            CameraShake.Instance.ShakeCamera(4f, 2f, "SixDShake");
             floodManager.OpenDoor(room);
         }
 

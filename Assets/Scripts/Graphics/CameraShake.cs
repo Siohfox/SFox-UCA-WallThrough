@@ -9,9 +9,11 @@ namespace WallThrough.Graphics
     {
         public static CameraShake Instance { get; private set; }
 
-        private CinemachineVirtualCamera cinemachineVirtualCamera;
+        private CinemachineVirtualCamera vcam;
+        private CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin;
+        public NoiseSettings handheldNormalExtreme;
+        public NoiseSettings SixDShake;
 
-        [SerializeField]
         private float shakeTimer;
         private float shakeTimerTotal;
         private float startingIntensity;
@@ -19,12 +21,20 @@ namespace WallThrough.Graphics
         private void Awake()
         {
             Instance = this;
-            cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
+            vcam = GetComponent<CinemachineVirtualCamera>();
+            cinemachineBasicMultiChannelPerlin = vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         }
 
-        public void ShakeCamera(float intensity, float time)
+        public void ShakeCamera(float intensity, float time, string noiseProfile)
         {
-            CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            if(noiseProfile == "SixDShake")
+            {
+                cinemachineBasicMultiChannelPerlin.m_NoiseProfile = SixDShake;
+            }
+            if(noiseProfile == "handheldNormalExtreme")
+            {
+                cinemachineBasicMultiChannelPerlin.m_NoiseProfile = handheldNormalExtreme;
+            }   
 
             cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
 
@@ -38,7 +48,6 @@ namespace WallThrough.Graphics
             if (shakeTimer > 0)
             {
                 shakeTimer -= Time.deltaTime;
-                CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = Mathf.Lerp(startingIntensity, 0f, 1 - shakeTimer / shakeTimerTotal);
             }
         }

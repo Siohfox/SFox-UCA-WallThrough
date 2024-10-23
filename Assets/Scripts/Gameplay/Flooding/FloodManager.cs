@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WallThrough.Gameplay.Pawn;
 
 namespace WallThrough.Gameplay
 {
@@ -16,6 +17,8 @@ namespace WallThrough.Gameplay
         [SerializeField] private float transitionSpeed = 0.5f; // Speed of transition when balancing water levels
 
         private List<IDamageable> m_AllDamageables = new List<IDamageable>();
+
+        [SerializeField] private PlayerStats playerStats;
 
         /// <summary>
         /// Initializes the flooding process by setting the initial water levels for all rooms.
@@ -52,16 +55,12 @@ namespace WallThrough.Gameplay
 
                         if(room.GetCurrentWaterHeight() >= maxWaterHeight)
                         {
-                            MonoBehaviour[] allScripts = FindObjectsOfType<MonoBehaviour>();
-                            for (int i = 0; i < allScripts.Length; i++)
-                            {
-                                if (allScripts[i] is IDamageable)
-                                    m_AllDamageables.Add(allScripts[i] as IDamageable);
-                            }
-                            for (int i = 0; i < m_AllDamageables.Count; i++)
-                            {
-                                m_AllDamageables[i].TakeDamage(1);
-                            }      
+                            TryDamageAllDamageables();
+                            playerStats.SetDrowningState(true);
+                        }
+                        else
+                        {
+                            playerStats.SetDrowningState(false);
                         }
 
                         // Clamp the target water height to max
@@ -77,6 +76,20 @@ namespace WallThrough.Gameplay
                 }
 
                 yield return null; // Wait for the next frame
+            }
+        }
+
+        private void TryDamageAllDamageables()
+        {
+            MonoBehaviour[] allScripts = FindObjectsOfType<MonoBehaviour>();
+            for (int i = 0; i < allScripts.Length; i++)
+            {
+                if (allScripts[i] is IDamageable)
+                    m_AllDamageables.Add(allScripts[i] as IDamageable);
+            }
+            for (int i = 0; i < m_AllDamageables.Count; i++)
+            {
+                m_AllDamageables[i].TakeDamage(1);
             }
         }
 
