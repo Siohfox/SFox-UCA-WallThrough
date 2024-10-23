@@ -10,7 +10,8 @@ namespace WallThrough.Gameplay.Pawn
     {
         [SerializeField] private int maxHealth = 10;
         [SerializeField] private int health;
-        [SerializeField] private int breath = 10;
+        [SerializeField] private int breath;
+        [SerializeField] private int breathMax = 10;
         [SerializeField] private float invincibilityTimer;
         [SerializeField] private float invincibilityTimerMax = 2f;
 
@@ -18,6 +19,7 @@ namespace WallThrough.Gameplay.Pawn
         void Start()
         {
             health = maxHealth;
+            breath = breathMax;
             invincibilityTimer = invincibilityTimerMax;
         }
 
@@ -49,7 +51,7 @@ namespace WallThrough.Gameplay.Pawn
         }
         public void TakeDamage(int damageAmount)
         {
-            if(invincibilityTimer <= 0)
+            if(invincibilityTimer <= 0 && breath <= 0)
             {
                 health -= damageAmount;
                 invincibilityTimer = invincibilityTimerMax;

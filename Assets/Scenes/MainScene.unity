@@ -753,6 +753,7 @@ MonoBehaviour:
   maxHealth: 10
   health: 0
   breath: 10
+  breathMax: 10
   invincibilityTimer: 0
   invincibilityTimerMax: 2
 --- !u!1 &235016091
@@ -891,6 +892,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectives: []
+  objectiveTotal: 0
+  completedObjectives: 0
+  completedWallObjectives: 0
+  wallObjectiveCount: 0
   colourData:
   - colour: {r: 1, g: 0, b: 0, a: 0}
     colourName: Red
@@ -4378,7 +4383,7 @@ RectTransform:
   m_GameObject: {fileID: 1431898013}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 625996742}
@@ -5229,7 +5234,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectiveText: {fileID: 624769809}
-  wallObjectiveText: {fileID: 0}
+  wallObjectiveText: {fileID: 81764021}
+  objectiveManager: {fileID: 306194929}
 --- !u!4 &1791083109
 Transform:
   m_ObjectHideFlags: 0

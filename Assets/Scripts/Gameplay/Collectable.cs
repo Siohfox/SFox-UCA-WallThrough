@@ -28,12 +28,6 @@ namespace WallThrough.Gameplay
                 // Complete the objective
                 base.CompleteObjective();
 
-                // Trigger the objective completed event
-                if (ObjectiveManager.Instance)
-                {
-                    ObjectiveManager.UpdateCompletedObjectives(ObjectiveManager.Instance.GetCompeletedObjectives().ToString());
-                }
-
                 // Disable the collectable
                 gameObject.SetActive(false);
             }

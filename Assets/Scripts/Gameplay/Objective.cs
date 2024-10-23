@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace WallThrough.Gameplay
@@ -20,6 +21,8 @@ namespace WallThrough.Gameplay
         /// Indicates whether the objective has been completed.
         /// </summary>
         public bool IsCompleted { get; private set; } = false;
+
+        public static event Action<Objective> OnObjectiveCompleted;
 
         public ObjectiveManager objectiveManager; // Reference to the ObjectiveManager handling this objective
 
@@ -51,7 +54,15 @@ namespace WallThrough.Gameplay
         public virtual void CompleteObjective()
         {
             IsCompleted = true;
-            // Debug.Log($"{gameObject.name} completed!");
+            UpdateCompletedObjectives(this);
+        }
+
+        /// <summary>
+        /// Invokes the objective completed event.
+        /// </summary>
+        protected static void UpdateCompletedObjectives(Objective objective)
+        {
+            OnObjectiveCompleted?.Invoke(objective);
         }
     }
 }

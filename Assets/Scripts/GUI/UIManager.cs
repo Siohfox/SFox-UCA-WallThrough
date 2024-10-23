@@ -11,24 +11,37 @@ namespace WallThrough.UI
     {
         [SerializeField] private TMP_Text objectiveText; // Text component for displaying objectives
         [SerializeField] private TMP_Text wallObjectiveText; // Text component specifically for wall objectives
+        [SerializeField] private ObjectiveManager objectiveManager;
+
+        private void Start()
+        {
+            UpdateObjectiveUIOnStart();
+        }
 
         private void OnEnable()
         {
-            ObjectiveManager.OnObjectiveCompleted += UpdateObjectiveUI; // Subscribe to objective completion events
+            Objective.OnObjectiveCompleted += UpdateObjectiveUI; // Subscribe to objective completion events
         }
 
         private void OnDisable()
         {
-            ObjectiveManager.OnObjectiveCompleted -= UpdateObjectiveUI; // Unsubscribe from objective completion events
+            Objective.OnObjectiveCompleted -= UpdateObjectiveUI; // Unsubscribe from objective completion events
         }
 
         /// <summary>
         /// Updates the UI to reflect the completed objective.
         /// </summary>
-        /// <param name="objective">The name of the completed objective.</param>
-        private void UpdateObjectiveUI(string objective)
+        /// <param name="objective">The completed objective.</param>
+        private void UpdateObjectiveUI(Objective objective)
         {
-            objectiveText.text = $"Objective Complete: {objective}/5"; // Update to reflect the actual maximum objective count
+            objectiveText.text = $"Objective Complete: {objectiveManager.completedObjectives}/{objectiveManager.objectiveTotal}"; // Update to reflect the actual maximum objective count
+            wallObjectiveText.text = $"Walls Open: {objectiveManager.completedWallObjectives}/{objectiveManager.wallObjectiveCount}";
+        }
+
+        private void UpdateObjectiveUIOnStart()
+        {
+            objectiveText.text = $"Objective Complete: {objectiveManager.completedObjectives}/{objectiveManager.objectiveTotal}";
+            wallObjectiveText.text = $"Walls Open: {objectiveManager.completedWallObjectives}/{objectiveManager.wallObjectiveCount}";
         }
     }
 }

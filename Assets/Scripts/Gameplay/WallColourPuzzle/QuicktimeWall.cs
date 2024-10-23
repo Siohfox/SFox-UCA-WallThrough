@@ -162,7 +162,7 @@ namespace WallThrough.Gameplay
             if (!IsCompleted)
             {
                 base.CompleteObjective();
-                ObjectiveManager.UpdateCompletedObjectives(ObjectiveManager.Instance.GetCompeletedObjectives().ToString());
+                //ObjectiveManager.UpdateCompletedObjectives(ObjectiveManager.Instance.GetCompeletedObjectives().ToString());
             }
 
             AudioManager.Instance.PlaySound(codeSuccess, 1.0f, GetComponent<AudioSource>());
