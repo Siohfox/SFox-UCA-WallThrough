@@ -9,16 +9,16 @@ namespace WallThrough.Gameplay.Pawn
     public class PlayerController : MonoBehaviour
     {
         private Movement _movement;
-        [SerializeField]
-        private InputActionReference moveActionToUse;
-        [SerializeField]
-        private bool debugControls;
-        [SerializeField]
-        private GameObject virtualJoystick;
+        private PlayerStats playerStats;
+
+        [SerializeField] private InputActionReference moveActionToUse;
+        [SerializeField] private bool debugControls;
+        [SerializeField] private GameObject virtualJoystick;
 
         private void Start()
         {
             _movement = GetComponent<Movement>();
+            playerStats = GetComponent<PlayerStats>();
         }
 
         private void FixedUpdate()
@@ -51,7 +51,10 @@ namespace WallThrough.Gameplay.Pawn
                 moveDirection = moveActionToUse.action.ReadValue<Vector2>();
             }
 
-            _movement.Move(moveDirection);
+            if(playerStats.AliveState == true)
+            {
+                _movement.Move(moveDirection);
+            }
         }
     }
 }

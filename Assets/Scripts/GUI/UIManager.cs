@@ -3,6 +3,7 @@ using TMPro;
 using WallThrough.Gameplay;
 using WallThrough.Gameplay.Pawn;
 using UnityEngine.UI;
+using System;
 
 namespace WallThrough.UI
 {
@@ -25,6 +26,9 @@ namespace WallThrough.UI
         [SerializeField] private Sprite emptyHeart;
         [SerializeField] private Sprite breath;
 
+        // Other UI
+        [SerializeField] private GameObject deathUI;
+
         private void Start()
         {
             UpdateObjectiveUIOnStart();
@@ -35,6 +39,7 @@ namespace WallThrough.UI
             Objective.OnObjectiveCompleted += UpdateObjectiveUI; // Subscribe to objective completion events
             PlayerStats.OnHealthChange += UpdatePlayerStatsHealthUI; //The name Player does not exist in current context
             PlayerStats.OnBreathChange += UpdatePlayerStatsBreathUI; //The name Player does not exist in current context
+            PlayerStats.OnPlayerDeath += DisplayPlayerDeathUI;
         }
 
         private void OnDisable()
@@ -73,6 +78,11 @@ namespace WallThrough.UI
                 // Enable or disable breath bubbles based on current breath value
                 breathBubbles[i].gameObject.SetActive(i < breath);
             }
+        }
+
+        private void DisplayPlayerDeathUI()
+        {
+            deathUI.SetActive(true);
         }
     }
 }

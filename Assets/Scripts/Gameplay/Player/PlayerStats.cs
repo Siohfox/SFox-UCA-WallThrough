@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WallThrough.Audio;
 using WallThrough.Graphics;
 
 namespace WallThrough.Gameplay.Pawn
@@ -15,12 +16,18 @@ namespace WallThrough.Gameplay.Pawn
         [SerializeField] private float invincibilityTimer;
         [SerializeField] private float invincibilityTimerMax = 2f;
         [SerializeField] private bool drowningState;
+        [SerializeField] private bool aliveState;
+        [SerializeField] private AudioClip damageTakenClip;
+        [SerializeField] private AudioClip deathClip;
+        [SerializeField] private AudioClip deathTune;
+        private AudioSource src;
 
         private int previousHealth = 0;
         private int previousBreath = 0;
 
         public static event Action<int> OnHealthChange;
         public static event Action<int> OnBreathChange;
+        public static event Action OnPlayerDeath;
 
         private static void UpdateHealth(int health)
         {
@@ -36,11 +43,13 @@ namespace WallThrough.Gameplay.Pawn
         void Start()
         {
             drowningState = false;
+            aliveState = true;
             health = maxHealth;
             breath = breathMax;
             invincibilityTimer = invincibilityTimerMax;
             UpdateHealth(health);
             UpdateBreath(breath);
+            src = GetComponent<AudioSource>();
         }
 
         // Update is called once per frame
@@ -66,19 +75,15 @@ namespace WallThrough.Gameplay.Pawn
                 invincibilityTimer = invincibilityTimerMax;
             }
 
-            if (health <= 0)
+            if (health <= 0 && aliveState == true)
             {
                 HandlePlayerDeath();
             }
         }
 
-        public Vector3 Position
-        {
-            get
-            {
-                return transform.position;
-            }
-        }
+        public Vector3 Position => transform.position;
+
+        public bool AliveState { get => aliveState; private set => aliveState = value; }
 
         public void HealDamage(int damageAmount)
         {
@@ -95,17 +100,23 @@ namespace WallThrough.Gameplay.Pawn
             }
 
             // If no breath, take health instead
-            if(invincibilityTimer <= 0 && breath <= 0)
+            if(invincibilityTimer <= 0 && breath <= 0 && health > 0)
             {
                 health -= damageAmount;
                 CameraShake.Instance.ShakeCamera(5.0f, 0.5f, "handheldNormalExtreme");
+                AudioManager.Instance.PlaySound(damageTakenClip, 1, src);
                 invincibilityTimer = invincibilityTimerMax;
             }   
         }
 
         private void HandlePlayerDeath()
         {
-            transform.parent.gameObject.SetActive(false);
+            aliveState = false;
+            AudioManager.Instance.PlaySound(deathClip, 1, src);
+            AudioManager.Instance.PlaySound(deathTune, 1, src);
+            AudioManager.Instance.StopPlayMusic();
+            OnPlayerDeath?.Invoke();
+            //transform.parent.gameObject.SetActive(false);
         }
 
         public void SetDrowningState(bool drowning)
