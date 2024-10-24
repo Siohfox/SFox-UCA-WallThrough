@@ -33,8 +33,6 @@ namespace WallThrough.Gameplay
         /// </summary>
         private void Awake()
         {
-            quickTimeMenu = FindObjectOfType<QuickTimeMenu>();
-            failCross = GameObject.Find("FailCross");
             floodManager = GameObject.Find("FloodManager").GetComponent<FloodManager>();
             var src = GetComponent<AudioSource>();
 
@@ -142,7 +140,6 @@ namespace WallThrough.Gameplay
             if (!IsCompleted)
             {
                 base.CompleteObjective();
-                //ObjectiveManager.UpdateCompletedObjectives(ObjectiveManager.Instance.GetCompeletedObjectives().ToString());
             }
 
             AudioManager.Instance.PlaySound(codeSuccess, 1.0f, GetComponent<AudioSource>());
