@@ -84,5 +84,13 @@ namespace WallThrough.Gameplay
             quickTimeWallScript = wall;
             this.requiredInputs = requiredInputs;
         }
+
+        /// <summary>
+        /// Deactivates the quick time menu.
+        /// </summary>
+        public void DeactivateQuickTimeMenu()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

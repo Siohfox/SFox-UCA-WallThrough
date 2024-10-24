@@ -13,7 +13,7 @@ namespace WallThrough.Gameplay
     /// </summary>
     public class QuickTimeWall : Objective, IInteractable
     {
-        [SerializeField] private GameObject quickTimeMenu;
+        [SerializeField] private QuickTimeMenu quickTimeMenu;
         [SerializeField] private GameObject failCross;
         [SerializeField] private Animator wallAnimator;
         [SerializeField] private AudioClip wallOpenClip;
@@ -23,7 +23,6 @@ namespace WallThrough.Gameplay
 
         private int[] colourCode;
         private string colourString;
-        private bool isInteracting = false;
         private int requiredInputs = 4;
 
         public FloodManager floodManager; 
@@ -34,7 +33,7 @@ namespace WallThrough.Gameplay
         /// </summary>
         private void Awake()
         {
-            quickTimeMenu = FindObjectOfType<QuickTimeMenu>().gameObject;
+            quickTimeMenu = FindObjectOfType<QuickTimeMenu>();
             failCross = GameObject.Find("FailCross");
             floodManager = GameObject.Find("FloodManager").GetComponent<FloodManager>();
             var src = GetComponent<AudioSource>();
@@ -60,8 +59,7 @@ namespace WallThrough.Gameplay
         /// </summary>
         private void InitializeQuickTimeEvent()
         {
-            isInteracting = false;
-            quickTimeMenu.SetActive(false);
+            quickTimeMenu.DeactivateQuickTimeMenu();
             failCross.SetActive(false);
             GenerateColourCode();
 
@@ -105,14 +103,6 @@ namespace WallThrough.Gameplay
         }
 
         /// <summary>
-        /// Updates the state of the quick time event.
-        /// </summary>
-        private void Update()
-        {
-            if (!isInteracting) return;
-        }
-
-        /// <summary>
         /// Activates the quick time menu for player interaction.
         /// </summary>
         /// <param name="menu">The quick time menu to activate.</param>
@@ -120,16 +110,6 @@ namespace WallThrough.Gameplay
         {
             menu.SetCurrentWall(this, requiredInputs); // Pass the wall reference.
             menu.gameObject.SetActive(true);
-            isInteracting = true;
-        }
-
-        /// <summary>
-        /// Deactivates the quick time menu.
-        /// </summary>
-        private void DeactivateQuickTimeMenu()
-        {
-            quickTimeMenu.SetActive(false);
-            isInteracting = false;
         }
 
         /// <summary>
@@ -155,7 +135,7 @@ namespace WallThrough.Gameplay
         /// </summary>
         private void WallSuccess()
         {
-            DeactivateQuickTimeMenu();
+            quickTimeMenu.DeactivateQuickTimeMenu();
             wallAnimator.SetBool("Open", true);
             GetComponentInParent<Collider>().enabled = false;
 
@@ -209,7 +189,7 @@ namespace WallThrough.Gameplay
         /// </summary>
         public void InteractionEnd()
         {
-            DeactivateQuickTimeMenu();
+            quickTimeMenu.DeactivateQuickTimeMenu();
             quickTimeMenu.GetComponent<QuickTimeMenu>().ClearInput();
         }
     }
