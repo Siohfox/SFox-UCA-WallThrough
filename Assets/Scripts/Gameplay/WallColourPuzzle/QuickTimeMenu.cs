@@ -13,7 +13,6 @@ namespace WallThrough.Gameplay
         [SerializeField] private int requiredInputs;  // Number of inputs required to process
         [SerializeField] private List<int> codeInput = new();  // List to store color codes input
         [SerializeField] private AudioClip buttonClick;  // Sound played on button click
-        [SerializeField] private List<Image> colorImages;  // UI Images to display color codes
         [SerializeField] private Color defaultColor = Color.white;  // Default color for images
         [SerializeField] private GameObject colorImagePrefab;  // Prefab for color images
         [SerializeField] private Transform colorImageContainer;  // Parent container for color images
