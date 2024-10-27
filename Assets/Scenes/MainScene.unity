@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BindingMode: 1
+  m_BindingMode: 4
   m_FollowOffset: {x: 0, y: 14, z: -10}
   m_XDamping: 1
   m_YDamping: 1
@@ -2472,7 +2472,7 @@ Transform:
   m_GameObject: {fileID: 515788816}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8690,7 +8690,7 @@ MonoBehaviour:
   - {fileID: 556844531}
   - {fileID: 681084239}
   initialWaterHeight: 0
-  floodRate: 0.3
+  floodRate: 0.1
   maxWaterHeight: 4.29
   transitionSpeed: 0.5
   playerStats: {fileID: 2013661598}
@@ -11272,6 +11272,7 @@ MonoBehaviour:
   moveSpeed: 15
   acceleration: 15
   deceleration: 30
+  rotationSpeed: 720
 --- !u!114 &2013661596
 MonoBehaviour:
   m_ObjectHideFlags: 0

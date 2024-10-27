@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 115938943306320529}
   - component: {fileID: 8387912960716541541}
   - component: {fileID: 5768019611915774740}
+  - component: {fileID: 7503830148141330936}
   m_Layer: 0
   m_Name: ColourCube
   m_TagString: Untagged
@@ -105,3 +106,31 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7503830148141330936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947176549777336046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3414fdec382e93d4abf38da5a14c04b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementTypes: 0000000001000000050000000400000007000000
+  floatAmplitude: 2
+  floatFrequency: 3
+  lerpHeight: 1
+  lerpSpeed: 1
+  swayAmplitude: 0.5
+  swayFrequency: 1
+  bobbingAmplitude: 1.12
+  bobbingFrequency: 2.21
+  zigzagDistance: 2.48
+  zigzagSpeed: 1
+  circleRadius: 1
+  circleSpeed: 1
+  scaleAmplitude: 2
+  scaleSpeed: 2
+  rotationSpeed: 30

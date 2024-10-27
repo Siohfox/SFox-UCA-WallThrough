@@ -1,7 +1,7 @@
 using WallThrough.Gameplay.Interactable;
 using UnityEngine;
 using WallThrough.Audio;
-
+using WallThrough.Utility;
 
 namespace WallThrough.Gameplay
 {
@@ -10,11 +10,7 @@ namespace WallThrough.Gameplay
         [SerializeField]
         private AudioClip collectClip;
 
-        // Floating and rotation settings
-        [SerializeField] private float floatAmplitude = 0.5f; // Height of the float
-        [SerializeField] private float floatFrequency = 1f; // Speed of the float
-        [SerializeField] private float rotationSpeed = 30f; // Degrees per second
-        private Vector3 initialPosition;
+        private PassiveObjectMovement passiveMovement;
 
         private void Awake()
         {
@@ -23,18 +19,13 @@ namespace WallThrough.Gameplay
 
             SetObjectiveType(ObjectiveType.Collectable);
 
-            // Store the initial position to use as the base for floating
-            initialPosition = transform.position;
+            passiveMovement = GetComponent<PassiveObjectMovement>();
+            if (!passiveMovement) Debug.LogWarning("PassiveObjectMovement component not found!");
         }
 
         private void Update()
         {
-            // Floating effect
-            float newY = initialPosition.y + Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-
-            // Continuous rotation
-            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime, Space.World);
+            // The passive movement logic is now handled by PassiveObjectMovement
         }
 
         public void InteractionStart()
@@ -58,4 +49,3 @@ namespace WallThrough.Gameplay
         }
     }
 }
-

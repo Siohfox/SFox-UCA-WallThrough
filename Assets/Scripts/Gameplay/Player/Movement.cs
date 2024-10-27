@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
@@ -11,9 +10,8 @@ public class Movement : MonoBehaviour
     public float moveSpeed = 5f;
     public float acceleration = 10f;
     public float deceleration = 10f;
+    public float rotationSpeed = 720f; // Degrees per second
     private Vector3 currentVelocity;
-
-    
 
     private void Start()
     {
@@ -30,6 +28,7 @@ public class Movement : MonoBehaviour
         if (targetVelocity.magnitude > 0)
         {
             currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+            RotateTowards(currentVelocity);
         }
         else
         {
@@ -38,5 +37,17 @@ public class Movement : MonoBehaviour
 
         // Apply the calculated velocity to the Rigidbody
         _rb.velocity = new Vector3(currentVelocity.x, _rb.velocity.y, currentVelocity.z);
+    }
+
+    private void RotateTowards(Vector3 direction)
+    {
+        if (direction.magnitude > 0)
+        {
+            // Calculate the target rotation
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            // Smoothly rotate towards the target rotation
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+        }
     }
 }
