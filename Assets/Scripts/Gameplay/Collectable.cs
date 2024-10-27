@@ -10,12 +10,31 @@ namespace WallThrough.Gameplay
         [SerializeField]
         private AudioClip collectClip;
 
+        // Floating and rotation settings
+        [SerializeField] private float floatAmplitude = 0.5f; // Height of the float
+        [SerializeField] private float floatFrequency = 1f; // Speed of the float
+        [SerializeField] private float rotationSpeed = 30f; // Degrees per second
+        private Vector3 initialPosition;
+
         private void Awake()
         {
             src = GetComponent<AudioSource>();
             if (!src) Debug.LogWarning("No audio source found");
 
             SetObjectiveType(ObjectiveType.Collectable);
+
+            // Store the initial position to use as the base for floating
+            initialPosition = transform.position;
+        }
+
+        private void Update()
+        {
+            // Floating effect
+            float newY = initialPosition.y + Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+
+            // Continuous rotation
+            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime, Space.World);
         }
 
         public void InteractionStart()
