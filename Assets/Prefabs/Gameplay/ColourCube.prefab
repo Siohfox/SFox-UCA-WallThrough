@@ -118,19 +118,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3414fdec382e93d4abf38da5a14c04b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementTypes: 0000000001000000050000000400000007000000
+  movementTypes: 07000000
   floatAmplitude: 2
   floatFrequency: 3
+  randomizeFloating: 0
+  minFloatAmplitude: 0.1
+  maxFloatAmplitude: 1
+  minFloatFrequency: 0.5
+  maxFloatFrequency: 2
   lerpHeight: 1
   lerpSpeed: 1
+  randomizeVertical: 0
+  minLerpHeight: 0.5
+  maxLerpHeight: 2
+  minLerpSpeed: 0.5
+  maxLerpSpeed: 2
   swayAmplitude: 0.5
   swayFrequency: 1
+  randomizeSwaying: 0
+  minSwayAmplitude: 0.1
+  maxSwayAmplitude: 1
+  minSwayFrequency: 0.5
+  maxSwayFrequency: 2
   bobbingAmplitude: 1.12
   bobbingFrequency: 2.21
+  randomizeBobbing: 0
+  minBobbingAmplitude: 0.1
+  maxBobbingAmplitude: 1
+  minBobbingFrequency: 0.5
+  maxBobbingFrequency: 2
   zigzagDistance: 2.48
   zigzagSpeed: 1
+  randomizeZigzag: 0
+  minZigzagDistance: 0.5
+  maxZigzagDistance: 2
+  minZigzagSpeed: 0.5
+  maxZigzagSpeed: 2
   circleRadius: 1
   circleSpeed: 1
-  scaleAmplitude: 2
+  randomizeCircular: 0
+  minCircleRadius: 0.5
+  maxCircleRadius: 2
+  minCircleSpeed: 0.5
+  maxCircleSpeed: 2
+  scaleAmplitude: 0.1
   scaleSpeed: 2
+  randomizeScaling: 0
+  minScaleAmplitude: 0.01
+  maxScaleAmplitude: 0.5
+  minScaleSpeed: 0.5
+  maxScaleSpeed: 2
   rotationSpeed: 30

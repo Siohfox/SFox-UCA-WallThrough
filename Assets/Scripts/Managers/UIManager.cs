@@ -67,7 +67,10 @@ namespace WallThrough.UI
         {
             for (int i = 0; i < hearts.Length; i++)
             {
-                hearts[i].sprite = (i < health) ? fullHeart : emptyHeart;
+                if(hearts[i] != null)
+                {
+                    hearts[i].sprite = (i < health) ? fullHeart : emptyHeart;
+                }               
             }
         }
 
@@ -76,7 +79,10 @@ namespace WallThrough.UI
             for (int i = 0; i < breathBubbles.Length; i++)
             {
                 // Enable or disable breath bubbles based on current breath value
-                breathBubbles[i].gameObject.SetActive(i < breath);
+                if(breathBubbles[i] != null)
+                {
+                    breathBubbles[i].gameObject.SetActive(i < breath);
+                }          
             }
         }
 
