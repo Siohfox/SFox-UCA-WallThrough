@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 namespace WallThrough.Core
 {
@@ -10,6 +11,10 @@ namespace WallThrough.Core
     {
         // Singleton
         public static LevelManager Instance { get; private set; }
+
+        [SerializeField] private Image loadingBar;
+        [SerializeField] private TMP_Text progressText;
+        [SerializeField] private GameObject loadingScreen;
 
         private void Awake()
         {
@@ -23,57 +28,42 @@ namespace WallThrough.Core
             }
         }
 
-        private void Start()
-        {
-            Time.timeScale = 1;
-        }
-
         // Loads the next scene
         public void LoadNextScene()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            string sceneName = SceneUtility.GetScenePathByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1);
+            if(loadingScreen) loadingScreen.SetActive(true);
+            StartCoroutine(LoadAsynchronously(sceneName));
         }
 
         // Loads a specific scene via build index number
-        public void LoadScene(int sceneNumber)
+        public void LoadScene(string sceneName)
         {
-            // Destroy the menu music player before loading a new scene
-
-            StartCoroutine(LoadAsynchronously(sceneNumber));
+            if (loadingScreen) loadingScreen.SetActive(true);
+            StartCoroutine(LoadAsynchronously(sceneName));
         }
 
-        private IEnumerator LoadAsynchronously(int sceneNumber)
+        private IEnumerator LoadAsynchronously(string sceneName)
         {
-            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneNumber, LoadSceneMode.Single);
+            loadingBar.fillAmount = 0;
+            AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SceneUtility.GetBuildIndexByScenePath(sceneName), LoadSceneMode.Single);
 
             //loadingScreen.SetActive(true);
 
-            while (!operation.isDone)
+            while (!asyncOperation.isDone)
             {
-                //float progress = Mathf.Clamp01(operation.progress / .9f);
-
-                //slider.value = progress;
-                //progressText.text = (Mathf.Round(progress * 100f) + "%");
-
-                yield return null;
+                float progress = Mathf.Clamp01(asyncOperation.progress / .9f);
+                progressText.text = (Mathf.Round(progress * 100f) + "%");
+                loadingBar.fillAmount = asyncOperation.progress;
+                
+                yield return new WaitForEndOfFrame();
             }
-            if (GameObject.Find("MusicPlayer") != null)
-            {
-                Destroy(GameObject.Find("MusicPlayer"));
-            }
-        }
-
-        // Loads the settings menu specifically
-        public void LoadSettingsMenu()
-        {
-            // DontDestroyOnLoad(musicPlayer);
-            SceneManager.LoadScene("SettingsMenu");
         }
 
         // Loads the first scene (menu)
         public void LoadMenu()
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadSceneAsync(0);
         }
 
         public void ReloadCurrentScene()
