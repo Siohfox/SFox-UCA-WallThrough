@@ -27,11 +27,13 @@ public class Movement : MonoBehaviour
         // Smoothly transition to the target velocity using acceleration/deceleration
         if (targetVelocity.magnitude > 0)
         {
+            // Accelerate towards the target velocity
             currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
             RotateTowards(currentVelocity);
         }
         else
         {
+            // If no input, decelerate to zero
             currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.fixedDeltaTime);
         }
 
