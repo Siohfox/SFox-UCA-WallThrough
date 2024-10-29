@@ -17,6 +17,8 @@ namespace WallThrough.Gameplay
         private ObjectiveManager objectiveManager; // Reference to the ObjectiveManager
         [SerializeField] private GameObject portalVFX;
 
+        [SerializeField] private string sceneToLoadName;
+
         private void Start()
         {
             // Find and assign the ObjectiveManager in the scene
@@ -69,7 +71,7 @@ namespace WallThrough.Gameplay
         {
             winText.SetActive(true); // Show win text if objectives are completed (until portal object made)
             yield return new WaitForSeconds(2f);
-            LevelManager.Instance.LoadMenu();
+            LevelManager.Instance.LoadScene(sceneToLoadName);
         }
     }
 }
