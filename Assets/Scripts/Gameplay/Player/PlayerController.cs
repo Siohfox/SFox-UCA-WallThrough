@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using WallThrough.Core;
 
 namespace WallThrough.Gameplay.Pawn
 {
@@ -10,8 +11,10 @@ namespace WallThrough.Gameplay.Pawn
     {
         private Movement _movement;
         private PlayerStats playerStats;
+        [SerializeField] GameObject optionsMenu;
 
         [SerializeField] private InputActionReference moveActionToUse;
+        [SerializeField] private InputActionReference escapeAction;
         [SerializeField] private bool debugControls;
         [SerializeField] private GameObject virtualJoystick;
 
@@ -19,6 +22,18 @@ namespace WallThrough.Gameplay.Pawn
         {
             _movement = GetComponent<Movement>();
             playerStats = GetComponent<PlayerStats>();
+        }
+
+        private void OnEnable()
+        {
+            escapeAction.action.performed += OnEscapePressed;
+            escapeAction.action.Enable();
+        }
+
+        private void OnDisable()
+        {
+            escapeAction.action.performed -= OnEscapePressed;
+            escapeAction.action.Disable();
         }
 
         private void FixedUpdate()
@@ -54,6 +69,25 @@ namespace WallThrough.Gameplay.Pawn
             if(playerStats.AliveState == true)
             {
                 _movement.Move(moveDirection);
+            }
+        }
+
+        private void OnEscapePressed(InputAction.CallbackContext context)
+        {
+            ToggleMenuAndPause();
+        }
+
+        public void ToggleMenuAndPause()
+        {
+            if(GameManager.Instance.currentGameState == GameManager.GameState.Playing)
+            {
+                GameManager.Instance.currentGameState = GameManager.GameState.Paused;
+                optionsMenu.SetActive(true);
+            }
+            else
+            {
+                GameManager.Instance.currentGameState = GameManager.GameState.Playing;
+                optionsMenu.SetActive(false);
             }
         }
     }

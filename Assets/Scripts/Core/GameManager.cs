@@ -52,9 +52,48 @@ namespace WallThrough.Core
             ChangeGameState(GameState.MainMenu);
         }
 
+        private void Update()
+        {
+            switch (currentGameState)
+            {
+                case GameState.MainMenu:
+                    break;
+                case GameState.Playing:
+                    PauseGame(false);
+                    break;
+                case GameState.Paused:
+                    PauseGame(true);
+                    break;
+                case GameState.GameOver:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void PauseGame(bool paused)
+        {
+            if(paused)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
+        }
+
         public void ChangeGameState(GameState newState)
         {
             currentGameState = newState;
+        }
+
+        public void SetPlaying(bool playing)
+        {
+            if (playing)
+            {
+                currentGameState = GameState.Playing;
+            }
         }
 
         public void SaveGame()

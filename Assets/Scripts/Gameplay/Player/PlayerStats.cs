@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using WallThrough.Audio;
 using WallThrough.Graphics;
+using WallThrough.Core;
 
 namespace WallThrough.Gameplay.Pawn
 {
@@ -117,6 +116,7 @@ namespace WallThrough.Gameplay.Pawn
             AudioManager.Instance.StopPlayMusic();
             OnPlayerDeath?.Invoke();
             //transform.parent.gameObject.SetActive(false);
+            GameManager.Instance.currentGameState = GameManager.GameState.GameOver;
         }
 
         public void SetDrowningState(bool drowning)
