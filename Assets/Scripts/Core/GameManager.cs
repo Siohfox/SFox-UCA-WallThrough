@@ -50,7 +50,11 @@ namespace WallThrough.Core
             score = 0;
             currentLevel = 0;
             unlockedLevels = new List<int>();
-            if (autoLoadSave) LoadGame();
+            if (autoLoadSave)
+            {
+                LoadGame();
+                saveManager.LoadOptionsData();
+            }
         }
 
         private void Update()
