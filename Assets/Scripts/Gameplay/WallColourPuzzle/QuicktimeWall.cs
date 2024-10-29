@@ -67,7 +67,7 @@ namespace WallThrough.Gameplay
                 miniPuzzle.InstantiateCubes(colourCode); // Instantiate cubes when generating color code
             }
 
-            DebugColourInfo();
+            //DebugColourInfo();
         }
 
         /// <summary>

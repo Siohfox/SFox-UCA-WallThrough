@@ -15,6 +15,7 @@ namespace WallThrough.Gameplay.Pawn
 
         [SerializeField] private InputActionReference moveActionToUse;
         [SerializeField] private InputActionReference escapeAction;
+        [SerializeField] private InputActionReference anyKey;
         [SerializeField] private bool debugControls;
         [SerializeField] private GameObject virtualJoystick;
 
@@ -22,18 +23,28 @@ namespace WallThrough.Gameplay.Pawn
         {
             _movement = GetComponent<Movement>();
             playerStats = GetComponent<PlayerStats>();
+
+            if(playerStats == null)
+            {
+                Debug.LogWarning("Couldn't get playerstats component for some fucking reason");
+            }
         }
 
         private void OnEnable()
         {
             escapeAction.action.performed += OnEscapePressed;
             escapeAction.action.Enable();
+            anyKey.action.performed += RestartGame;
+            anyKey.action.Enable();
+
         }
 
         private void OnDisable()
         {
             escapeAction.action.performed -= OnEscapePressed;
             escapeAction.action.Disable();
+            anyKey.action.performed -= RestartGame;
+            anyKey.action.Disable();
         }
 
         private void FixedUpdate()
@@ -74,7 +85,13 @@ namespace WallThrough.Gameplay.Pawn
 
         private void OnEscapePressed(InputAction.CallbackContext context)
         {
+            // if player is dead, return
             ToggleMenuAndPause();
+        }
+
+        private void OnAnyKeyPressedWhileDead(InputAction.CallbackContext context)
+        {
+            Debug.Log("Pressed any key");
         }
 
         public void ToggleMenuAndPause()
@@ -88,6 +105,19 @@ namespace WallThrough.Gameplay.Pawn
             {
                 GameManager.Instance.currentGameState = GameManager.GameState.Playing;
                 optionsMenu.SetActive(false);
+            }
+        }
+
+        private void RestartGame(InputAction.CallbackContext context)
+        {
+            if (playerStats == null)
+            {
+                Debug.LogError("playerStats is null");
+            }
+            if (!playerStats.AliveState)
+            {
+                Debug.Log($"{playerStats.AliveState}");
+                LevelManager.Instance.ReloadCurrentScene();
             }
         }
     }

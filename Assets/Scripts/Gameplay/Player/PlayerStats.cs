@@ -84,10 +84,7 @@ namespace WallThrough.Gameplay.Pawn
 
         public bool AliveState { get => aliveState; private set => aliveState = value; }
 
-        public void HealDamage(int damageAmount)
-        {
-            health += damageAmount;
-        }
+        public void HealDamage(int damageAmount) => health += damageAmount;
 
         public void TakeDamage(int damageAmount)
         {
@@ -119,9 +116,7 @@ namespace WallThrough.Gameplay.Pawn
             GameManager.Instance.currentGameState = GameManager.GameState.GameOver;
         }
 
-        public void SetDrowningState(bool drowning)
-        {
-            drowningState = drowning;
-        }
+        public void SetDrowningState(bool drowning) => drowningState = drowning;
+        
     }
 }

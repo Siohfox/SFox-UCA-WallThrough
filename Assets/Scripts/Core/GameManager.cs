@@ -69,6 +69,7 @@ namespace WallThrough.Core
                     PauseGame(true);
                     break;
                 case GameState.GameOver:
+
                     break;
                 default:
                     break;
