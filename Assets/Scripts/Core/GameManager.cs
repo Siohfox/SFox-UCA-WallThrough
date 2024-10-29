@@ -10,6 +10,7 @@ namespace WallThrough.Core
         public static GameManager Instance;
 
         public bool debugMode;
+        public bool autoLoadSave;
         public enum GameState { MainMenu, Playing, Paused, GameOver }
         public GameState currentGameState;
 
@@ -49,7 +50,7 @@ namespace WallThrough.Core
             score = 0;
             currentLevel = 0;
             unlockedLevels = new List<int>();
-            ChangeGameState(GameState.MainMenu);
+            if (autoLoadSave) LoadGame();
         }
 
         private void Update()

@@ -2373,6 +2373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  autoLoadSave: 1
   currentGameState: 0
   score: 0
   currentLevel: 0
