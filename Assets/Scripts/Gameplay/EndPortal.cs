@@ -15,6 +15,7 @@ namespace WallThrough.Gameplay
         [SerializeField]
         private GameObject adviceText; // Text to provide advice when objectives are incomplete
         private ObjectiveManager objectiveManager; // Reference to the ObjectiveManager
+        [SerializeField] private GameObject portalVFX;
 
         private void Start()
         {
@@ -34,6 +35,14 @@ namespace WallThrough.Gameplay
             else
             {
                 StartCoroutine(GiveAdvice()); // Provide advice if objectives are incomplete
+            }
+        }
+
+        private void Update()
+        {
+            if (objectiveManager.CheckObjectives())
+            {
+                portalVFX.SetActive(true);
             }
         }
 

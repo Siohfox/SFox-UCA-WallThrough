@@ -10,9 +10,13 @@ namespace WallThrough.Gameplay
         public void SetWaterLevel(float height)
         {
             // Set the water level position
-            Vector3 newPosition = waterPlane.transform.position;
-            newPosition.y = height; // Adjust for the water plane's height
-            waterPlane.transform.position = newPosition;
+            if(waterPlane)
+            {
+                Vector3 newPosition = waterPlane.transform.position;
+                newPosition.y = height; // Adjust for the water plane's height
+                waterPlane.transform.position = newPosition;
+            }
+
         }
 
         public float GetCurrentWaterHeight()
