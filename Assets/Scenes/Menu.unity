@@ -2377,7 +2377,7 @@ MonoBehaviour:
   currentGameState: 0
   score: 0
   currentLevel: 0
-  unlockedLevels: 
+  unlockedLevels: 00000000
   saveManager: {fileID: 1645844929}
 --- !u!114 &1645844929
 MonoBehaviour:
@@ -2804,6 +2804,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2863021486295024228, guid: c263196d056623347a616f73dc3ddb5b, type: 3}
   m_PrefabInstance: {fileID: 1122211476}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2044104186 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4124391313475871464, guid: cbd642038fb941d4e98af037e6412f57, type: 3}
+  m_PrefabInstance: {fileID: 4443105634390615197}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00d43f71e6b391b469d586b2d72155a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2068344296
 GameObject:
   m_ObjectHideFlags: 0
@@ -3549,6 +3560,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9147268395480906890}
     m_Modifications:
+    - target: {fileID: 1472188138761838424, guid: b66eb998d552dc046b93d73ada5eabd8, type: 3}
+      propertyPath: optionsManager
+      value: 
+      objectReference: {fileID: 2044104186}
     - target: {fileID: 6437574209270257333, guid: b66eb998d552dc046b93d73ada5eabd8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

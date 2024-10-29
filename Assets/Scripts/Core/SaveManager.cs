@@ -26,10 +26,12 @@ namespace WallThrough.Core
     public class SaveManager : MonoBehaviour
     {
         private string saveFilePath;
+        private string optionsFilePath;
 
         private void Awake()
         {
             saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
+            optionsFilePath = Path.Combine(Application.persistentDataPath, "optionsfile.json");
         }
 
         public void SaveGame(GameManager gameManager)
@@ -49,15 +51,15 @@ namespace WallThrough.Core
         public void SaveOptionsData(OptionsData optionsData)
         {
             string json = JsonUtility.ToJson(optionsData);
-            File.WriteAllText(saveFilePath, json);
+            File.WriteAllText(optionsFilePath, json);
             Debug.Log("Options Saved");
         }
 
         public OptionsData LoadOptionsData()
         {
-            if (File.Exists(saveFilePath))
+            if (File.Exists(optionsFilePath))
             {
-                string json = File.ReadAllText(saveFilePath);
+                string json = File.ReadAllText(optionsFilePath);
                 OptionsData optionsData = JsonUtility.FromJson<OptionsData>(json);
                 return optionsData;
             }

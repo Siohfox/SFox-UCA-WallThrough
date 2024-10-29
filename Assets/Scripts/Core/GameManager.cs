@@ -53,7 +53,6 @@ namespace WallThrough.Core
             if (autoLoadSave)
             {
                 LoadGame();
-                saveManager.LoadOptionsData();
             }
         }
 
