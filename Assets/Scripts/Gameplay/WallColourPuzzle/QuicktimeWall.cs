@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,45 +15,25 @@ namespace WallThrough.Gameplay
         [SerializeField] private QuickTimeMenu quickTimeMenu;
         [SerializeField] private GameObject failCross;
         [SerializeField] private Animator wallAnimator;
-        [SerializeField] private AudioClip wallOpenClip;
-        [SerializeField] private AudioClip codeSuccess;
-        [SerializeField] private AudioClip codeFail;
+        [SerializeField] private AudioClip wallOpenClip, codeSuccess, codeFail;
         [SerializeField] private MiniPuzzleColourCube miniPuzzle;
 
         private int[] colourCode;
-        private string colourString;
-        private int requiredInputs = 4;
+        private int requiredInputs;
 
-        public FloodManager floodManager; 
+        public FloodManager floodManager;
         public Room room;
 
-        /// <summary>
-        /// Initializes references and sets the objective type.
-        /// </summary>
         private void Awake()
         {
             floodManager = GameObject.Find("FloodManager").GetComponent<FloodManager>();
-            var src = GetComponent<AudioSource>();
-
-            if (!src)
-            {
+            if (!GetComponent<AudioSource>())
                 Debug.LogWarning("No audio source found");
-            }
-
             SetObjectiveType(ObjectiveType.WallPuzzle);
         }
 
-        /// <summary>
-        /// Initializes the quick time event when the script instance is loaded.
-        /// </summary>
-        private void Start()
-        {
-            InitializeQuickTimeEvent();
-        }
+        private void Start() => InitializeQuickTimeEvent();
 
-        /// <summary>
-        /// Sets up the quick time event, generates the colour code, and registers the objective.
-        /// </summary>
         private void InitializeQuickTimeEvent()
         {
             quickTimeMenu.DeactivateQuickTimeMenu();
@@ -64,107 +43,64 @@ namespace WallThrough.Gameplay
             if (colourCode.Length > 0)
             {
                 ObjectiveManager.Instance.RegisterObjective(this, colourCode);
-                miniPuzzle.InstantiateCubes(colourCode); // Instantiate cubes when generating color code
+                miniPuzzle.InstantiateCubes(colourCode);
             }
 
-            //DebugColourInfo();
+            // DebugColourInfo();
         }
 
-        /// <summary>
-        /// Generates a random colour code for the quick time event.
-        /// </summary>
         private void GenerateColourCode()
         {
-            colourCode = new int[UnityEngine.Random.Range(2, 6)];
-            requiredInputs = colourCode.Length;
-
-            for (int i = 0; i < colourCode.Length; i++)
-            {
-                colourCode[i] = UnityEngine.Random.Range(0, ObjectiveManager.Instance.colourData.Count);
-            }
+            requiredInputs = (colourCode = new int[Random.Range(2, 6)]).Length;
+            for (int i = 0; i < requiredInputs; i++)
+                colourCode[i] = Random.Range(0, ObjectiveManager.Instance.colourData.Count);
         }
 
-        /// <summary>
-        /// Logs the colour names and their corresponding integer values.
-        /// </summary>
         private void DebugColourInfo()
         {
             List<string> colourNames = new();
             foreach (int code in colourCode)
-            {
-                ColourData colourData = ObjectiveManager.Instance.GetColourData(code);
-                colourNames.Add(colourData.colourName);
-            }
-
-            colourString = string.Join(" ", colourNames);
-            Debug.Log("Colour Names: " + colourString);
+                colourNames.Add(ObjectiveManager.Instance.GetColourData(code).colourName);
+            Debug.Log("Colour Names: " + string.Join(" ", colourNames));
         }
 
-        /// <summary>
-        /// Activates the quick time menu for player interaction.
-        /// </summary>
-        /// <param name="menu">The quick time menu to activate.</param>
-        private void ActivateQuickTimeMenu(QuickTimeMenu menu)
+        private void ActivateQuickTimeMenu()
         {
-            menu.SetCurrentWall(this, requiredInputs); // Pass the wall reference.
-            menu.gameObject.SetActive(true);
+            quickTimeMenu.SetCurrentWall(this, requiredInputs);
+            quickTimeMenu.gameObject.SetActive(true);
         }
 
-        /// <summary>
-        /// Compares the player's input with the generated colour code.
-        /// </summary>
-        /// <param name="codeInput">List of integers representing the player's input.</param>
         public void CompareCodes(List<int> codeInput)
         {
             for (int i = 0; i < colourCode.Length; i++)
-            {
-                if (codeInput[i] != colourCode[i])
-                {
-                    WallFail();
-                    return;
-                }
-            }
-
+                if (codeInput[i] != colourCode[i]) { WallFail(); return; }
             WallSuccess();
         }
 
-        /// <summary>
-        /// Handles successful input of the code.
-        /// </summary>
         private void WallSuccess()
         {
             quickTimeMenu.DeactivateQuickTimeMenu();
             wallAnimator.SetBool("Open", true);
             GetComponentInParent<Collider>().enabled = false;
-
-            if (!IsCompleted)
-            {
-                base.CompleteObjective();
-            }
-
-            AudioManager.Instance.PlaySound(codeSuccess, 1.0f, GetComponent<AudioSource>());
-            AudioManager.Instance.PlaySound(wallOpenClip, 1.0f, GetComponent<AudioSource>());
+            if (!IsCompleted) base.CompleteObjective();
+            PlaySuccessSounds();
             CameraShake.Instance.ShakeCamera(4f, 2f, "SixDShake");
             floodManager.OpenDoor(room);
         }
 
-        /// <summary>
-        /// Handles failed input of the code.
-        /// </summary>
-        private void WallFail()
+        private void PlaySuccessSounds()
         {
-            if (failCross)
-            {
-                StartCoroutine(FailCrossShow());
-            }
-
-            //Debug.Log("Input was incorrect, correct input should've been: " + colourString);
+            var audioSource = GetComponent<AudioSource>();
+            AudioManager.Instance.PlaySound(codeSuccess, 1.0f, audioSource);
+            AudioManager.Instance.PlaySound(wallOpenClip, 1.0f, audioSource);
         }
 
-        /// <summary>
-        /// Displays the fail cross indicator for a brief moment.
-        /// </summary>
-        /// <returns>IEnumerator for coroutine.</returns>
+        private void WallFail()
+        {
+            if (failCross) StartCoroutine(FailCrossShow());
+            // Debug.Log("Input was incorrect, correct input should've been: " + colourString);
+        }
+
         private IEnumerator FailCrossShow()
         {
             failCross.SetActive(true);
@@ -173,17 +109,8 @@ namespace WallThrough.Gameplay
             failCross.SetActive(false);
         }
 
-        /// <summary>
-        /// Starts the interaction with the quick time event.
-        /// </summary>
-        public void InteractionStart()
-        {
-            ActivateQuickTimeMenu(quickTimeMenu.GetComponent<QuickTimeMenu>());
-        }
+        public void InteractionStart() => ActivateQuickTimeMenu();
 
-        /// <summary>
-        /// Ends the interaction with the quick time event.
-        /// </summary>
         public void InteractionEnd()
         {
             quickTimeMenu.DeactivateQuickTimeMenu();
