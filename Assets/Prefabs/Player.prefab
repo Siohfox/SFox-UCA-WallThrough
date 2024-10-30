@@ -273,6 +273,7 @@ MonoBehaviour:
   optionsMenu: {fileID: 0}
   moveActionToUse: {fileID: -2227494494570478164, guid: 65acfc835083fdf4a863892db1cdc781, type: 3}
   escapeAction: {fileID: -7692450464684374610, guid: 65acfc835083fdf4a863892db1cdc781, type: 3}
+  anyKey: {fileID: 8966144463789099847, guid: 65acfc835083fdf4a863892db1cdc781, type: 3}
   debugControls: 0
   virtualJoystick: {fileID: 0}
 --- !u!114 &4187633942117894534

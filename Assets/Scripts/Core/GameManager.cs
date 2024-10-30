@@ -9,14 +9,14 @@ namespace WallThrough.Core
     {
         public static GameManager Instance;
 
-        public bool debugMode;
-        public bool autoLoadSave;
         public enum GameState { MainMenu, Playing, Paused, GameOver }
-        public GameState currentGameState;
 
+        public bool debugMode;
+        public bool autoLoadSave; 
+        public GameState currentGameState;
         public int score;
         public int currentLevel;
-        public List<int> unlockedLevels;
+        public List<int> unlockedLevels = new();
 
         [SerializeField] private SaveManager saveManager;
 
@@ -36,7 +36,14 @@ namespace WallThrough.Core
 
             if(!saveManager)
             {
-                Debug.LogWarning("No save manager set in inspector");
+                try
+                {
+                    saveManager = GetComponent<SaveManager>();
+                }
+                catch
+                {
+                    Debug.LogWarning("No save manager set in inspector");
+                } 
             }
         }
 
@@ -49,11 +56,7 @@ namespace WallThrough.Core
         {
             score = 0;
             currentLevel = 0;
-            unlockedLevels = new List<int>();
-            if (autoLoadSave)
-            {
-                LoadGame();
-            }
+            if (autoLoadSave) LoadGame();
         }
 
         private void Update()
@@ -69,52 +72,17 @@ namespace WallThrough.Core
                     PauseGame(true);
                     break;
                 case GameState.GameOver:
-
                     break;
                 default:
                     break;
             }
         }
 
-        private void PauseGame(bool paused)
-        {
-            if(paused)
-            {
-                Time.timeScale = 0;
-            }
-            else
-            {
-                Time.timeScale = 1;
-            }
-        }
-
-        public void ChangeGameState(GameState newState)
-        {
-            currentGameState = newState;
-        }
-
-        public void SetPlaying(bool playing)
-        {
-            if (playing)
-            {
-                currentGameState = GameState.Playing;
-            }
-        }
-
-        public void SaveGame()
-        {
-            saveManager.SaveGame(this);
-        }
-
-        public void LoadGame()
-        {
-            saveManager.LoadGame(this);
-        }
-
-        public void IncreaseScore(int score)
-        {
-            this.score += score;
-        }
+        private void PauseGame(bool paused) => Time.timeScale = paused ? 0 : 1;
+        public void ChangeGameState(GameState newState) => currentGameState = newState;
+        public void SetPlaying(bool playing) { if (playing) currentGameState = GameState.Playing; }
+        public void SaveGame() => saveManager.SaveGame(this);
+        public void LoadGame() => saveManager.LoadGame(this);
+        public void IncreaseScore(int score) => this.score += score;
     }
 }
-
