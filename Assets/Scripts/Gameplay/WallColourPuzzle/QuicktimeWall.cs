@@ -158,7 +158,7 @@ namespace WallThrough.Gameplay
                 StartCoroutine(FailCrossShow());
             }
 
-            Debug.Log("Input was incorrect, correct input should've been: " + colourString);
+            //Debug.Log("Input was incorrect, correct input should've been: " + colourString);
         }
 
         /// <summary>

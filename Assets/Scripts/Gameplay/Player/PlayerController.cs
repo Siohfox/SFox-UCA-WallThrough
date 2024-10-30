@@ -89,11 +89,6 @@ namespace WallThrough.Gameplay.Pawn
             ToggleMenuAndPause();
         }
 
-        private void OnAnyKeyPressedWhileDead(InputAction.CallbackContext context)
-        {
-            Debug.Log("Pressed any key");
-        }
-
         public void ToggleMenuAndPause()
         {
             if(GameManager.Instance.currentGameState == GameManager.GameState.Playing)

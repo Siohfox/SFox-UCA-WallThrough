@@ -39,7 +39,6 @@ public class Tutorial : MonoBehaviour
                 WASDText.gameObject.SetActive(true);     
                 if(playerMovement.GetCurrentVelocity().x > 0 || playerMovement.GetCurrentVelocity().z > 0)
                 {
-                    Debug.Log("Player moving");
                     WASDText.gameObject.SetActive(false);
                     state = TutorialState.FindColour;
                 }
