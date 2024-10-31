@@ -6068,6 +6068,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7526230520180164695, guid: 654a70b5baa36fd48ba7aebe2e52e724, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526230520180164695, guid: 654a70b5baa36fd48ba7aebe2e52e724, type: 3}
+      propertyPath: rotationSpeed
+      value: 360
+      objectReference: {fileID: 0}
     - target: {fileID: 8527947282266816568, guid: 654a70b5baa36fd48ba7aebe2e52e724, type: 3}
       propertyPath: virtualJoystick
       value: 

@@ -10,38 +10,34 @@ namespace WallThrough.Gameplay.Pawn
         private Rigidbody _rb;
 
         public float moveSpeed = 5f;
-        public float acceleration = 10f;
-        public float deceleration = 10f;
         public float rotationSpeed = 720f; // Degrees per second
-        private Vector3 currentVelocity;
 
         private void Start()
         {
             _rb = GetComponent<Rigidbody>();
-            currentVelocity = Vector3.zero; // Start with no movement
         }
 
         public void Move(Vector2 moveDir)
         {
-            // Calculate target velocity based on input
-            Vector3 targetVelocity = new Vector3(moveDir.x, 0, moveDir.y).normalized * moveSpeed;
-
-            // Smoothly transition to the target velocity using acceleration/deceleration
-            if (targetVelocity.magnitude > 0)
+            // Use a threshold to prevent very small inputs from affecting movement
+            if (moveDir.magnitude < 0.1f)
             {
-                // Accelerate towards the target velocity
-                currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
-                RotateTowards(currentVelocity);
-            }
-            else
-            {
-                // If no input, decelerate to zero
-                currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.fixedDeltaTime);
+                // Stop the player's movement when there is no input
+                _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
+                return;
             }
 
-            // Apply the calculated velocity to the Rigidbody
-            _rb.velocity = new Vector3(currentVelocity.x, _rb.velocity.y, currentVelocity.z);
+            // Calculate the target direction based on input
+            Vector3 targetDirection = new Vector3(moveDir.x, 0, moveDir.y).normalized;
+
+            // Rotate towards the target direction
+            RotateTowards(targetDirection);
+
+            // Move in the direction the player is facing
+            Vector3 forward = transform.forward;
+            _rb.velocity = new Vector3(forward.x * moveSpeed, _rb.velocity.y, forward.z * moveSpeed);
         }
+
 
         private void RotateTowards(Vector3 direction)
         {
@@ -51,10 +47,12 @@ namespace WallThrough.Gameplay.Pawn
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
 
                 // Smoothly rotate towards the target rotation
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+                float step = rotationSpeed * Time.fixedDeltaTime; // Calculate the step size
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
             }
         }
 
-        public Vector3 GetCurrentVelocity() => currentVelocity;
+
+        public Vector3 GetCurrentVelocity() => _rb.velocity;
     }
 }
