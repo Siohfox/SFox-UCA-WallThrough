@@ -33,6 +33,11 @@ namespace WallThrough.Gameplay
             Objective.OnObjectiveCompleted += HandleObjectiveCompleted;
         }
 
+        private void OnDisable()
+        {
+            Objective.OnObjectiveCompleted -= HandleObjectiveCompleted;
+        }
+
         private void HandleObjectiveCompleted(Objective objective)
         {
             completedObjectives++;

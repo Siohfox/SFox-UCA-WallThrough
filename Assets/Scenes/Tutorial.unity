@@ -1007,10 +1007,13 @@ Transform:
   m_GameObject: {fileID: 314024945}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.799, y: 2.03, z: -22.26}
+  m_LocalPosition: {x: -22.799, y: 0, z: -22.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1490568951}
+  - {fileID: 1711154268}
+  - {fileID: 2052257104}
   m_Father: {fileID: 794967396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &314024947
@@ -1025,8 +1028,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 947176549777336046, guid: 0afd2906b78d7c2429394dbb26187457, type: 3}
-  slotPrefab: {fileID: 3320552723506370652, guid: 10dd17e8b4ce49148bb567edcb56f68c, type: 3}
+  parentPrefabHolder: {fileID: 550209069}
+  parentPrefab: {fileID: 4066807904030051114, guid: 895ecc0d050ce854398726db500fd091, type: 3}
+  imagePrefab: {fileID: 2903133070666545469, guid: 003f78c27c13ed542a1dcf1cd981fa10, type: 3}
+  pressurePlateLocations:
+  - {fileID: 1490568951}
+  - {fileID: 1711154268}
+  - {fileID: 2052257104}
+  pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
 --- !u!1 &332553387 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8488766852617563107, guid: d9b3ef622078236468378b38f3033029, type: 3}
@@ -1952,6 +1961,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 517387810}
   m_CullTransparentMesh: 1
+--- !u!1 &550209069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 550209070}
+  m_Layer: 6
+  m_Name: MiniPuzzleOverlay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &550209070
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550209069}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1877650910}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &576865819
 GameObject:
   m_ObjectHideFlags: 0
@@ -3203,52 +3247,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterPlane: {fileID: 1808778554}
   IsFlooding: 0
---- !u!1 &788965239
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 788965240}
-  - component: {fileID: 788965241}
-  m_Layer: 0
-  m_Name: MiniPuzzleColourCube (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &788965240
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788965239}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.47, y: 1.97, z: 11.13}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 794967396}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &788965241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788965239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 947176549777336046, guid: 0afd2906b78d7c2429394dbb26187457, type: 3}
-  slotPrefab: {fileID: 3320552723506370652, guid: 10dd17e8b4ce49148bb567edcb56f68c, type: 3}
 --- !u!1 &794967395
 GameObject:
   m_ObjectHideFlags: 0
@@ -3280,7 +3278,6 @@ Transform:
   m_Children:
   - {fileID: 314024946}
   - {fileID: 1959664651}
-  - {fileID: 788965240}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &839049341
@@ -3536,6 +3533,10 @@ PrefabInstance:
       propertyPath: quickTimeMenu
       value: 
       objectReference: {fileID: 592671642}
+    - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
+      propertyPath: associatedMiniPuzzle
+      value: 
+      objectReference: {fileID: 1959664652}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4119,6 +4120,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056864126}
   m_Mesh: {fileID: -4097844776799219605, guid: a179947a5e31cc0428e706c0841d3277, type: 3}
+--- !u!1 &1064324455
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1064324456}
+  m_Layer: 0
+  m_Name: PressurePadLocation (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1064324456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064324455}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 14.971001, y: 0.56, z: 1.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1959664651}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1072837624
 GameObject:
   m_ObjectHideFlags: 0
@@ -4874,6 +4906,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 977.978, y: 426.6034}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1490568950
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1490568951}
+  m_Layer: 0
+  m_Name: PressurePadLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1490568951
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490568950}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.33, y: 0.56, z: 2.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 314024946}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1493254197
 GameObject:
   m_ObjectHideFlags: 0
@@ -5637,6 +5700,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668127660}
   m_CullTransparentMesh: 1
+--- !u!1 &1711154267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1711154268}
+  m_Layer: 0
+  m_Name: PressurePadLocation (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1711154268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711154267}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.43, y: 0.56, z: 2.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 314024946}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1746855331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1746855332}
+  m_Layer: 0
+  m_Name: PressurePadLocation (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1746855332
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746855331}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.2, y: 0.56, z: 15.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1959664651}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1759135736
 GameObject:
   m_ObjectHideFlags: 0
@@ -5944,10 +6069,6 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8527947282266816568, guid: 654a70b5baa36fd48ba7aebe2e52e724, type: 3}
-      propertyPath: anyKey
-      value: 
-      objectReference: {fileID: 8966144463789099847, guid: 65acfc835083fdf4a863892db1cdc781, type: 3}
-    - target: {fileID: 8527947282266816568, guid: 654a70b5baa36fd48ba7aebe2e52e724, type: 3}
       propertyPath: virtualJoystick
       value: 
       objectReference: {fileID: 1431898013}
@@ -6169,6 +6290,7 @@ RectTransform:
   - {fileID: 1668127661}
   - {fileID: 1967398067}
   - {fileID: 953406843}
+  - {fileID: 550209070}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6559,10 +6681,13 @@ Transform:
   m_GameObject: {fileID: 1959664650}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.34, y: 1.94, z: 2.86}
+  m_LocalPosition: {x: -20.34, y: 0, z: 2.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2072081021}
+  - {fileID: 1064324456}
+  - {fileID: 1746855332}
   m_Father: {fileID: 794967396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1959664652
@@ -6577,8 +6702,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 947176549777336046, guid: 0afd2906b78d7c2429394dbb26187457, type: 3}
-  slotPrefab: {fileID: 3320552723506370652, guid: 10dd17e8b4ce49148bb567edcb56f68c, type: 3}
+  parentPrefabHolder: {fileID: 550209069}
+  parentPrefab: {fileID: 4066807904030051114, guid: 895ecc0d050ce854398726db500fd091, type: 3}
+  imagePrefab: {fileID: 2903133070666545469, guid: 003f78c27c13ed542a1dcf1cd981fa10, type: 3}
+  pressurePlateLocations:
+  - {fileID: 2072081021}
+  - {fileID: 1064324456}
+  - {fileID: 1746855332}
+  pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
 --- !u!1 &1967398064
 GameObject:
   m_ObjectHideFlags: 0
@@ -7241,6 +7372,68 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052153701}
   m_Mesh: {fileID: -4097844776799219605, guid: a179947a5e31cc0428e706c0841d3277, type: 3}
+--- !u!1 &2052257103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2052257104}
+  m_Layer: 0
+  m_Name: PressurePadLocation (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2052257104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052257103}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.43, y: 0.56, z: 16.56}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 314024946}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2072081020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2072081021}
+  m_Layer: 0
+  m_Name: PressurePadLocation (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2072081021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072081020}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.12899971, y: 0.56, z: 1.37}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1959664651}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2083910541
 GameObject:
   m_ObjectHideFlags: 0
@@ -9647,6 +9840,10 @@ PrefabInstance:
       propertyPath: quickTimeMenu
       value: 
       objectReference: {fileID: 592671642}
+    - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
+      propertyPath: associatedMiniPuzzle
+      value: 
+      objectReference: {fileID: 314024947}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

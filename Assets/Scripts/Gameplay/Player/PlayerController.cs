@@ -111,7 +111,6 @@ namespace WallThrough.Gameplay.Pawn
             }
             if (!playerStats.AliveState)
             {
-                Debug.Log($"{playerStats.AliveState}");
                 LevelManager.Instance.ReloadCurrentScene();
             }
         }
