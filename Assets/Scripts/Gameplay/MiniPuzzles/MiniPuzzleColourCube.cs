@@ -7,11 +7,18 @@ namespace WallThrough.Gameplay
 {
     public class MiniPuzzleColourCube : MonoBehaviour
     {
+        [Header("Parent Prefabs")]
         [SerializeField] private GameObject parentPrefabHolder; // Empty GameObject to hold parent prefabs
         [SerializeField] private GameObject parentPrefab; // Prefab for the parent object holding the images
         [SerializeField] private GameObject imagePrefab; // Prefab for the colored images (UI)
+
+        [Header("Pressure Plates")]
         [SerializeField] private Transform[] pressurePlateLocations; // Array of Transforms for pressure plate locations
         [SerializeField] private GameObject pressurePlatePrefab; // Prefab for the pressure plate
+
+        [Header("Settings")]
+        [SerializeField] private float showCodeTime = 1f; // Time to show the code
+
         private GameObject parentObject; // Reference to the instantiated parent object
 
         public void InstantiateCubes(int[] colourCodes)
@@ -33,7 +40,7 @@ namespace WallThrough.Gameplay
                 GameObject image = Instantiate(imagePrefab, parentObject.transform); // Instantiate image under the parent object
 
                 // Set the image color (including alpha)
-                Image imgComponent = image.GetComponent<Image>(); // Get the Image component
+                Image imgComponent = image.GetComponentInChildren<Image>(); // Get the Image component
                 if (imgComponent != null)
                 {
                     color.a = 1; // Ensure alpha is set to 1 (fully opaque)
@@ -61,7 +68,7 @@ namespace WallThrough.Gameplay
 
                 // Instantiate the pressure plate at the selected location
                 GameObject pressurePlate = Instantiate(pressurePlatePrefab, selectedLocation.position, Quaternion.identity);
-                pressurePlate.AddComponent<PressurePlate>().Initialize(parentObject); // Add a PressurePlate component
+                pressurePlate.AddComponent<PressurePlate>().Initialize(parentObject, showCodeTime); // Add a PressurePlate component
             }
         }
     }
@@ -69,10 +76,12 @@ namespace WallThrough.Gameplay
     public class PressurePlate : MonoBehaviour
     {
         private GameObject parentObject;
+        private float showCodeTime;
 
-        public void Initialize(GameObject parent)
+        public void Initialize(GameObject parent, float showCodeTime)
         {
             parentObject = parent; // Store the reference to the parent object
+            this.showCodeTime = showCodeTime;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -87,8 +96,52 @@ namespace WallThrough.Gameplay
         private IEnumerator FlashCode()
         {
             parentObject.SetActive(true);
-            yield return new WaitForSeconds(2f);
+            Animator[] animArray = parentObject.GetComponentsInChildren<Animator>();
+            Image[] imageArray = parentObject.GetComponentsInChildren<Image>();
+
+            // Set initial alpha to 0 for all images
+            foreach (Image image in imageArray)
+            {
+                Color color = image.color;
+                color.a = 0; // Set alpha to 0
+                image.color = color;
+            }
+
+            foreach (Animator animator in animArray)
+            {
+                // Activate the animator
+                animator.SetBool("Activated", true);
+
+                // Set the corresponding image's alpha to 1
+                Image image = animator.GetComponent<Image>();
+                if (image != null)
+                {
+                    Color color = image.color;
+                    color.a = 1; // Set alpha to 1
+                    image.color = color;
+                }
+
+                // Wait for the duration of the animation
+                float animationDuration = GetAnimationDuration(animator);
+                yield return new WaitForSeconds(animationDuration);
+
+                // Deactivate the animator
+                animator.SetBool("Activated", false);
+            }
+
+            // Wait an additional second after the final animation
+            yield return new WaitForSeconds(showCodeTime);
+
+            // Finally, deactivate the parent object after all animations are done
             parentObject.SetActive(false);
+        }
+
+        // Helper method to get the animation duration
+        private float GetAnimationDuration(Animator animator)
+        {
+            // Assuming the animation is on the first layer and you know the animation clip name
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            return stateInfo.length; // Or a fixed duration if you know it
         }
     }
 }

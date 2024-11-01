@@ -826,12 +826,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentPrefabHolder: {fileID: 1664367760}
   parentPrefab: {fileID: 4066807904030051114, guid: 895ecc0d050ce854398726db500fd091, type: 3}
-  imagePrefab: {fileID: 2903133070666545469, guid: 003f78c27c13ed542a1dcf1cd981fa10, type: 3}
+  imagePrefab: {fileID: 930676846004878546, guid: 3f95675fdbe7928458b205032b2a55d4, type: 3}
   pressurePlateLocations:
   - {fileID: 492690115}
   - {fileID: 1159352328}
   - {fileID: 818547790}
   pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
+  showCodeTime: 1
 --- !u!1 &332553387 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8488766852617563107, guid: d9b3ef622078236468378b38f3033029, type: 3}
@@ -2832,12 +2833,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentPrefabHolder: {fileID: 1664367760}
   parentPrefab: {fileID: 4066807904030051114, guid: 895ecc0d050ce854398726db500fd091, type: 3}
-  imagePrefab: {fileID: 2903133070666545469, guid: 003f78c27c13ed542a1dcf1cd981fa10, type: 3}
+  imagePrefab: {fileID: 930676846004878546, guid: 3f95675fdbe7928458b205032b2a55d4, type: 3}
   pressurePlateLocations:
   - {fileID: 528149762}
   - {fileID: 1969133394}
   - {fileID: 1452248707}
   pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
+  showCodeTime: 1
 --- !u!1 &794967395
 GameObject:
   m_ObjectHideFlags: 0
@@ -5875,12 +5877,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentPrefabHolder: {fileID: 1664367760}
   parentPrefab: {fileID: 4066807904030051114, guid: 895ecc0d050ce854398726db500fd091, type: 3}
-  imagePrefab: {fileID: 2903133070666545469, guid: 003f78c27c13ed542a1dcf1cd981fa10, type: 3}
+  imagePrefab: {fileID: 930676846004878546, guid: 3f95675fdbe7928458b205032b2a55d4, type: 3}
   pressurePlateLocations:
   - {fileID: 1672976904}
   - {fileID: 2125776252}
   - {fileID: 291278653}
   pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
+  showCodeTime: 1
 --- !u!1 &1967398064
 GameObject:
   m_ObjectHideFlags: 0
