@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 8345557949798676620}
   - component: {fileID: 3611608446911812302}
   - component: {fileID: 253679424882382365}
+  - component: {fileID: 2522998441516162702}
   m_Layer: 0
   m_Name: Objective
   m_TagString: Untagged
@@ -135,7 +136,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1375760454324049622}
@@ -287,6 +288,72 @@ MonoBehaviour:
   movementTypes: 0000000001000000
   floatAmplitude: 0.5
   floatFrequency: 1
-  rotationSpeed: 30
+  randomizeFloating: 0
+  minFloatAmplitude: 0.1
+  maxFloatAmplitude: 1
+  minFloatFrequency: 0.5
+  maxFloatFrequency: 2
   lerpHeight: 1
   lerpSpeed: 1
+  randomizeVertical: 0
+  minLerpHeight: 0.5
+  maxLerpHeight: 2
+  minLerpSpeed: 0.5
+  maxLerpSpeed: 2
+  swayAmplitude: 0.5
+  swayFrequency: 1
+  randomizeSwaying: 0
+  minSwayAmplitude: 0.1
+  maxSwayAmplitude: 1
+  minSwayFrequency: 0.5
+  maxSwayFrequency: 2
+  bobbingAmplitude: 0.5
+  bobbingFrequency: 1
+  randomizeBobbing: 0
+  minBobbingAmplitude: 0.1
+  maxBobbingAmplitude: 1
+  minBobbingFrequency: 0.5
+  maxBobbingFrequency: 2
+  zigzagDistance: 1
+  zigzagSpeed: 1
+  randomizeZigzag: 0
+  minZigzagDistance: 0.5
+  maxZigzagDistance: 2
+  minZigzagSpeed: 0.5
+  maxZigzagSpeed: 2
+  circleRadius: 1
+  circleSpeed: 1
+  randomizeCircular: 0
+  minCircleRadius: 0.5
+  maxCircleRadius: 2
+  minCircleSpeed: 0.5
+  maxCircleSpeed: 2
+  scaleAmplitude: 0.1
+  scaleSpeed: 1
+  randomizeScaling: 0
+  minScaleAmplitude: 0.01
+  maxScaleAmplitude: 0.5
+  minScaleSpeed: 0.5
+  maxScaleSpeed: 2
+  rotationSpeed: 30
+--- !u!135 &2522998441516162702
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8488766852617563107}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
