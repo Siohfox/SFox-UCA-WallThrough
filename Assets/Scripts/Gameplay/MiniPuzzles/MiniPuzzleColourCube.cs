@@ -122,7 +122,7 @@ namespace WallThrough.Gameplay
                 }
 
                 // Wait for the duration of the animation
-                float animationDuration = GetAnimationDuration(animator);
+                float animationDuration = GetAnimationDuration(animator) / animArray.Length;
                 yield return new WaitForSeconds(animationDuration);
 
                 // Deactivate the animator
@@ -130,7 +130,9 @@ namespace WallThrough.Gameplay
             }
 
             // Wait an additional second after the final animation
-            yield return new WaitForSeconds(showCodeTime);
+            float showCodeTimeWithCodeLength = (float)(showCodeTime * (animArray.Length / 2));
+            Debug.Log(showCodeTimeWithCodeLength);
+            yield return new WaitForSeconds(showCodeTimeWithCodeLength);
 
             // Finally, deactivate the parent object after all animations are done
             parentObject.SetActive(false);

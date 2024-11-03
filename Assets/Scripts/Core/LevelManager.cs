@@ -15,6 +15,7 @@ namespace WallThrough.Core
         [SerializeField] private Image loadingBar;
         [SerializeField] private TMP_Text progressText;
         [SerializeField] private GameObject loadingScreen;
+        [SerializeField] private Animator transition;
 
         private void Awake()
         {
@@ -28,52 +29,76 @@ namespace WallThrough.Core
             }
         }
 
-        // Loads the next scene
-        public void LoadNextScene()
-        {
-            string sceneName = SceneUtility.GetScenePathByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1);
-            if(loadingScreen) loadingScreen.SetActive(true);
-            StartCoroutine(LoadAsynchronously(sceneName));
-        }
-
         // Loads a specific scene via build index number
         public void LoadScene(string sceneName)
         {
-            if (loadingScreen) loadingScreen.SetActive(true);
-            StartCoroutine(LoadAsynchronously(sceneName));
+            StartCoroutine(InitLoading(sceneName));
         }
 
         private IEnumerator LoadAsynchronously(string sceneName)
         {
+            // Prepare the loading bar
             loadingBar.fillAmount = 0;
+
+            // Start loading the scene asynchronously
             AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SceneUtility.GetBuildIndexByScenePath(sceneName), LoadSceneMode.Single);
+            asyncOperation.allowSceneActivation = false; // Prevent automatic activation of the scene
 
-            //loadingScreen.SetActive(true);
-
+            // While the scene is loading, update the loading bar and progress text
             while (!asyncOperation.isDone)
             {
-                float progress = Mathf.Clamp01(asyncOperation.progress / .9f);
+                float progress = Mathf.Clamp01(asyncOperation.progress / 0.9f);
                 progressText.text = (Mathf.Round(progress * 100f) + "%");
-                loadingBar.fillAmount = asyncOperation.progress;
-                
-                yield return new WaitForEndOfFrame();
+                loadingBar.fillAmount = progress;
+
+                // Check if loading is complete
+                if (asyncOperation.progress >= 0.9f)
+                {
+                    // Optionally, you can break the loop here to do additional things before transition
+                    break;
+                }
+
+                yield return null; // Wait for the next frame
             }
+
+            // At this point, loading is done, and we can return to the caller
+        }
+
+        private IEnumerator InitLoading(string sceneName)
+        {
+            // Activate the loading screen
+            if (loadingScreen) loadingScreen.SetActive(true);
+
+            // Start loading the scene asynchronously
+            yield return StartCoroutine(LoadAsynchronously(sceneName));
+
+            // At this point, loading is complete
+            transition.SetTrigger("Start");
+            Debug.Log("Starting trigger");
+
+            // Wait for the transition animation to complete
+            yield return new WaitForSeconds(1f);
+
+            // Finally, activate the loaded scene
+            SceneManager.LoadScene(SceneUtility.GetBuildIndexByScenePath(sceneName));
+        }
+
+        // Reloads the current scene
+        public void ReloadCurrentScene()
+        {
+            StartCoroutine(InitLoading(SceneManager.GetActiveScene().name));
+        }
+
+        // Quits the game
+        public void QuitGame()
+        {
+            Application.Quit();
         }
 
         // Loads the first scene (menu)
         public void LoadMenu()
         {
-            SceneManager.LoadSceneAsync(0);
-        }
-
-        public void ReloadCurrentScene()
-        {
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
-        }
-        // Quits the game
-        public void QuitGame()
-        {
-            Application.Quit();
+            StartCoroutine(InitLoading(SceneUtility.GetScenePathByBuildIndex(0)));
         }
     }
 }

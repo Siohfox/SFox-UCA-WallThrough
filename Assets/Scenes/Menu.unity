@@ -1697,6 +1697,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1645844928}
     - target: {fileID: 5345279179370800609, guid: 46b7831fa4b812f49864fb428fcfabde, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345279179370800609, guid: 46b7831fa4b812f49864fb428fcfabde, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 874055960}
@@ -1704,6 +1708,14 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1645844928}
+    - target: {fileID: 5345279179370800609, guid: 46b7831fa4b812f49864fb428fcfabde, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345279179370800609, guid: 46b7831fa4b812f49864fb428fcfabde, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Tutorial
+      objectReference: {fileID: 0}
     - target: {fileID: 6339640400463472820, guid: 46b7831fa4b812f49864fb428fcfabde, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
