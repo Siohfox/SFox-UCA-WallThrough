@@ -9,19 +9,12 @@ public class DungeonGenerator : MonoBehaviour
     public class Cell
     {
         public bool visited = false;
-        public bool[] status = {
-            false,
-            false,
-            false,
-            false
-        };
+        public bool[] status = new bool[4];
     }
 
-    public Vector2 size;
+    public Vector2 generationSize;
     public int startPos = 0;
-
     public GameObject room;
-
     public Vector2 offset;
 
     List<Cell> board;
@@ -32,55 +25,81 @@ public class DungeonGenerator : MonoBehaviour
         MazeGenerator();
     }
 
-    // Update is called once per frame
-    void Update()
+    // Coroutine to generate rooms with a 1-second delay between each
+    IEnumerator GenerateDungeon()
     {
-        
-    }
-
-    void GenerateDungeon()
-    {
-        for(int i = 0; i < size.x; i++)
+        for (int i = 0; i < generationSize.x; i++)
         {
-            for(int j = 0; j < size.y; j++)
+            for (int j = 0; j < generationSize.y; j++)
             {
-                var newRoom = Instantiate(room, new Vector3(i*offset.x, 0, j*offset.y), quaternion.identity, transform).GetComponent<RoomBehaviour>();
-                newRoom.UpdateRoom(board[Mathf.FloorToInt(i+j*size.x)].status);
+                Cell currentCell = board[Mathf.FloorToInt(i + j * generationSize.x)];
+
+                if (currentCell.visited)
+                {
+                    var newRoom = Instantiate(room, new Vector3(i * offset.x, 0, -j * offset.y), quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                    newRoom.UpdateRoom(currentCell.status);
+                    newRoom.name += " " + i + " " + j;
+                }
+
+                // Wait for 1 second before continuing to the next room
+                yield return new WaitForSeconds(0.3f);
             }
         }
+
+        yield return new WaitForSeconds(1f);
     }
 
     void MazeGenerator()
     {
-        board = new();
-        
-        for(int i = 0; i < size.x; i++)
+        board = new List<Cell>();
+
+        if (generationSize.x < 1 || generationSize.y < 1)
         {
-            for(int j = 0; j < size.y; j++)
+            Debug.LogError("Generation size should not be 0!");
+            return;
+        }
+
+        for (int i = 0; i < generationSize.x; i++)
+        {
+            for (int j = 0; j < generationSize.y; j++)
             {
                 board.Add(new Cell());
             }
         }
-        Debug.Log(board[0].status[0]);
 
         int currentCell = startPos;
-
-        Stack<int> path = new();
-
+        Stack<int> path = new Stack<int>();
         int k = 0;
 
-        while(k<1000)
+        while (k < 1000)
         {
             k++;
 
             board[currentCell].visited = true;
 
+            if (currentCell == board.Count - 1)
+            {
+                break;
+            }
+
+            if (generationSize.x < 1 && generationSize.y < 1)
+            {
+                Debug.LogError("Invalid size");
+                return;
+            }
+            board[currentCell].visited = true;
+
+            if (currentCell == board.Count - 1)
+            {
+                break;
+            }
+
             // Check the cell's neighbors
             List<int> neighbors = CheckNeighbors(currentCell);
 
-            if(neighbors.Count == 0)
+            if (neighbors.Count == 0)
             {
-                if(path.Count == 0)
+                if (path.Count == 0)
                 {
                     break;
                 }
@@ -95,10 +114,10 @@ public class DungeonGenerator : MonoBehaviour
 
                 int newCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)];
 
-                if(newCell>currentCell)
+                if (newCell > currentCell)
                 {
                     // down or right
-                    if(newCell - 1 == currentCell)
+                    if (newCell - 1 == currentCell)
                     {
                         board[currentCell].status[2] = true;
                         currentCell = newCell;
@@ -114,7 +133,7 @@ public class DungeonGenerator : MonoBehaviour
                 else
                 {
                     // up or left
-                    if(newCell+1 == currentCell)
+                    if (newCell + 1 == currentCell)
                     {
                         board[currentCell].status[3] = true;
                         currentCell = newCell;
@@ -129,37 +148,38 @@ public class DungeonGenerator : MonoBehaviour
                 }
             }
         }
-        GenerateDungeon();
+
+        // Start generating the dungeon with delays
+        StartCoroutine(GenerateDungeon());
     }
 
     List<int> CheckNeighbors(int cell)
     {
-        List<int> neighbors = new();
+        List<int> neighbors = new List<int>();
 
         // check up neighbor
-        if(cell - size.x >= 0 && !board[Mathf.FloorToInt(cell - size.x)].visited)
+        if (cell - generationSize.x >= 0 && !board[Mathf.FloorToInt(cell - generationSize.x)].visited)
         {
-            neighbors.Add(Mathf.FloorToInt(cell-size.x));
+            neighbors.Add(Mathf.FloorToInt(cell - generationSize.x));
         }
 
         // check down neighbor
-        if(cell + size.x < board.Count && !board[Mathf.FloorToInt(cell + size.x)].visited)
+        if (cell + generationSize.x < board.Count && !board[Mathf.FloorToInt(cell + generationSize.x)].visited)
         {
-            neighbors.Add(Mathf.FloorToInt(cell + size.x));
+            neighbors.Add(Mathf.FloorToInt(cell + generationSize.x));
         }
 
         // check right neighbor
-        if((cell + 1) % size.x != board.Count && !board[Mathf.FloorToInt(cell + 1)].visited)
+        if ((cell + 1) % generationSize.x != 0 && !board[(cell + 1)].visited)
         {
-            neighbors.Add(Mathf.FloorToInt(cell + size.x));
+            neighbors.Add((cell + 1));
         }
 
         // check left neighbor
-        if(cell % size.x != 0 && !board[Mathf.FloorToInt(cell - 1)].visited)
+        if (cell % generationSize.x != 0 && !board[(cell - 1)].visited)
         {
-            neighbors.Add(Mathf.FloorToInt(cell - 1));
+            neighbors.Add((cell - 1));
         }
-
 
         return neighbors;
     }

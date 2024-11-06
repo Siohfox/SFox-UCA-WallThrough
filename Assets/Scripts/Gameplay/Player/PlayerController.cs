@@ -51,12 +51,13 @@ namespace WallThrough.Gameplay.Pawn
         {
             Vector2 moveDirection;
 
+            
             // Check if the application is running on PC or mobile
             if (debugControls)
             {
                 // Use virtual joystick in debug mode
                 Debug.Log("Debug controls active");
-                virtualJoystick.SetActive(true);
+                if (virtualJoystick) virtualJoystick.SetActive(true);
                 moveDirection = moveActionToUse.action.ReadValue<Vector2>();
             }
             else if (Application.platform == RuntimePlatform.WindowsPlayer ||
@@ -67,13 +68,13 @@ namespace WallThrough.Gameplay.Pawn
                      Application.platform == RuntimePlatform.LinuxEditor)
             {
                 // Use keyboard controls on PC
-                virtualJoystick.SetActive(false);
+                if (virtualJoystick) virtualJoystick.SetActive(false);
                 moveDirection = moveActionToUse.action.ReadValue<Vector2>();
             }
             else // mobile
             {
                 // Use virtual joystick for mobile
-                virtualJoystick.SetActive(true);
+                if (virtualJoystick) virtualJoystick.SetActive(true);
                 moveDirection = moveActionToUse.action.ReadValue<Vector2>();
             }
 
