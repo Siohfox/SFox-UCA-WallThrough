@@ -43,7 +43,7 @@ namespace WallThrough.Gameplay
             if (colourCode.Length > 0)
             {
                 ObjectiveManager.Instance.RegisterObjective(this, colourCode);
-                associatedMiniPuzzle.InstantiateCubes(colourCode);
+                associatedMiniPuzzle.Initialize(colourCode);
             }
 
             // DebugColourInfo();

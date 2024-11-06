@@ -27,6 +27,8 @@ namespace WallThrough.Core
             {
                 Instance = this;
             }
+
+            transition.gameObject.SetActive(true);
         }
 
         // Loads a specific scene via build index number

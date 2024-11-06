@@ -884,15 +884,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentPrefabHolder: {fileID: 1664367760}
-  parentPrefab: {fileID: 4066807904030051114, guid: 895ecc0d050ce854398726db500fd091, type: 3}
-  imagePrefab: {fileID: 930676846004878546, guid: 3f95675fdbe7928458b205032b2a55d4, type: 3}
   pressurePlateLocations:
   - {fileID: 492690115}
   - {fileID: 1159352328}
   - {fileID: 818547790}
   pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
-  showCodeTime: 1
+  colourCodeManager: {fileID: 1603217756}
 --- !u!1 &360760209 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2864538248493128530, guid: 6bd2f4902e08ff242a6dd6bdb360e1ba, type: 3}
@@ -2739,15 +2736,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentPrefabHolder: {fileID: 1664367760}
-  parentPrefab: {fileID: 4066807904030051114, guid: 895ecc0d050ce854398726db500fd091, type: 3}
-  imagePrefab: {fileID: 930676846004878546, guid: 3f95675fdbe7928458b205032b2a55d4, type: 3}
   pressurePlateLocations:
   - {fileID: 528149762}
   - {fileID: 1969133394}
   - {fileID: 1452248707}
   pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
-  showCodeTime: 1
+  colourCodeManager: {fileID: 1603217756}
 --- !u!1 &794967395
 GameObject:
   m_ObjectHideFlags: 0
@@ -4447,6 +4441,119 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1599674233}
   m_CullTransparentMesh: 1
+--- !u!1001 &1603217755
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1877650910}
+    m_Modifications:
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845458909856284022, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+      propertyPath: m_Name
+      value: MiniPuzzleOverlay
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+--- !u!114 &1603217756 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6271954231661373758, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+  m_PrefabInstance: {fileID: 1603217755}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a87d50ba34478149a782ee52440d95d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &1603217757 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
+  m_PrefabInstance: {fileID: 1603217755}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1616526391
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4526,41 +4633,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2864538248493128530, guid: 6bd2f4902e08ff242a6dd6bdb360e1ba, type: 3}
   m_PrefabInstance: {fileID: 1616526391}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1664367760
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1664367761}
-  m_Layer: 6
-  m_Name: MiniPuzzleOverlay
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1664367761
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1664367760}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1877650910}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1666068706
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4967,8 +5039,8 @@ RectTransform:
   - {fileID: 1668127661}
   - {fileID: 1967398067}
   - {fileID: 953406843}
-  - {fileID: 1664367761}
   - {fileID: 1578924305}
+  - {fileID: 1603217757}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5404,15 +5476,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentPrefabHolder: {fileID: 1664367760}
-  parentPrefab: {fileID: 4066807904030051114, guid: 895ecc0d050ce854398726db500fd091, type: 3}
-  imagePrefab: {fileID: 930676846004878546, guid: 3f95675fdbe7928458b205032b2a55d4, type: 3}
   pressurePlateLocations:
   - {fileID: 1672976904}
   - {fileID: 2125776252}
   - {fileID: 291278653}
   pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
-  showCodeTime: 1
+  colourCodeManager: {fileID: 1603217756}
 --- !u!1 &1967398064
 GameObject:
   m_ObjectHideFlags: 0
