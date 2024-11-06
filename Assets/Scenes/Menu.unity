@@ -1612,6 +1612,22 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 874055960}
+    - target: {fileID: 2646214790746913280, guid: 46b7831fa4b812f49864fb428fcfabde, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2646214790746913280, guid: 46b7831fa4b812f49864fb428fcfabde, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2646214790746913280, guid: 46b7831fa4b812f49864fb428fcfabde, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 138.91998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2646214790746913280, guid: 46b7831fa4b812f49864fb428fcfabde, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -82
+      objectReference: {fileID: 0}
     - target: {fileID: 3397237659499792087, guid: 46b7831fa4b812f49864fb428fcfabde, type: 3}
       propertyPath: m_Pivot.x
       value: 0

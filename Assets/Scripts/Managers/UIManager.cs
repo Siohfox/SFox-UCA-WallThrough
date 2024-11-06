@@ -21,10 +21,8 @@ namespace WallThrough.UI
 
         // PlayerUI
         [SerializeField] private Image[] hearts;
-        [SerializeField] private Image[] breathBubbles;
         [SerializeField] private Sprite fullHeart;
         [SerializeField] private Sprite emptyHeart;
-        [SerializeField] private Sprite breath;
 
         // Other UI
         [SerializeField] private GameObject deathUI;
@@ -38,13 +36,14 @@ namespace WallThrough.UI
         {
             Objective.OnObjectiveCompleted += UpdateObjectiveUI; // Subscribe to objective completion events
             PlayerStats.OnHealthChange += UpdatePlayerStatsHealthUI; //The name Player does not exist in current context
-            PlayerStats.OnBreathChange += UpdatePlayerStatsBreathUI; //The name Player does not exist in current context
             PlayerStats.OnPlayerDeath += DisplayPlayerDeathUI;
         }
 
         private void OnDisable()
         {
-            Objective.OnObjectiveCompleted -= UpdateObjectiveUI; // Unsubscribe from objective completion events
+            Objective.OnObjectiveCompleted -= UpdateObjectiveUI; // Subscribe to objective completion events
+            PlayerStats.OnHealthChange -= UpdatePlayerStatsHealthUI; //The name Player does not exist in current context
+            PlayerStats.OnPlayerDeath -= DisplayPlayerDeathUI;
         }
 
         /// <summary>
@@ -71,18 +70,6 @@ namespace WallThrough.UI
                 {
                     hearts[i].sprite = (i < health) ? fullHeart : emptyHeart;
                 }               
-            }
-        }
-
-        private void UpdatePlayerStatsBreathUI(int breath)
-        {
-            for (int i = 0; i < breathBubbles.Length; i++)
-            {
-                // Enable or disable breath bubbles based on current breath value
-                if(breathBubbles[i] != null)
-                {
-                    breathBubbles[i].gameObject.SetActive(i < breath);
-                }          
             }
         }
 

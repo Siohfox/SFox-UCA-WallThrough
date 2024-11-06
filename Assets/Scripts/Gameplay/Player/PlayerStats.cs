@@ -8,22 +8,20 @@ namespace WallThrough.Gameplay.Pawn
 {
     public class PlayerStats : MonoBehaviour, IDamageable
     {
-        [SerializeField] private int maxHealth = 10, health, breath, breathMax = 10;
+        [SerializeField] private int maxHealth = 10, health;
         [SerializeField] private float invincibilityTimer, invincibilityTimerMax = 2f;
-        [SerializeField] private bool drowningState, aliveState = true;
+        [SerializeField] private bool aliveState = true;
         [SerializeField] private AudioClip damageTakenClip, deathClip, deathTune;
         private AudioSource src;
 
         private int previousHealth, previousBreath;
 
         public static event Action<int> OnHealthChange;
-        public static event Action<int> OnBreathChange;
         public static event Action OnPlayerDeath;
 
         private void Start()
         {
             health = maxHealth;
-            breath = breathMax;
             aliveState = true;
             invincibilityTimer = invincibilityTimerMax;
             UpdateStats();
@@ -32,15 +30,10 @@ namespace WallThrough.Gameplay.Pawn
 
         private void Update()
         {
-            if (previousHealth != health || previousBreath != breath)
+            if (previousHealth != health)
                 UpdateStats();
 
             invincibilityTimer -= Time.deltaTime;
-            if (!drowningState && breath < breathMax && invincibilityTimer <= 0)
-            {
-                breath++;
-                invincibilityTimer = invincibilityTimerMax;
-            }
 
             if (health <= 0 && aliveState) HandlePlayerDeath();
         }
@@ -54,12 +47,7 @@ namespace WallThrough.Gameplay.Pawn
         {
             if (invincibilityTimer > 0) return;
 
-            if (drowningState && breath > 0)
-            {
-                breath -= amount;
-                invincibilityTimer = invincibilityTimerMax;
-            }
-            else if (health > 0)
+            if (health > 0)
             {
                 health -= amount;
                 CameraShake.Instance.ShakeCamera(5.0f, 0.5f, "handheldNormalExtreme");
@@ -78,14 +66,10 @@ namespace WallThrough.Gameplay.Pawn
             GameManager.Instance.currentGameState = GameManager.GameState.GameOver;
         }
 
-        public void SetDrowningState(bool drowning) => drowningState = drowning;
-
         private void UpdateStats()
         {
             OnHealthChange?.Invoke(health);
-            OnBreathChange?.Invoke(breath);
             previousHealth = health;
-            previousBreath = breath;
         }
     }
 }

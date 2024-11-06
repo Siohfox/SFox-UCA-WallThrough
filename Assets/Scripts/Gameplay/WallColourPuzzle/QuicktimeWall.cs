@@ -21,12 +21,8 @@ namespace WallThrough.Gameplay
         private int[] colourCode;
         private int requiredInputs;
 
-        public FloodManager floodManager;
-        public Room room;
-
         private void Awake()
         {
-            floodManager = GameObject.Find("FloodManager").GetComponent<FloodManager>();
             if (!GetComponent<AudioSource>())
                 Debug.LogWarning("No audio source found");
             SetObjectiveType(ObjectiveType.WallPuzzle);
@@ -85,7 +81,6 @@ namespace WallThrough.Gameplay
             if (!IsCompleted) base.CompleteObjective();
             PlaySuccessSounds();
             CameraShake.Instance.ShakeCamera(4f, 2f, "SixDShake");
-            floodManager.OpenDoor(room);
         }
 
         private void PlaySuccessSounds()

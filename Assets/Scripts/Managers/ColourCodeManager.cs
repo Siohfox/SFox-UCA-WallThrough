@@ -24,10 +24,6 @@ namespace WallThrough.UI
 
         public GameObject Initialize(int[] colourCodes)
         {
-
-            Debug.Log($"Parent Prefab: {parentPrefab}");
-            Debug.Log($"Parent Prefab Holder: {parentPrefabHolder}");
-
             // Check for null references
             if (!parentPrefabHolder)
             {
