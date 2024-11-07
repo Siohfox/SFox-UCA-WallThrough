@@ -1,23 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using WallThrough.Gameplay;
 
 public class DungeonGenerator : MonoBehaviour
 {
-    public class Cell
-    {
-        public bool visited = false;
-        public bool[] status = new bool[4];
-    }
-
-    public Vector2 generationSize;
+    public Vector2Int generationSize;
     public int startPos = 0;
     public GameObject finalBoss;
     public Vector2 offset;
     public Rule[] rooms;
-    List<Cell> dungeonGrid;
+    public float generationDelay = 0.3f;
+
+    private List<Cell> dungeonGrid;
+    private List<int> roomCells; // Cells marked for room instantiation
+
+    public class Cell
+    {
+        public bool visited = false;
+        public bool isRoom = false; // Indicates if this cell will be a room
+        public bool[] status = new bool[4]; // Wall status for each direction
+    }
 
     [System.Serializable]
     public class Rule
@@ -25,237 +28,173 @@ public class DungeonGenerator : MonoBehaviour
         public GameObject room;
         public Vector2Int minPosition;
         public Vector2Int maxPosition;
-        
-
         public bool obligatory;
 
-        public int ProbabilityOfSpawning(int x, int y)
+        public SpawnType GetSpawnType(int x, int y)
         {
-            // 0 - cannot spawn 1 - can spawn 2 - HAS to spawn
-
             if (x >= minPosition.x && x <= maxPosition.x && y >= minPosition.y && y <= maxPosition.y)
             {
-                return obligatory ? 2 : 1;
+                return obligatory ? SpawnType.Required : SpawnType.Optional;
             }
-
-            return 0;
+            return SpawnType.None;
         }
-
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public enum SpawnType { None, Optional, Required }
+
+    private void Start()
     {
-        MazeGenerator();
+        GenerateDungeon();
     }
 
-    // Coroutine to generate rooms with a 1-second delay between each
-    IEnumerator GenerateDungeon()
+    private void GenerateDungeon()
     {
-        for (int i = 0; i < generationSize.x; i++)
-        {
-            for (int j = 0; j < generationSize.y; j++)
-            {
-                Cell currentCell = dungeonGrid[Mathf.FloorToInt(i + j * generationSize.x)];
-                if (currentCell.visited)
-                {
-                    int randomRoom = -1;
-                    List<int> availableRooms = new List<int>();
-
-                    for (int k = 0; k < rooms.Length; k++)
-                    {
-                        int p = rooms[k].ProbabilityOfSpawning(i, j);
-
-                        if (p == 2)
-                        {
-                            randomRoom = k;
-                            break;
-                        }
-                        else if (p == 1)
-                        {
-                            availableRooms.Add(k);
-                        }
-                    }
-
-                    if (randomRoom == -1)
-                    {
-                        if (availableRooms.Count > 0)
-                        {
-                            randomRoom = availableRooms[UnityEngine.Random.Range(0, availableRooms.Count)];
-                        }
-                        else
-                        {
-                            randomRoom = 0;
-                        }
-                    }
-
-
-                    var newRoom = Instantiate(rooms[randomRoom].room, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomBehaviour>();
-                    newRoom.UpdateRoom(currentCell.status);
-                    newRoom.name += " " + i + "-" + j;
-
-
-                    yield return new WaitForSeconds(0.3f);
-                }
-            }
-        }
-
-        yield return new WaitForSeconds(0.3f);
-    }
-
-    void MazeGenerator()
-    {
-        dungeonGrid = new List<Cell>();
-
         if (generationSize.x < 1 || generationSize.y < 1)
         {
-            Debug.LogError("Generation size should not be 0!");
+            Debug.LogError("Generation size should not be zero!");
             return;
         }
 
-        for (int i = 0; i < generationSize.x; i++)
-        {
-            for (int j = 0; j < generationSize.y; j++)
-            {
-                dungeonGrid.Add(new Cell());
-            }
-        }
-
-        int currentCell = startPos;
-        Stack<int> path = new Stack<int>();
-        int k = 0;
-
-        while (k < 1000)
-        {
-            k++;
-
-            dungeonGrid[currentCell].visited = true;
-
-            if (currentCell == dungeonGrid.Count - 1)
-            {
-                break;
-            }
-
-            if (generationSize.x < 1 && generationSize.y < 1)
-            {
-                Debug.LogError("Invalid size");
-                return;
-            }
-
-            if (currentCell == dungeonGrid.Count - 1)
-            {
-                break;
-            }
-
-            // Check the cell's neighbors
-            List<int> neighbors = CheckNeighbors(currentCell);
-
-            if (neighbors.Count == 0)
-            {
-                if (path.Count == 0)
-                {
-                    break;
-                }
-                else
-                {
-                    currentCell = path.Pop();
-                }
-            }
-            else
-            {
-                path.Push(currentCell);
-
-                int newCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)];
-
-                if (newCell > currentCell)
-                {
-                    // down or right
-                    if (newCell - 1 == currentCell)
-                    {
-                        dungeonGrid[currentCell].status[2] = true;
-                        currentCell = newCell;
-                        dungeonGrid[currentCell].status[3] = true;
-                    }
-                    else
-                    {
-                        dungeonGrid[currentCell].status[1] = true;
-                        currentCell = newCell;
-                        dungeonGrid[currentCell].status[0] = true;
-                    }
-                }
-                else
-                {
-                    // up or left
-                    if (newCell + 1 == currentCell)
-                    {
-                        dungeonGrid[currentCell].status[3] = true;
-                        currentCell = newCell;
-                        dungeonGrid[currentCell].status[2] = true;
-                    }
-                    else
-                    {
-                        dungeonGrid[currentCell].status[0] = true;
-                        currentCell = newCell;
-                        dungeonGrid[currentCell].status[1] = true;
-                    }
-                }
-            }
-        }
-
-        // Start generating the dungeon with delays
-        StartCoroutine(GenerateDungeon());
-
-        // After the dungeon is generated, place the boss in the final room
+        InitializeDungeonGrid();
+        GenerateMazeWithRooms();
+        StartCoroutine(SpawnRooms());
         PlaceFinalBoss();
     }
 
-    List<int> CheckNeighbors(int cell)
+    private void InitializeDungeonGrid()
+    {
+        dungeonGrid = new List<Cell>(generationSize.x * generationSize.y);
+        roomCells = new List<int>();
+
+        for (int i = 0; i < generationSize.x * generationSize.y; i++)
+        {
+            dungeonGrid.Add(new Cell());
+        }
+    }
+
+    private void GenerateMazeWithRooms()
+    {
+        Stack<int> path = new Stack<int>();
+        int currentCell = startPos;
+
+        for (int i = 0; i < generationSize.x * generationSize.y; i++)
+        {
+            dungeonGrid[currentCell].visited = true;
+            dungeonGrid[currentCell].isRoom = true;
+            roomCells.Add(currentCell);
+
+            List<int> neighbors = GetUnvisitedNeighbors(currentCell);
+            if (neighbors.Count > 0)
+            {
+                path.Push(currentCell);
+                int newCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)];
+                ConnectCells(currentCell, newCell);
+                currentCell = newCell;
+            }
+            else if (path.Count > 0)
+            {
+                currentCell = path.Pop();
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    private List<int> GetUnvisitedNeighbors(int cell)
     {
         List<int> neighbors = new List<int>();
+        int width = generationSize.x;
 
-        // check up neighbor
-        if (cell - generationSize.x >= 0 && !dungeonGrid[Mathf.FloorToInt(cell - generationSize.x)].visited)
+        void AddNeighbor(int neighbor)
         {
-            neighbors.Add(Mathf.FloorToInt(cell - generationSize.x));
+            if (neighbor >= 0 && neighbor < dungeonGrid.Count && !dungeonGrid[neighbor].visited)
+            {
+                neighbors.Add(neighbor);
+            }
         }
 
-        // check down neighbor
-        if (cell + generationSize.x < dungeonGrid.Count && !dungeonGrid[Mathf.FloorToInt(cell + generationSize.x)].visited)
-        {
-            neighbors.Add(Mathf.FloorToInt(cell + generationSize.x));
-        }
-
-        // check right neighbor
-        if ((cell + 1) % generationSize.x != 0 && !dungeonGrid[(cell + 1)].visited)
-        {
-            neighbors.Add((cell + 1));
-        }
-
-        // check left neighbor
-        if (cell % generationSize.x != 0 && !dungeonGrid[(cell - 1)].visited)
-        {
-            neighbors.Add((cell - 1));
-        }
+        AddNeighbor(cell - width); // up
+        AddNeighbor(cell + width); // down
+        if (cell % width != 0) AddNeighbor(cell - 1); // left
+        if ((cell + 1) % width != 0) AddNeighbor(cell + 1); // right
 
         return neighbors;
     }
 
-    public Vector2 GetRoomCoordinates(int index)
+    private void ConnectCells(int currentCell, int newCell)
     {
-        int x = index % (int)generationSize.x;
-        int y = index / (int)generationSize.x;
-        return new Vector2(x, y);
+        int width = generationSize.x;
+        if (newCell == currentCell + 1) // Right
+        {
+            dungeonGrid[currentCell].status[2] = true;
+            dungeonGrid[newCell].status[3] = true;
+        }
+        else if (newCell == currentCell - 1) // Left
+        {
+            dungeonGrid[currentCell].status[3] = true;
+            dungeonGrid[newCell].status[2] = true;
+        }
+        else if (newCell == currentCell + width) // Down
+        {
+            dungeonGrid[currentCell].status[1] = true;
+            dungeonGrid[newCell].status[0] = true;
+        }
+        else if (newCell == currentCell - width) // Up
+        {
+            dungeonGrid[currentCell].status[0] = true;
+            dungeonGrid[newCell].status[1] = true;
+        }
     }
 
-
-    void PlaceFinalBoss()
+    private IEnumerator SpawnRooms()
     {
-        // Get coordinates of the final room
-        int finalRoomIndex = dungeonGrid.Count - 1;
-        Vector2 finalRoomCoordinates = GetRoomCoordinates(finalRoomIndex);
+        for (int x = 0; x < generationSize.x; x++)
+        {
+            for (int y = 0; y < generationSize.y; y++)
+            {
+                int index = x + y * generationSize.x;
+                if (roomCells.Contains(index))
+                {
+                    Cell cell = dungeonGrid[index];
+                    int roomIndex = GetRoomIndex(x, y);
+                    if (roomIndex != -1)
+                    {
+                        Vector3 position = new Vector3(x * offset.x, 0, -y * offset.y);
+                        var room = Instantiate(rooms[roomIndex].room, position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                        room.UpdateRoom(cell.status);
+                        room.name += $" {x}-{y}";
+                    }
+                }
+                yield return new WaitForSeconds(generationDelay);
+            }
+        }
+    }
 
-        // Instantiate the boss in the middle of the final room
-        Vector3 bossPosition = new Vector3(finalRoomCoordinates.x * offset.x + offset.x / 2, 0, -finalRoomCoordinates.y * offset.y - offset.y / 2);
+    private int GetRoomIndex(int x, int y)
+    {
+        foreach (var rule in rooms)
+        {
+            SpawnType type = rule.GetSpawnType(x, y);
+            if (type == SpawnType.Required) return System.Array.IndexOf(rooms, rule);
+            if (type == SpawnType.Optional) return UnityEngine.Random.Range(0, rooms.Length);
+        }
+        return 0; // Default room
+    }
+
+    private void PlaceFinalBoss()
+    {
+        int finalRoomIndex = roomCells[roomCells.Count - 1];
+        Vector2 finalPos = GetRoomCoordinates(finalRoomIndex);
+        Vector3 bossPosition = new Vector3(finalPos.x * offset.x + offset.x / 2, 0, -finalPos.y * offset.y - offset.y / 2);
         Instantiate(finalBoss, bossPosition, Quaternion.identity, transform);
+    }
+
+    private Vector2 GetRoomCoordinates(int index)
+    {
+        int x = index % generationSize.x;
+        int y = index / generationSize.x;
+        return new Vector2(x, y);
     }
 }
