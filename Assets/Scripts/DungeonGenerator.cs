@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using WallThrough.Gameplay;
+using WallThrough.Generation;
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -9,16 +9,19 @@ public class DungeonGenerator : MonoBehaviour
     public int startPos = 0;
     public GameObject finalBoss;
     public Vector2 offset;
-    public Rule[] rooms;
+    public Rule[] rooms;  // First room for main path, second room for branches
     public float generationDelay = 0.3f;
+    public int mainPathLength = 10;  // Length of the main path
+    public int maxBranchLength = 3;  // Max length of branches
 
     private List<Cell> dungeonGrid;
-    private List<int> roomCells; // Cells marked for room instantiation
+    private List<int> roomCells;
+    private List<int> mainPathCells;
 
     public class Cell
     {
         public bool visited = false;
-        public bool isRoom = false; // Indicates if this cell will be a room
+        public bool isRoom = false;
         public bool[] status = new bool[4]; // Wall status for each direction
     }
 
@@ -56,7 +59,7 @@ public class DungeonGenerator : MonoBehaviour
         }
 
         InitializeDungeonGrid();
-        GenerateMazeWithRooms();
+        GenerateLinearPathWithBranches();
         StartCoroutine(SpawnRooms());
         PlaceFinalBoss();
     }
@@ -65,6 +68,7 @@ public class DungeonGenerator : MonoBehaviour
     {
         dungeonGrid = new List<Cell>(generationSize.x * generationSize.y);
         roomCells = new List<int>();
+        mainPathCells = new List<int>();
 
         for (int i = 0; i < generationSize.x * generationSize.y; i++)
         {
@@ -72,12 +76,47 @@ public class DungeonGenerator : MonoBehaviour
         }
     }
 
-    private void GenerateMazeWithRooms()
+    private void GenerateLinearPathWithBranches()
     {
         Stack<int> path = new Stack<int>();
         int currentCell = startPos;
+        int pathLength = 0;
 
-        for (int i = 0; i < generationSize.x * generationSize.y; i++)
+        while (pathLength < mainPathLength)
+        {
+            dungeonGrid[currentCell].visited = true;
+            dungeonGrid[currentCell].isRoom = true;
+            roomCells.Add(currentCell);
+            mainPathCells.Add(currentCell);  // Add to main path list
+
+            List<int> neighbors = GetUnvisitedNeighbors(currentCell);
+            if (neighbors.Count > 0)
+            {
+                path.Push(currentCell);
+                int nextCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)];
+                ConnectCells(currentCell, nextCell);
+                currentCell = nextCell;
+                pathLength++;
+            }
+            else if (path.Count > 0)
+            {
+                currentCell = path.Pop();
+            }
+
+            // Chance to start a branch path
+            if (pathLength > 2 && UnityEngine.Random.value < 0.3f)
+            {
+                GenerateBranch(currentCell);
+            }
+        }
+    }
+
+    private void GenerateBranch(int startCell)
+    {
+        int branchLength = UnityEngine.Random.Range(1, maxBranchLength);
+        int currentCell = startCell;
+
+        for (int i = 0; i < branchLength; i++)
         {
             dungeonGrid[currentCell].visited = true;
             dungeonGrid[currentCell].isRoom = true;
@@ -86,14 +125,9 @@ public class DungeonGenerator : MonoBehaviour
             List<int> neighbors = GetUnvisitedNeighbors(currentCell);
             if (neighbors.Count > 0)
             {
-                path.Push(currentCell);
-                int newCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)];
-                ConnectCells(currentCell, newCell);
-                currentCell = newCell;
-            }
-            else if (path.Count > 0)
-            {
-                currentCell = path.Pop();
+                int nextCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)];
+                ConnectCells(currentCell, nextCell);
+                currentCell = nextCell;
             }
             else
             {
@@ -158,34 +192,20 @@ public class DungeonGenerator : MonoBehaviour
                 if (roomCells.Contains(index))
                 {
                     Cell cell = dungeonGrid[index];
-                    int roomIndex = GetRoomIndex(x, y);
-                    if (roomIndex != -1)
-                    {
-                        Vector3 position = new Vector3(x * offset.x, 0, -y * offset.y);
-                        var room = Instantiate(rooms[roomIndex].room, position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
-                        room.UpdateRoom(cell.status);
-                        room.name += $" {x}-{y}";
-                    }
+                    int roomIndex = mainPathCells.Contains(index) ? 0 : 1;  // Main path uses first room, branches use second
+                    Vector3 position = new Vector3(x * offset.x, 0, -y * offset.y);
+                    var room = Instantiate(rooms[roomIndex].room, position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                    room.UpdateRoom(cell.status);
+                    room.name += $" {x}-{y}";
                 }
                 yield return new WaitForSeconds(generationDelay);
             }
         }
     }
 
-    private int GetRoomIndex(int x, int y)
-    {
-        foreach (var rule in rooms)
-        {
-            SpawnType type = rule.GetSpawnType(x, y);
-            if (type == SpawnType.Required) return System.Array.IndexOf(rooms, rule);
-            if (type == SpawnType.Optional) return UnityEngine.Random.Range(0, rooms.Length);
-        }
-        return 0; // Default room
-    }
-
     private void PlaceFinalBoss()
     {
-        int finalRoomIndex = roomCells[roomCells.Count - 1];
+        int finalRoomIndex = mainPathCells[mainPathCells.Count - 1];
         Vector2 finalPos = GetRoomCoordinates(finalRoomIndex);
         Vector3 bossPosition = new Vector3(finalPos.x * offset.x + offset.x / 2, 0, -finalPos.y * offset.y - offset.y / 2);
         Instantiate(finalBoss, bossPosition, Quaternion.identity, transform);

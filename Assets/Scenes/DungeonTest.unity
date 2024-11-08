@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce5b60c24c74f343bd0dc128216277f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generationSize: {x: 5, y: 5}
+  generationSize: {x: 100, y: 100}
   startPos: 0
   finalBoss: {fileID: 3601818987285764771, guid: ac89b0dcf996fe6489be05dccaa537e6, type: 3}
   offset: {x: 24, y: 24}
@@ -160,6 +160,13 @@ MonoBehaviour:
     minPosition: {x: 0, y: 0}
     maxPosition: {x: 2000, y: 2000}
     obligatory: 1
+  - room: {fileID: 6451114561706508905, guid: 799dce338c49f3848bb3c16cde06929d, type: 3}
+    minPosition: {x: 0, y: 0}
+    maxPosition: {x: 2000, y: 2000}
+    obligatory: 0
+  generationDelay: 0.01
+  mainPathLength: 10
+  maxBranchLength: 3
 --- !u!4 &1365801174
 Transform:
   m_ObjectHideFlags: 0
