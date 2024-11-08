@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,11 @@ using WallThrough.Generation;
 
 public class DungeonGenerator : MonoBehaviour
 {
-    public Vector2Int generationSize;
+    public int generationSize;
     public int startPos = 0;
     public GameObject finalBoss;
     public Vector2 offset;
-    public Rule[] rooms;  // First room for main path, second room for branches
+    public GameObject[] rooms;  // First room for main path, second room for branches
     public float generationDelay = 0.3f;
     public int mainPathLength = 10;  // Length of the main path
     public int maxBranchLength = 3;  // Max length of branches
@@ -25,26 +26,6 @@ public class DungeonGenerator : MonoBehaviour
         public bool[] status = new bool[4]; // Wall status for each direction
     }
 
-    [System.Serializable]
-    public class Rule
-    {
-        public GameObject room;
-        public Vector2Int minPosition;
-        public Vector2Int maxPosition;
-        public bool obligatory;
-
-        public SpawnType GetSpawnType(int x, int y)
-        {
-            if (x >= minPosition.x && x <= maxPosition.x && y >= minPosition.y && y <= maxPosition.y)
-            {
-                return obligatory ? SpawnType.Required : SpawnType.Optional;
-            }
-            return SpawnType.None;
-        }
-    }
-
-    public enum SpawnType { None, Optional, Required }
-
     private void Start()
     {
         GenerateDungeon();
@@ -52,7 +33,7 @@ public class DungeonGenerator : MonoBehaviour
 
     private void GenerateDungeon()
     {
-        if (generationSize.x < 1 || generationSize.y < 1)
+        if (generationSize < 1)
         {
             Debug.LogError("Generation size should not be zero!");
             return;
@@ -66,11 +47,11 @@ public class DungeonGenerator : MonoBehaviour
 
     private void InitializeDungeonGrid()
     {
-        dungeonGrid = new List<Cell>(generationSize.x * generationSize.y);
-        roomCells = new List<int>();
-        mainPathCells = new List<int>();
+        dungeonGrid = new List<Cell>(MathSquare(generationSize));
+        roomCells = new();
+        mainPathCells = new();
 
-        for (int i = 0; i < generationSize.x * generationSize.y; i++)
+        for (int i = 0; i < MathSquare(generationSize); i++)
         {
             dungeonGrid.Add(new Cell());
         }
@@ -78,7 +59,7 @@ public class DungeonGenerator : MonoBehaviour
 
     private void GenerateLinearPathWithBranches()
     {
-        Stack<int> path = new Stack<int>();
+        Stack<int> path = new();
         int currentCell = startPos;
         int pathLength = 0;
 
@@ -138,8 +119,8 @@ public class DungeonGenerator : MonoBehaviour
 
     private List<int> GetUnvisitedNeighbors(int cell)
     {
-        List<int> neighbors = new List<int>();
-        int width = generationSize.x;
+        List<int> neighbors = new();
+        int width = generationSize;
 
         void AddNeighbor(int neighbor)
         {
@@ -159,7 +140,7 @@ public class DungeonGenerator : MonoBehaviour
 
     private void ConnectCells(int currentCell, int newCell)
     {
-        int width = generationSize.x;
+        int width = generationSize;
         if (newCell == currentCell + 1) // Right
         {
             dungeonGrid[currentCell].status[2] = true;
@@ -184,17 +165,17 @@ public class DungeonGenerator : MonoBehaviour
 
     private IEnumerator SpawnRooms()
     {
-        for (int x = 0; x < generationSize.x; x++)
+        for (int x = 0; x < generationSize; x++)
         {
-            for (int y = 0; y < generationSize.y; y++)
+            for (int y = 0; y < generationSize; y++)
             {
-                int index = x + y * generationSize.x;
+                int index = x + y * generationSize;
                 if (roomCells.Contains(index))
                 {
                     Cell cell = dungeonGrid[index];
                     int roomIndex = mainPathCells.Contains(index) ? 0 : 1;  // Main path uses first room, branches use second
-                    Vector3 position = new Vector3(x * offset.x, 0, -y * offset.y);
-                    var room = Instantiate(rooms[roomIndex].room, position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                    Vector3 position = new(x * offset.x, 0, -y * offset.y);
+                    var room = Instantiate(rooms[roomIndex], position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
                     room.UpdateRoom(cell.status);
                     room.name += $" {x}-{y}";
                 }
@@ -205,16 +186,24 @@ public class DungeonGenerator : MonoBehaviour
 
     private void PlaceFinalBoss()
     {
-        int finalRoomIndex = mainPathCells[mainPathCells.Count - 1];
+        int finalRoomIndex = mainPathCells[^1]; // ^1 means last element in the array
         Vector2 finalPos = GetRoomCoordinates(finalRoomIndex);
-        Vector3 bossPosition = new Vector3(finalPos.x * offset.x + offset.x / 2, 0, -finalPos.y * offset.y - offset.y / 2);
+        Vector3 bossPosition = new(finalPos.x * offset.x + offset.x / 2, 0, -finalPos.y * offset.y - offset.y / 2);
         Instantiate(finalBoss, bossPosition, Quaternion.identity, transform);
     }
 
     private Vector2 GetRoomCoordinates(int index)
     {
-        int x = index % generationSize.x;
-        int y = index / generationSize.x;
+        int x = index % generationSize;
+        int y = index / generationSize;
         return new Vector2(x, y);
     }
+
+    public T MathSquare<T>(T numberToSquare) where T : IConvertible
+    {
+        // Convert to double for arithmetic operations
+        double num = Convert.ToDouble(numberToSquare);
+        return (T)Convert.ChangeType(num * num, typeof(T));  // Convert back to original type.
+    }
+
 }
