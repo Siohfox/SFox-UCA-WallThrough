@@ -74,8 +74,11 @@ public class DungeonGenerator : MonoBehaviour
             if (neighbors.Count > 0) // If there is unvisited neighbors to the current cell, it has potential to be part of the path
             {
                 path.Push(currentCell);                                                 // Push the cell as part of the potential path
-                int nextCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)]; // Randomly select a neighbor to be the next cell in the path
-                ConnectCells(currentCell, nextCell);                                    // Make sure the doors between the current cell and the newly selected neighbor are open
+                int nextCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)]; // Randomly select a neighbor to be the next cell in the path                                      
+                if(pathLength != generationSize - 1) // Check if final room
+                {
+                    ConnectCells(currentCell, nextCell); // Make sure the doors between the current cell and the newly selected neighbor are open
+                }
                 currentCell = nextCell;
                 pathLength++;
             }
@@ -91,35 +94,38 @@ public class DungeonGenerator : MonoBehaviour
             // Chance to start a branch path
             if (pathLength > 2 && UnityEngine.Random.value < 0.3f)
             {
-                //GenerateBranch(currentCell);
+                GenerateBranch(currentCell);
             }
         }
     }
 
-    //private void GenerateBranch(int startCell)
-    //{
-    //    int branchLength = UnityEngine.Random.Range(1, maxBranchLength);
-    //    int currentCell = startCell;
+    private void GenerateBranch(int startCell)
+    {
+        int branchLength = UnityEngine.Random.Range(1, maxBranchLength);
+        int currentCell = startCell;
 
-    //    for (int i = 0; i < branchLength; i++)
-    //    {
-    //        dungeonGrid[currentCell].visited = true;
-    //        dungeonGrid[currentCell].isRoom = true;
-    //        roomCells.Add(currentCell);
+        for (int i = 0; i < branchLength; i++)
+        {
+            dungeonGrid[currentCell].visited = true;
+            dungeonGrid[currentCell].isRoom = true;
+            roomCells.Add(currentCell);
 
-    //        List<int> neighbors = GetUnvisitedNeighbors(currentCell);
-    //        if (neighbors.Count > 0)
-    //        {
-    //            int nextCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)];
-    //            ConnectCells(currentCell, nextCell);
-    //            currentCell = nextCell;
-    //        }
-    //        else
-    //        {
-    //            break;
-    //        }
-    //    }
-    //}
+            List<int> neighbors = GetUnvisitedNeighbors(currentCell);
+            if (neighbors.Count > 0)
+            {
+                int nextCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)];
+                if (i != branchLength - 1) // Check if final room
+                {
+                    ConnectCells(currentCell, nextCell); // Make sure the doors between the current cell and the newly selected neighbor are open
+                }
+                currentCell = nextCell;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
 
     private List<int> GetUnvisitedNeighbors(int cell)
     {
