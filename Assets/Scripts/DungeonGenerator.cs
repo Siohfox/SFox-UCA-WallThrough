@@ -12,7 +12,6 @@ public class DungeonGenerator : MonoBehaviour
     public Vector2 offset;
     public GameObject[] rooms;  // First room for main path, second room for branches
     public float generationDelay = 0.3f;
-    public int mainPathLength = 10;  // Length of the main path
     public int maxBranchLength = 3;  // Max length of branches
 
     private List<Cell> dungeonGrid;
@@ -63,7 +62,7 @@ public class DungeonGenerator : MonoBehaviour
         int currentCell = startPos;
         int pathLength = 0;
 
-        while (pathLength < mainPathLength)
+        while (pathLength < generationSize)
         {
             dungeonGrid[currentCell].visited = true;
             dungeonGrid[currentCell].isRoom = true;
@@ -71,14 +70,19 @@ public class DungeonGenerator : MonoBehaviour
             mainPathCells.Add(currentCell);  // Add to main path list
 
             List<int> neighbors = GetUnvisitedNeighbors(currentCell);
-            if (neighbors.Count > 0)
+
+            if (neighbors.Count > 0) // If there is unvisited neighbors to the current cell, it has potential to be part of the path
             {
-                path.Push(currentCell);
-                int nextCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)];
-                ConnectCells(currentCell, nextCell);
+                path.Push(currentCell);                                                 // Push the cell as part of the potential path
+                int nextCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)]; // Randomly select a neighbor to be the next cell in the path
+                ConnectCells(currentCell, nextCell);                                    // Make sure the doors between the current cell and the newly selected neighbor are open
                 currentCell = nextCell;
                 pathLength++;
             }
+            // No neighbors? Check if there are still cells in the path stack
+            // If there is still cells in the path stack, pop a previous cell to backtrack
+            // Note to self: Pop removes the current cell from the top of the stack (like a stack of plates), and
+            // this removed plate becomes the current cell again, completing the backtrack.
             else if (path.Count > 0)
             {
                 currentCell = path.Pop();
@@ -130,36 +134,45 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
-        AddNeighbor(cell - width); // up
-        AddNeighbor(cell + width); // down
+        if (cell - width >= 0) AddNeighbor(cell - width); // Up
+        if (cell + width < dungeonGrid.Count) AddNeighbor(cell + width); // Down
         if (cell % width != 0) AddNeighbor(cell - 1); // left
         if ((cell + 1) % width != 0) AddNeighbor(cell + 1); // right
 
         return neighbors;
     }
 
+
     private void ConnectCells(int currentCell, int newCell)
     {
         int width = generationSize;
+
+        // Avoid connecting to outside cells
+        if (newCell < 0 || newCell >= dungeonGrid.Count) return;
+
         if (newCell == currentCell + 1) // Right
         {
-            dungeonGrid[currentCell].status[2] = true;
-            dungeonGrid[newCell].status[3] = true;
+            if ((currentCell + 1) % width == 0) return; // Prevent connection at the edge
+            dungeonGrid[currentCell].status[(int)Direction.Right] = true; // Disable Right Wall
+            dungeonGrid[newCell].status[(int)Direction.Left] = true; // Disable Left Wall
         }
         else if (newCell == currentCell - 1) // Left
         {
-            dungeonGrid[currentCell].status[3] = true;
-            dungeonGrid[newCell].status[2] = true;
+            if (currentCell % width == 0) return; // Prevent connection at the edge
+            dungeonGrid[currentCell].status[(int)Direction.Left] = true; // Disable Left Wall
+            dungeonGrid[newCell].status[(int)Direction.Right] = true; // Disable Right Wall
         }
         else if (newCell == currentCell + width) // Down
         {
-            dungeonGrid[currentCell].status[1] = true;
-            dungeonGrid[newCell].status[0] = true;
+            if (newCell >= dungeonGrid.Count) return; // Prevent connection beyond bottom edge
+            dungeonGrid[currentCell].status[(int)Direction.Down] = true;
+            dungeonGrid[newCell].status[(int)Direction.Up] = true;
         }
         else if (newCell == currentCell - width) // Up
         {
-            dungeonGrid[currentCell].status[0] = true;
-            dungeonGrid[newCell].status[1] = true;
+            if (newCell < 0) return; // Prevent connection beyond top edge
+            dungeonGrid[currentCell].status[(int)Direction.Up] = true;
+            dungeonGrid[newCell].status[(int)Direction.Down] = true;
         }
     }
 
