@@ -91,35 +91,35 @@ public class DungeonGenerator : MonoBehaviour
             // Chance to start a branch path
             if (pathLength > 2 && UnityEngine.Random.value < 0.3f)
             {
-                GenerateBranch(currentCell);
+                //GenerateBranch(currentCell);
             }
         }
     }
 
-    private void GenerateBranch(int startCell)
-    {
-        int branchLength = UnityEngine.Random.Range(1, maxBranchLength);
-        int currentCell = startCell;
+    //private void GenerateBranch(int startCell)
+    //{
+    //    int branchLength = UnityEngine.Random.Range(1, maxBranchLength);
+    //    int currentCell = startCell;
 
-        for (int i = 0; i < branchLength; i++)
-        {
-            dungeonGrid[currentCell].visited = true;
-            dungeonGrid[currentCell].isRoom = true;
-            roomCells.Add(currentCell);
+    //    for (int i = 0; i < branchLength; i++)
+    //    {
+    //        dungeonGrid[currentCell].visited = true;
+    //        dungeonGrid[currentCell].isRoom = true;
+    //        roomCells.Add(currentCell);
 
-            List<int> neighbors = GetUnvisitedNeighbors(currentCell);
-            if (neighbors.Count > 0)
-            {
-                int nextCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)];
-                ConnectCells(currentCell, nextCell);
-                currentCell = nextCell;
-            }
-            else
-            {
-                break;
-            }
-        }
-    }
+    //        List<int> neighbors = GetUnvisitedNeighbors(currentCell);
+    //        if (neighbors.Count > 0)
+    //        {
+    //            int nextCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)];
+    //            ConnectCells(currentCell, nextCell);
+    //            currentCell = nextCell;
+    //        }
+    //        else
+    //        {
+    //            break;
+    //        }
+    //    }
+    //}
 
     private List<int> GetUnvisitedNeighbors(int cell)
     {
