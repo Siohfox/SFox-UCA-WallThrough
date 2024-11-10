@@ -328,6 +328,7 @@ MonoBehaviour:
   - {fileID: 4164796719904630724}
   - {fileID: 8426107457953316530}
   - {fileID: 8924419774644587614}
+  quickTimeWallPrefab: {fileID: 3608613932425727389, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
 --- !u!1001 &7406635290888482
 PrefabInstance:
   m_ObjectHideFlags: 0

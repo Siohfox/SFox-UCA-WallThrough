@@ -23,6 +23,7 @@ public class DungeonGenerator : MonoBehaviour
         public bool visited = false;
         public bool isRoom = false;
         public bool[] status = new bool[4]; // Wall status for each direction
+        public Direction doorSpawnDirection;
     }
 
     private void Start()
@@ -161,24 +162,32 @@ public class DungeonGenerator : MonoBehaviour
             if ((currentCell + 1) % width == 0) return; // Prevent connection at the edge
             dungeonGrid[currentCell].status[(int)Direction.Right] = true; // Disable Right Wall
             dungeonGrid[newCell].status[(int)Direction.Left] = true; // Disable Left Wall
+
+            dungeonGrid[currentCell].doorSpawnDirection = Direction.Right;
         }
         else if (newCell == currentCell - 1) // Left
         {
             if (currentCell % width == 0) return; // Prevent connection at the edge
             dungeonGrid[currentCell].status[(int)Direction.Left] = true; // Disable Left Wall
             dungeonGrid[newCell].status[(int)Direction.Right] = true; // Disable Right Wall
+
+            dungeonGrid[currentCell].doorSpawnDirection = Direction.Left;
         }
         else if (newCell == currentCell + width) // Down
         {
             if (newCell >= dungeonGrid.Count) return; // Prevent connection beyond bottom edge
             dungeonGrid[currentCell].status[(int)Direction.Down] = true;
             dungeonGrid[newCell].status[(int)Direction.Up] = true;
+
+            dungeonGrid[currentCell].doorSpawnDirection = Direction.Down;
         }
         else if (newCell == currentCell - width) // Up
         {
             if (newCell < 0) return; // Prevent connection beyond top edge
             dungeonGrid[currentCell].status[(int)Direction.Up] = true;
             dungeonGrid[newCell].status[(int)Direction.Down] = true;
+
+            dungeonGrid[currentCell].doorSpawnDirection = Direction.Up;
         }
     }
 
@@ -195,7 +204,7 @@ public class DungeonGenerator : MonoBehaviour
                     int roomIndex = mainPathCells.Contains(index) ? 0 : 1;  // Main path uses first room, branches use second
                     Vector3 position = new(x * offset.x, 0, -y * offset.y);
                     var room = Instantiate(rooms[roomIndex], position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
-                    room.UpdateRoom(cell.status);
+                    room.UpdateRoom(cell.status, cell.doorSpawnDirection);
                     room.name += $" {x}-{y}";
                 }
                 yield return new WaitForSeconds(generationDelay);

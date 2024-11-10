@@ -11,15 +11,25 @@ namespace WallThrough.Generation
         public GameObject[] walls;
         public GameObject[] doors;
         public GameObject[] arches;
+        public GameObject quickTimeWallPrefab;
 
         // Update is called once per frame
-        public void UpdateRoom(bool[] status)
+        public void UpdateRoom(bool[] status, Direction doorSpawnDirection)
         {
             for(int i = 0; i < status.Length; i++)
             {
                 doors[i].SetActive(status[i]);
                 walls[i].SetActive(!status[i]);
                 arches[i].SetActive(status[i]);
+
+                if (status[i] && doorSpawnDirection == (Direction)i)
+                {
+                    if (quickTimeWallPrefab)
+                    {
+                        GameObject quickTimeWall = Instantiate(quickTimeWallPrefab, doors[i].transform.position + new Vector3(0,2,0), doors[i].transform.rotation);
+                        quickTimeWall.transform.SetParent(transform);
+                    } 
+                }
             }
         }
     }

@@ -6,7 +6,7 @@ namespace WallThrough.Gameplay
     public class MiniPuzzleColourCube : MonoBehaviour
     {
         [Header("Pressure Plates")]
-        [SerializeField] private Transform[] pressurePlateLocations; // Array of Transforms for pressure plate locations
+        [SerializeField] private Transform pressurePlateLocation; // Array of Transforms for pressure plate locations
         [SerializeField] private GameObject pressurePlatePrefab; // Prefab for the pressure plate
 
         [SerializeField] private ColourCodeManager colourCodeManager; // Reference to the ColourCodeManager
@@ -15,8 +15,24 @@ namespace WallThrough.Gameplay
 
         public void Initialize(int[] colourCodes)
         {
-            // Initialize the ColourCodeManager
-            parentObject = colourCodeManager.Initialize(colourCodes);
+            if (colourCodeManager)
+            {
+                // Initialize the ColourCodeManager
+                parentObject = colourCodeManager.Initialize(colourCodes);
+            }
+            else
+            {
+                try
+                {
+                    colourCodeManager = FindObjectOfType<ColourCodeManager>();
+
+                    parentObject = colourCodeManager.Initialize(colourCodes);
+                }
+                catch
+                {
+                    Debug.LogWarning("Colour code manager not found");
+                }
+            }
 
             // Spawn the pressure plate
             SpawnPressurePlate();
@@ -24,14 +40,12 @@ namespace WallThrough.Gameplay
 
         private void SpawnPressurePlate()
         {
-            if (pressurePlateLocations.Length > 0)
-            {
-                int randomIndex = Random.Range(0, pressurePlateLocations.Length);
-                Transform selectedLocation = pressurePlateLocations[randomIndex];
 
-                GameObject pressurePlate = Instantiate(pressurePlatePrefab, selectedLocation.position, Quaternion.identity);
-                pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject); // Pass parentObject
-            }
+            Transform selectedLocation = transform.parent.parent;
+
+            GameObject pressurePlate = Instantiate(pressurePlatePrefab, selectedLocation.position, Quaternion.identity);
+            pressurePlate.transform.SetParent(transform);
+            pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject); // Pass parentObject
         }
     }
 

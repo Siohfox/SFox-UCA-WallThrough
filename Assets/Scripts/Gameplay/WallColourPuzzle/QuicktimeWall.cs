@@ -26,6 +26,30 @@ namespace WallThrough.Gameplay
             if (!GetComponent<AudioSource>())
                 Debug.LogWarning("No audio source found");
             SetObjectiveType(ObjectiveType.WallPuzzle);
+
+            if(!quickTimeMenu)
+            {
+                try
+                {
+                    quickTimeMenu = FindObjectOfType<QuickTimeMenu>(true);
+                }
+                catch
+                {
+                    Debug.LogError("No quick time menu found");
+                }
+            }
+
+            if (!failCross)
+            {
+                try
+                {
+                    failCross = GameObject.Find("GameplayCanvas").transform.Find("FailCross").gameObject;
+                }
+                catch
+                {
+                    Debug.LogError("No failCross found");
+                }
+            }
         }
 
         private void Start() => InitializeQuickTimeEvent();
@@ -39,7 +63,10 @@ namespace WallThrough.Gameplay
             if (colourCode.Length > 0)
             {
                 ObjectiveManager.Instance.RegisterObjective(this, colourCode);
-                associatedMiniPuzzle.Initialize(colourCode);
+                if (associatedMiniPuzzle)
+                {
+                    associatedMiniPuzzle.Initialize(colourCode);
+                }  
             }
 
             // DebugColourInfo();
