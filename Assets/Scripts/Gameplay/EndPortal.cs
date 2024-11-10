@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using WallThrough.Gameplay.Interactable;
 using WallThrough.Core;
+using UnityEngine.SceneManagement;
+using System.IO;
 
 namespace WallThrough.Gameplay
 {
@@ -23,6 +25,30 @@ namespace WallThrough.Gameplay
         {
             // Find and assign the ObjectiveManager in the scene
             objectiveManager = FindObjectOfType<ObjectiveManager>();
+
+            if (!winText)
+            {
+                try
+                {
+                    winText = GameObject.Find("GameplayCanvas").transform.Find("YouWinText").gameObject;
+                }
+                catch
+                {
+                    Debug.LogWarning("Could not find the YouWinText gameobject, is the name changed?");
+                }
+            }
+
+            if (!adviceText)
+            {
+                try
+                {
+                    adviceText = GameObject.Find("GameplayCanvas").transform.Find("AdviceText").gameObject;
+                }
+                catch
+                {
+                    Debug.LogWarning("Could not find the AdviceText gameobject, is the name changed?");
+                }
+            }
         }
 
         /// <summary>
@@ -71,7 +97,18 @@ namespace WallThrough.Gameplay
         {
             winText.SetActive(true); // Show win text if objectives are completed (until portal object made)
             yield return new WaitForSeconds(2f);
-            LevelManager.Instance.LoadScene(sceneToLoadName);
+
+            // Get the current scene index
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+            // Get the path of the next scene by build index
+            string nextScenePath = SceneUtility.GetScenePathByBuildIndex(currentSceneIndex + 1);
+
+            // Extract the scene name from the path
+            string nextSceneName = Path.GetFileNameWithoutExtension(nextScenePath);
+
+            // Load the next scene by name
+            LevelManager.Instance.LoadScene(nextSceneName);
         }
     }
 }

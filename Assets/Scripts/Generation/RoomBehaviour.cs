@@ -12,6 +12,7 @@ namespace WallThrough.Generation
         public GameObject[] doors;
         public GameObject[] arches;
         public GameObject quickTimeWallPrefab;
+        public Vector3 roomSize = new Vector3(24, 0, 24);
 
         // Update is called once per frame
         public void UpdateRoom(bool[] status, Direction doorSpawnDirection)
@@ -32,5 +33,7 @@ namespace WallThrough.Generation
                 }
             }
         }
+
+        public Vector3 GetRoomCentre() => new Vector3(transform.position.x + roomSize.x / 2, 0, transform.position.z - roomSize.z / 2);
     }
 }
