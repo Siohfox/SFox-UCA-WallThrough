@@ -15,15 +15,16 @@ namespace WallThrough.Generation
         public Vector3 roomSize = new Vector3(24, 0, 24);
 
         // Update is called once per frame
-        public void UpdateRoom(bool[] status, Direction doorSpawnDirection)
+        //public void UpdateRoom(bool[] status, Direction doorSpawnDirection)
+        public void UpdateRoom(DungeonGenerator.Cell cell)
         {
-            for(int i = 0; i < status.Length; i++)
+            for(int i = 0; i < cell.status.Length; i++)
             {
-                doors[i].SetActive(status[i]);
-                walls[i].SetActive(!status[i]);
-                arches[i].SetActive(status[i]);
+                doors[i].SetActive(cell.status[i]);
+                walls[i].SetActive(!cell.status[i]);
+                arches[i].SetActive(cell.status[i]);
 
-                if (status[i] && doorSpawnDirection == (Direction)i)
+                if (cell.status[i] && cell.doorSpawnDirection == (Direction)i)
                 {
                     if (quickTimeWallPrefab)
                     {
