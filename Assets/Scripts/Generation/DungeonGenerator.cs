@@ -77,7 +77,7 @@ namespace WallThrough.Generation
                 {
                     path.Push(currentCell);                                                 // Push the cell as part of the potential path
                     int nextCell = neighbors[UnityEngine.Random.Range(0, neighbors.Count)]; // Randomly select a neighbor to be the next cell in the path                                      
-                    if (pathLength != generationSize - 1) // Check if final room
+                    if (pathLength != generationSize - 1)                                   // Check if final room
                     {
                         ConnectCells(currentCell, nextCell); // Make sure the doors between the current cell and the newly selected neighbor are open
                     }
@@ -200,22 +200,22 @@ namespace WallThrough.Generation
 
         private IEnumerator SpawnRooms()
         {
-            for (int i = 0; i < roomCells.Count; i++)
+            for (int x = 0; x < generationSize; x++)
             {
-                int index = roomCells[i];
-                Cell cell = dungeonGrid[index];
-                int roomIndex = mainPathCells.Contains(index) ? 0 : 1; // Choose main path or branch room
-
-                Vector2 cellCoords = GetRoomCoordinates(index);
-                Vector3 position = new(cellCoords.x * offset.x, 0, -cellCoords.y * offset.y);
-
-                var room = Instantiate(rooms[roomIndex], position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
-                room.UpdateRoom(cell);
-
-                // Get the prefab's original name and append the room index and coordinates
-                room.name = $"{rooms[roomIndex].name} ({i + 1}) {cellCoords.x}-{cellCoords.y}";
-
-                yield return new WaitForSeconds(generationDelay);
+                for (int y = 0; y < generationSize; y++)
+                {
+                    int index = x + y * generationSize;
+                    if (roomCells.Contains(index))
+                    {
+                        Cell cell = dungeonGrid[index];
+                        int roomIndex = mainPathCells.Contains(index) ? 0 : 1;  // Main path uses first room, branches use second
+                        Vector3 position = new(x * offset.x, 0, -y * offset.y);
+                        var room = Instantiate(rooms[roomIndex], position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                        room.UpdateRoom(cell);
+                        room.name += $" {x}-{y}";
+                    }
+                    yield return new WaitForSeconds(generationDelay);
+                }
             }
         }
 

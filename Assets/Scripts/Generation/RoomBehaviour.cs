@@ -25,7 +25,8 @@ namespace WallThrough.Generation
                 walls[i].SetActive(!cell.status[i]);
                 arches[i].SetActive(cell.status[i]);
 
-                if (cell.status[i] && cell.doorSpawnDirection == (Direction)i)
+                // Check if quick-time wall should be instantiated
+                if (cell.status[i] && cell.doorSpawnDirection == (Direction)i && !cell.isFinalRoom)  // Check for final room
                 {
                     if (quickTimeWallPrefab)
                     {
@@ -40,6 +41,7 @@ namespace WallThrough.Generation
                 PlaceExitPortal();
             }
         }
+
 
         private void PlaceExitPortal()
         {
