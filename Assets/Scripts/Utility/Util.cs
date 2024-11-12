@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Utility
+namespace WallThrough.Utility
 {
     public static class Util
     {
@@ -13,6 +13,13 @@ namespace Utility
             Array enumValues = Enum.GetValues(typeof(T));
             int randomIndex = UnityEngine.Random.Range(0, enumValues.Length);
             return (T)enumValues.GetValue(randomIndex);
+        }
+
+        public static T MathSquare<T>(T numberToSquare) where T : IConvertible
+        {
+            // Convert to double for arithmetic operations
+            double num = Convert.ToDouble(numberToSquare);
+            return (T)Convert.ChangeType(num * num, typeof(T));  // Convert back to original type.
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WallThrough.Utility;
 
 namespace WallThrough.Generation
 {
@@ -9,7 +10,6 @@ namespace WallThrough.Generation
     {
         public int generationSize;
         public int startPos = 0;
-        public GameObject finalBoss;
         public Vector2 offset;
         public GameObject[] rooms;  // First room for main path, second room for branches
         public float generationDelay = 0.3f;
@@ -23,7 +23,8 @@ namespace WallThrough.Generation
         {
             public bool visited = false;
             public bool isRoom = false;
-            public bool[] status = new bool[4]; // Wall status for each direction
+            public bool isFinalRoom = false;
+            public bool[] status = new bool[4]; // Wall status for each direction         
             public Direction doorSpawnDirection;
         }
 
@@ -43,16 +44,15 @@ namespace WallThrough.Generation
             InitializeDungeonGrid();
             GenerateLinearPathWithBranches();
             StartCoroutine(SpawnRooms());
-            PlaceFinalBoss();
         }
 
         private void InitializeDungeonGrid()
         {
-            dungeonGrid = new List<Cell>(MathSquare(generationSize));
+            dungeonGrid = new List<Cell>(Util.MathSquare(generationSize));
             roomCells = new();
             mainPathCells = new();
 
-            for (int i = 0; i < MathSquare(generationSize); i++)
+            for (int i = 0; i < Util.MathSquare(generationSize); i++)
             {
                 dungeonGrid.Add(new Cell());
             }
@@ -98,6 +98,12 @@ namespace WallThrough.Generation
                 {
                     GenerateBranch(currentCell);
                 }
+            }
+
+            if (mainPathCells.Count > 0)
+            {
+                int finalRoomIndex = mainPathCells[^1]; // ^1 gets the last item in mainPathCells
+                dungeonGrid[finalRoomIndex].isFinalRoom = true; // Mark it as final room
             }
         }
 
@@ -192,34 +198,25 @@ namespace WallThrough.Generation
             }
         }
 
-        // Spawns all the rooms in the 
         private IEnumerator SpawnRooms()
         {
-            for (int x = 0; x < generationSize; x++)
+            for (int i = 0; i < roomCells.Count; i++)
             {
-                for (int y = 0; y < generationSize; y++)
-                {
-                    int index = x + y * generationSize;
-                    if (roomCells.Contains(index))
-                    {
-                        Cell cell = dungeonGrid[index];
-                        int roomIndex = mainPathCells.Contains(index) ? 0 : 1;  // Main path uses first room, branches use second
-                        Vector3 position = new(x * offset.x, 0, -y * offset.y);
-                        var room = Instantiate(rooms[roomIndex], position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
-                        room.UpdateRoom(cell);
-                        room.name += $" {x}-{y}";
-                    }
-                    yield return new WaitForSeconds(generationDelay);
-                }
-            }
-        }
+                int index = roomCells[i];
+                Cell cell = dungeonGrid[index];
+                int roomIndex = mainPathCells.Contains(index) ? 0 : 1; // Choose main path or branch room
 
-        private void PlaceFinalBoss()
-        {
-            int finalRoomIndex = mainPathCells[^1]; // ^1 means last element in the array
-            Vector2 finalPos = GetRoomCoordinates(finalRoomIndex);
-            Vector3 bossPosition = new(finalPos.x * offset.x + offset.x / 2, 0, -finalPos.y * offset.y - offset.y / 2);
-            Instantiate(finalBoss, bossPosition, Quaternion.identity, transform);
+                Vector2 cellCoords = GetRoomCoordinates(index);
+                Vector3 position = new(cellCoords.x * offset.x, 0, -cellCoords.y * offset.y);
+
+                var room = Instantiate(rooms[roomIndex], position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                room.UpdateRoom(cell);
+
+                // Get the prefab's original name and append the room index and coordinates
+                room.name = $"{rooms[roomIndex].name} ({i + 1}) {cellCoords.x}-{cellCoords.y}";
+
+                yield return new WaitForSeconds(generationDelay);
+            }
         }
 
         private Vector2 GetRoomCoordinates(int index)
@@ -228,13 +225,5 @@ namespace WallThrough.Generation
             int y = index / generationSize;
             return new Vector2(x, y);
         }
-
-        public T MathSquare<T>(T numberToSquare) where T : IConvertible
-        {
-            // Convert to double for arithmetic operations
-            double num = Convert.ToDouble(numberToSquare);
-            return (T)Convert.ChangeType(num * num, typeof(T));  // Convert back to original type.
-        }
-
     }
 }
