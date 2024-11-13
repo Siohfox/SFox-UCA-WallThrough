@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using WallThrough.Gameplay.Pawn;
+using WallThrough.UI;
 
 public class Tutorial : MonoBehaviour
 {
@@ -16,19 +17,33 @@ public class Tutorial : MonoBehaviour
         Neutral
     }
 
-    [SerializeField] private TMP_Text WASDText;
-    [SerializeField] private TMP_Text findTheColourCodeText;
-    [SerializeField] private TMP_Text walkNearDoorText;
-    [SerializeField] private TMP_Text collectCollectableText;
-    [SerializeField] private TMP_Text ExitPortalText;
-
     [SerializeField] private TutorialState state;
 
     [SerializeField] private Movement playerMovement;
+    [SerializeField] private UIManager uiManager;
+
+    [Header("TutorialUI")]
+    [SerializeField] private GameObject WASDText;
+    [SerializeField] private GameObject findTheColourCodeText;
+    [SerializeField] private GameObject walkNearDoorText;
+    [SerializeField] private GameObject collectCollectableText;
+    [SerializeField] private GameObject ExitPortalText;
 
     private void Start()
     {
         state = TutorialState.WASD; 
+
+        if (uiManager == null)
+        {
+            try
+            {
+                uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+            }
+            catch
+            {
+                Debug.LogWarning("Tutorial Could not find UI Manager");
+            }
+        }
     }
 
     private void Update()
@@ -36,27 +51,27 @@ public class Tutorial : MonoBehaviour
         switch (state)
         {
             case TutorialState.WASD:
-                WASDText.gameObject.SetActive(true);     
-                if(playerMovement.GetCurrentVelocity().x > 0 || playerMovement.GetCurrentVelocity().z > 0)
+                WASDText.SetActive(true);
+                if (playerMovement.GetCurrentVelocity().x > 0 || playerMovement.GetCurrentVelocity().z > 0)
                 {
-                    WASDText.gameObject.SetActive(false);
+                    WASDText.SetActive(false);
                     state = TutorialState.FindColour;
                 }
                 break;
             case TutorialState.FindColour:
-                StartCoroutine(FlashText(findTheColourCodeText.gameObject, 4));
+                uiManager.DisplayTextGameObject(findTheColourCodeText, true, 2f);
                 state = TutorialState.Neutral;
                 break;
             case TutorialState.WalkNearDoor:
-                StartCoroutine(FlashText(walkNearDoorText.gameObject, 2));
+                uiManager.DisplayTextGameObject(findTheColourCodeText, true, 2f);
                 state = TutorialState.Neutral;
                 break;
             case TutorialState.CollectCollectables:
-                StartCoroutine(FlashText(collectCollectableText.gameObject, 2));
+                uiManager.DisplayTextGameObject(findTheColourCodeText, true, 2f);
                 state = TutorialState.Neutral;
                 break;
             case TutorialState.Exit:
-                StartCoroutine(FlashText(ExitPortalText.gameObject, 2));
+                uiManager.DisplayTextGameObject(findTheColourCodeText, true, 2f);
                 state = TutorialState.Neutral;
                 break;
             case TutorialState.Neutral:
@@ -66,10 +81,8 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    private IEnumerator FlashText(GameObject textGameobject, float timeToWait)
+    private void UpdateState(TutorialState state)
     {
-        textGameobject.SetActive(true);
-        yield return new WaitForSeconds(timeToWait);
-        textGameobject.SetActive(false);
+        this.state = state;
     }
 }

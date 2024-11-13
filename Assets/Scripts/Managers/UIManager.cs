@@ -4,6 +4,7 @@ using WallThrough.Gameplay;
 using WallThrough.Gameplay.Pawn;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 
 namespace WallThrough.UI
 {
@@ -12,14 +13,14 @@ namespace WallThrough.UI
     /// </summary>
     public class UIManager : MonoBehaviour
     {
-        // References
+        [Header("References")]
         [SerializeField] private ObjectiveManager objectiveManager;
 
-        // ObjectiveUI
+        [Header("ObjectiveUI")]
         [SerializeField] private TMP_Text objectiveText; // Text component for displaying objectives
         [SerializeField] private TMP_Text wallObjectiveText; // Text component specifically for wall objectives
 
-        // PlayerUI
+        [Header("PlayerUI")]
         [SerializeField] private Image[] hearts;
         [SerializeField] private Sprite fullHeart;
         [SerializeField] private Sprite emptyHeart;
@@ -76,6 +77,25 @@ namespace WallThrough.UI
         private void DisplayPlayerDeathUI()
         {
             deathUI.SetActive(true);
+        }
+
+        public void DisplayTextGameObject(GameObject textObject, bool flashText, float timeToWait)
+        {
+            if (flashText)
+            {
+                StartCoroutine(FlashText(textObject, timeToWait));
+            }
+            else
+            {
+                textObject.SetActive(true);
+            }
+        }
+
+        public static IEnumerator FlashText(GameObject textGameobject, float timeToWait)
+        {
+            textGameobject.SetActive(true);
+            yield return new WaitForSeconds(timeToWait);
+            textGameobject.SetActive(false);
         }
     }
 }
