@@ -19,6 +19,16 @@ namespace WallThrough.Gameplay.Pawn
         public static event Action<int> OnHealthChange;
         public static event Action OnPlayerDeath;
 
+        private void OnEnable()
+        {
+            CountdownTimer.OnTimerReachedMinimum += HandlePlayerDeath;
+        }
+
+        private void OnDisable()
+        {
+            CountdownTimer.OnTimerReachedMinimum -= HandlePlayerDeath;
+        }
+
         private void Start()
         {
             health = maxHealth;

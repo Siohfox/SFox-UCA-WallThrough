@@ -27,6 +27,7 @@ namespace WallThrough.UI
 
         // Other UI
         [SerializeField] private GameObject deathUI;
+        [SerializeField] private TMP_Text countdownTimerText;
 
         private void Start()
         {
@@ -96,6 +97,11 @@ namespace WallThrough.UI
             textGameobject.SetActive(true);
             yield return new WaitForSeconds(timeToWait);
             textGameobject.SetActive(false);
+        }
+
+        public void UpdateTimer(float timer)
+        {
+            countdownTimerText.text = Mathf.CeilToInt(timer).ToString();
         }
     }
 }
