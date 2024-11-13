@@ -45,8 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressurePlateLocations:
-  - {fileID: 4871087073642035863}
+  pressurePlateLocation: {fileID: 0}
   pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
   colourCodeManager: {fileID: 0}
 --- !u!1 &1247435778125254024
@@ -143,7 +142,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.6588, y: 1.2700443, z: 1.5109137}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1394501224867047283}
@@ -167,7 +166,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3744843214460871977
 MonoBehaviour:

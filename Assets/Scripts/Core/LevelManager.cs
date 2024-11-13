@@ -76,7 +76,6 @@ namespace WallThrough.Core
 
             // At this point, loading is complete
             transition.SetTrigger("Start");
-            Debug.Log("Starting trigger");
 
             // Wait for the transition animation to complete
             yield return new WaitForSeconds(1f);
