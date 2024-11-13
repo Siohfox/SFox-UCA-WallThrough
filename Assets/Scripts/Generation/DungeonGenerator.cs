@@ -6,6 +6,8 @@ using WallThrough.Utility;
 
 namespace WallThrough.Generation
 {
+    public enum RoomType { Normal, Collectable, Special, Final }
+
     public class DungeonGenerator : MonoBehaviour
     {
         public int generationSize;
@@ -23,7 +25,7 @@ namespace WallThrough.Generation
         {
             public bool visited = false;
             public bool isRoom = false;
-            public bool isFinalRoom = false;
+            public RoomType RoomType = RoomType.Normal;
             public bool[] status = new bool[4]; // Wall status for each direction         
             public Direction doorSpawnDirection;
         }
@@ -103,7 +105,7 @@ namespace WallThrough.Generation
             if (mainPathCells.Count > 0)
             {
                 int finalRoomIndex = mainPathCells[^1]; // ^1 gets the last item in mainPathCells
-                dungeonGrid[finalRoomIndex].isFinalRoom = true; // Mark it as final room
+                dungeonGrid[finalRoomIndex].RoomType = RoomType.Final; // Mark it as final room
             }
         }
 
@@ -116,6 +118,7 @@ namespace WallThrough.Generation
             {
                 dungeonGrid[currentCell].visited = true;
                 dungeonGrid[currentCell].isRoom = true;
+                dungeonGrid[currentCell].RoomType = RoomType.Collectable;
                 roomCells.Add(currentCell);
 
                 List<int> neighbors = GetUnvisitedNeighbors(currentCell);

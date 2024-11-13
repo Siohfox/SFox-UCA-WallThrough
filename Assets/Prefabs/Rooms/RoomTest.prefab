@@ -254,6 +254,10 @@ MonoBehaviour:
   - {fileID: 829371230122457533}
   - {fileID: 5482221924109717291}
   - {fileID: 8010448464318322560}
+  quickTimeWallPrefab: {fileID: 0}
+  exitPortalPrefab: {fileID: 0}
+  collectablePrefab: {fileID: 8488766852617563107, guid: d9b3ef622078236468378b38f3033029, type: 3}
+  roomSize: {x: 24, y: 0, z: 24}
 --- !u!1 &7684075209079686458
 GameObject:
   m_ObjectHideFlags: 0
