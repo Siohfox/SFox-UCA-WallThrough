@@ -1434,7 +1434,7 @@ MonoBehaviour:
   countdownTimerMax: 60
   countdownTimerMin: 0
   startStopTimer: 1
-  uiManager: {fileID: 0}
+  uiManager: {fileID: 2073089754}
 --- !u!224 &592671641 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5902327622577454025, guid: cd4b54ce0fc4de044a4591bfcf7b48e8, type: 3}
@@ -2353,7 +2353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8917067346128757066, guid: 642c8d2777d135844b555774c6db0d44, type: 3}
       propertyPath: generationSize
-      value: 4
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

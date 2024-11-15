@@ -203,22 +203,29 @@ namespace WallThrough.Generation
 
         private IEnumerator SpawnRooms()
         {
-            for (int x = 0; x < generationSize; x++)
+            HashSet<int> spawnedRooms = new HashSet<int>(); // Keep track of spawned room indices
+
+            foreach (int index in roomCells)
             {
-                for (int y = 0; y < generationSize; y++)
-                {
-                    int index = x + y * generationSize;
-                    if (roomCells.Contains(index))
-                    {
-                        Cell cell = dungeonGrid[index];
-                        int roomIndex = mainPathCells.Contains(index) ? 0 : 1;  // Main path uses first room, branches use second
-                        Vector3 position = new(x * offset.x, 0, -y * offset.y);
-                        var room = Instantiate(rooms[roomIndex], position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
-                        room.UpdateRoom(cell);
-                        room.name += $" {x}-{y}";
-                    }
-                    yield return new WaitForSeconds(generationDelay);
-                }
+                if (spawnedRooms.Contains(index))
+                    continue; // Skip if this room index has already been spawned
+
+                spawnedRooms.Add(index); // Mark this room index as spawned
+
+                Cell cell = dungeonGrid[index];
+                int roomIndex = mainPathCells.Contains(index) ? 0 : 1; // Main path uses first room, branches use second
+
+                // Calculate position based on cell index
+                int x = index % generationSize;
+                int y = index / generationSize;
+                Vector3 position = new Vector3(x * offset.x, 0, -y * offset.y);
+
+                // Instantiate the room and initialize it
+                var room = Instantiate(rooms[roomIndex], position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                room.UpdateRoom(cell);
+                room.name += $" {x}-{y}";
+
+                yield return new WaitForSeconds(generationDelay);
             }
         }
 
