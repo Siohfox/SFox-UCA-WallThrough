@@ -38,43 +38,35 @@ namespace WallThrough.Generation
                 }
             }
 
-            if (cell.RoomType == RoomType.Final)
-            {
-                PlaceExitPortal();
-            }
-
             if (cell.RoomType == RoomType.Collectable)
             {
-                PlaceCollectable();
+                PlaceCollectable(3);
             }
         }
 
-        private void PlaceCollectable()
+        private void PlaceCollectable(int amount)
         {
+            float padding = 4f;
+
             if (collectablePrefab)
             {
-                Vector3 collectablePosition = GetRoomCentre() + new Vector3(0, 4);
-                Instantiate(collectablePrefab, collectablePosition, Quaternion.identity, transform);
+                for (int i = 0; i < amount; i++)
+                {
+                    // Random position within room boundaries (from the corner to the max size)
+                    float xPos = UnityEngine.Random.Range(transform.position.x + padding, transform.position.x + roomSize.x - padding);
+                    float zPos = UnityEngine.Random.Range(transform.position.z - roomSize.z + padding, transform.position.z - padding); // negative z direction
+
+                    // Set y position to a fixed height (2 as per your previous code)
+                    Vector3 collectablePosition = new Vector3(xPos, 2, zPos);
+
+                    // Instantiate the collectable at the random position
+                    Instantiate(collectablePrefab, collectablePosition, Quaternion.identity, transform);
+                }
             }
             else
             {
                 Debug.LogWarning("No collectable prefab assigned to RoomBehaviour");
-            } 
-        }
-
-        private void PlaceExitPortal()
-        {
-            if (exitPortalPrefab)
-            {
-                // This method can be used in RoomBehaviour to place the boss within the room itself
-                Vector3 portalPosition = GetRoomCentre() + new Vector3(0, 4); // Use room's center position for boss placement
-                Instantiate(exitPortalPrefab, portalPosition, Quaternion.identity, transform);
             }
-            else
-            {
-                Debug.LogWarning("No exit portal prefab assigned to RoomBehaviour");
-            }
-            
         }
 
         public Vector3 GetRoomCentre() => new(transform.position.x + roomSize.x / 2, 0, transform.position.z - roomSize.z / 2);

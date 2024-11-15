@@ -6,14 +6,14 @@ using WallThrough.Utility;
 
 namespace WallThrough.Generation
 {
-    public enum RoomType { Normal, Collectable, Special, Final }
+    public enum RoomType { Basic, PushPuzzle, WiresPuzzle, Collectable, Special, Final }
 
     public class DungeonGenerator : MonoBehaviour
     {
         public int generationSize;
         public int startPos = 0;
         public Vector2 offset;
-        public GameObject[] rooms;  // First room for main path, second room for branches
+        public GameObject[] rooms;  // First room for main path, second room for branches, third for final room, needs to be expandable
         public float generationDelay = 0.3f;
         public int maxBranchLength = 3;  // Max length of branches
 
@@ -25,7 +25,7 @@ namespace WallThrough.Generation
         {
             public bool visited = false;
             public bool isRoom = false;
-            public RoomType RoomType = RoomType.Normal;
+            public RoomType RoomType = RoomType.Basic;
             public bool[] status = new bool[4]; // Wall status for each direction         
             public Direction doorSpawnDirection;
         }
@@ -72,6 +72,12 @@ namespace WallThrough.Generation
                 dungeonGrid[currentCell].isRoom = true;
                 roomCells.Add(currentCell);
                 mainPathCells.Add(currentCell);  // Add to main path list
+
+                // Assign a random room type for main path cells (except the final room)
+                if (pathLength != generationSize - 1)
+                {
+                    dungeonGrid[currentCell].RoomType = GetRandomMainPathRoomType();
+                }
 
                 List<int> neighbors = GetUnvisitedNeighbors(currentCell);
 
@@ -213,15 +219,18 @@ namespace WallThrough.Generation
                 spawnedRooms.Add(index); // Mark this room index as spawned
 
                 Cell cell = dungeonGrid[index];
-                int roomIndex = mainPathCells.Contains(index) ? 0 : 1; // Main path uses first room, branches use second
+
+                // Map the RoomType to the corresponding prefab in the rooms array
+                int roomIndex = (int)cell.RoomType;  // Convert RoomType enum to index for the rooms array
 
                 // Calculate position based on cell index
                 int x = index % generationSize;
                 int y = index / generationSize;
                 Vector3 position = new Vector3(x * offset.x, 0, -y * offset.y);
 
-                // Instantiate the room and initialize it
-                var room = Instantiate(rooms[roomIndex], position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                // Instantiate the correct prefab based on the room type
+                var roomPrefab = rooms[roomIndex];
+                var room = Instantiate(roomPrefab, position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
                 room.UpdateRoom(cell);
                 room.name += $" {x}-{y}";
 
@@ -229,11 +238,18 @@ namespace WallThrough.Generation
             }
         }
 
+
         private Vector2 GetRoomCoordinates(int index)
         {
             int x = index % generationSize;
             int y = index / generationSize;
             return new Vector2(x, y);
+        }
+
+        private RoomType GetRandomMainPathRoomType()
+        {
+            RoomType[] mainPathRoomTypes = { RoomType.Basic, RoomType.PushPuzzle, RoomType.WiresPuzzle };
+            return mainPathRoomTypes[UnityEngine.Random.Range(0, mainPathRoomTypes.Length)];
         }
     }
 }
