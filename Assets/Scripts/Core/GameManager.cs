@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WallThrough.Generation;
 
 namespace WallThrough.Core
 {
@@ -12,13 +13,15 @@ namespace WallThrough.Core
         public enum GameState { MainMenu, Playing, Paused, GameOver }
 
         public bool debugMode;
-        public bool autoLoadSave; 
+        public bool autoLoadSave;
         public GameState currentGameState;
         public int score;
         public int currentLevel;
         public List<int> unlockedLevels = new();
 
         [SerializeField] private SaveManager saveManager;
+
+        private List<RoomBehaviour> currentRooms = new(); // Holds the rooms for the current dungeon
 
         private void Awake()
         {
@@ -34,7 +37,7 @@ namespace WallThrough.Core
             }
             //////////////////////////
 
-            if(!saveManager)
+            if (!saveManager)
             {
                 try
                 {
@@ -43,7 +46,7 @@ namespace WallThrough.Core
                 catch
                 {
                     Debug.LogWarning("No save manager set in inspector");
-                } 
+                }
             }
         }
 
@@ -84,5 +87,24 @@ namespace WallThrough.Core
         public void SaveGame() => saveManager.SaveGame(this);
         public void LoadGame() => saveManager.LoadGame(this);
         public void IncreaseScore(int score) => this.score += score;
+        public void SetCurrentRooms(List<RoomBehaviour> rooms) => currentRooms = rooms;
+        public List<RoomBehaviour> GetCurrentRooms() => currentRooms;
+
+        public void DebugRoomList()
+        {
+            if (currentRooms == null || currentRooms.Count == 0)
+            {
+                Debug.Log("No rooms available in the current dungeon.");
+                return;
+            }
+
+            Debug.Log("Rooms in the current dungeon:");
+            for (int i = 0; i < currentRooms.Count; i++)
+            {
+                var room = currentRooms[i];
+                Debug.Log($"{i + 1}: {room.name}");
+            }
+        }
+
     }
 }

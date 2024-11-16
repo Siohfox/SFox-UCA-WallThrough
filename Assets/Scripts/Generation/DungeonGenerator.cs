@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WallThrough.Core;
 using WallThrough.Utility;
 
 namespace WallThrough.Generation
@@ -16,6 +17,7 @@ namespace WallThrough.Generation
         public GameObject[] rooms;  // First room for main path, second room for branches, third for final room, needs to be expandable
         public float generationDelay = 0.3f;
         public int maxBranchLength = 3;  // Max length of branches
+        public bool generateBranches = false;
 
         private List<Cell> dungeonGrid;
         private List<int> roomCells;
@@ -102,7 +104,7 @@ namespace WallThrough.Generation
                 }
 
                 // Chance to start a branch path
-                if (pathLength > 2 && UnityEngine.Random.value < 0.3f)
+                if (pathLength > 2 && pathLength < generationSize-1 && UnityEngine.Random.value < 0.3f && generateBranches)
                 {
                     GenerateBranch(currentCell);
                 }
@@ -209,35 +211,44 @@ namespace WallThrough.Generation
 
         private IEnumerator SpawnRooms()
         {
-            HashSet<int> spawnedRooms = new HashSet<int>(); // Keep track of spawned room indices
+            List<RoomBehaviour> spawnedRooms = new List<RoomBehaviour>(); // Track all spawned rooms
+            int roomCounter = 0;
 
             foreach (int index in roomCells)
             {
-                if (spawnedRooms.Contains(index))
-                    continue; // Skip if this room index has already been spawned
-
-                spawnedRooms.Add(index); // Mark this room index as spawned
+                // Check if this room has already been spawned
+                if (spawnedRooms.Exists(r => r.name.Contains($" {index % generationSize}-{index / generationSize}")))
+                    continue;
 
                 Cell cell = dungeonGrid[index];
+                int roomIndex = (int)cell.RoomType;
 
-                // Map the RoomType to the corresponding prefab in the rooms array
-                int roomIndex = (int)cell.RoomType;  // Convert RoomType enum to index for the rooms array
-
-                // Calculate position based on cell index
+                // Calculate room position
                 int x = index % generationSize;
                 int y = index / generationSize;
                 Vector3 position = new Vector3(x * offset.x, 0, -y * offset.y);
 
-                // Instantiate the correct prefab based on the room type
+                // Instantiate the room and set its name
                 var roomPrefab = rooms[roomIndex];
                 var room = Instantiate(roomPrefab, position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
                 room.UpdateRoom(cell);
-                room.name += $" {x}-{y}";
+
+                room.name = $"{roomPrefab.name}({roomCounter}) {x}-{y}";
+                roomCounter++;
+
+                // Add room to the list
+                spawnedRooms.Add(room);
 
                 yield return new WaitForSeconds(generationDelay);
             }
-        }
 
+            // Pass the list of spawned rooms to the GameManager
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.SetCurrentRooms(spawnedRooms);
+                GameManager.Instance.DebugRoomList();
+            }
+        }
 
         private Vector2 GetRoomCoordinates(int index)
         {

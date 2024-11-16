@@ -2353,11 +2353,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8917067346128757066, guid: 642c8d2777d135844b555774c6db0d44, type: 3}
       propertyPath: generationSize
-      value: 20
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8917067346128757066, guid: 642c8d2777d135844b555774c6db0d44, type: 3}
       propertyPath: generationDelay
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917067346128757066, guid: 642c8d2777d135844b555774c6db0d44, type: 3}
+      propertyPath: generateBranches
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8917067346128757066, guid: 642c8d2777d135844b555774c6db0d44, type: 3}
       propertyPath: rooms.Array.size
