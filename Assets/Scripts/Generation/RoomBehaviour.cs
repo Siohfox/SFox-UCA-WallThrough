@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace WallThrough.Generation
 {
-    public enum Direction { Up, Down, Right, Left };
+    public enum Direction { Up, Down, Right, Left, None };
 
     public class RoomBehaviour : MonoBehaviour
     {
@@ -20,10 +20,10 @@ namespace WallThrough.Generation
         void Update()
         {
             // Calculate the center point in world space
-            Vector3 roomCentre = GetRoomCentre();
+            //Vector3 roomCentre = GetRoomCentre();
 
             // Rotate the room around its center point
-            transform.RotateAround(roomCentre, Vector3.up, 90 * Time.deltaTime);
+            //transform.RotateAround(roomCentre, Vector3.up, 90 * Time.deltaTime);
         }
 
         //public void UpdateRoom(bool[] status, Direction doorSpawnDirection)
@@ -45,6 +45,8 @@ namespace WallThrough.Generation
                     }
                 }
             }
+
+            transform.RotateAround(GetRoomCentre(), Vector3.up, cell.rotation);
 
             if (cell.RoomType == RoomType.Collectable)
             {
@@ -91,5 +93,7 @@ namespace WallThrough.Generation
             // Return the center of the combined bounds of all child objects
             return roomBounds.center;
         }
+
+        public Vector3 GetRoomCentreOld() => new(transform.position.x + roomSize.x / 2, 0, transform.position.z - roomSize.z / 2);
     }
 }

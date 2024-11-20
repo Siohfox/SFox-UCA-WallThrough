@@ -68,12 +68,15 @@ namespace WallThrough.Gameplay.Pawn
 
         private void HandlePlayerDeath()
         {
-            aliveState = false;
-            AudioManager.Instance.PlaySound(deathClip, 1, src);
-            AudioManager.Instance.PlaySound(deathTune, 1, src);
-            AudioManager.Instance.StopPlayMusic();
-            OnPlayerDeath?.Invoke();
-            GameManager.Instance.currentGameState = GameManager.GameState.GameOver;
+            if (aliveState)
+            {
+                aliveState = false;
+                AudioManager.Instance.PlaySound(deathClip, 1, src);
+                AudioManager.Instance.PlaySound(deathTune, 1, src);
+                AudioManager.Instance.StopPlayMusic();
+                OnPlayerDeath?.Invoke();
+                GameManager.Instance.currentGameState = GameManager.GameState.GameOver;
+            }
         }
 
         private void UpdateStats()

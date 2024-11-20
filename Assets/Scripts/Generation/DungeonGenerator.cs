@@ -33,6 +33,7 @@ namespace WallThrough.Generation
             public RoomType RoomType = RoomType.Basic;
             public bool[] status = new bool[4]; // Wall status for each direction         
             public Direction doorSpawnDirection;
+            public float rotation = 0f;
         }
 
         private void Start()
@@ -171,6 +172,51 @@ namespace WallThrough.Generation
         }
 
 
+        //private void ConnectCells(int currentCell, int newCell)
+        //{
+        //    int width = generationSize;
+
+        //    // Avoid connecting to outside cells
+        //    if (newCell < 0 || newCell >= dungeonGrid.Count) return;
+
+        //    if (newCell == currentCell + 1) // Right
+        //    {
+        //        if ((currentCell + 1) % width == 0) return; // Prevent connection at the edge
+        //        dungeonGrid[currentCell].status[(int)Direction.Right] = true; // Disable Right Wall
+        //        dungeonGrid[newCell].status[(int)Direction.Left] = true; // Disable Left Wall
+
+        //        dungeonGrid[currentCell].doorSpawnDirection = Direction.Right;
+        //        dungeonGrid[currentCell].rotation = 90;
+        //    }
+        //    else if (newCell == currentCell - 1) // Left
+        //    {
+        //        if (currentCell % width == 0) return; // Prevent connection at the edge
+        //        dungeonGrid[currentCell].status[(int)Direction.Left] = true; // Disable Left Wall
+        //        dungeonGrid[newCell].status[(int)Direction.Right] = true; // Disable Right Wall
+
+        //        dungeonGrid[currentCell].doorSpawnDirection = Direction.Left;
+        //        dungeonGrid[currentCell].rotation = 270;
+        //    }
+        //    else if (newCell == currentCell + width) // Down
+        //    {
+        //        if (newCell >= dungeonGrid.Count) return; // Prevent connection beyond bottom edge
+        //        dungeonGrid[currentCell].status[(int)Direction.Down] = true;
+        //        dungeonGrid[newCell].status[(int)Direction.Up] = true;
+
+        //        dungeonGrid[currentCell].doorSpawnDirection = Direction.Down;
+        //        dungeonGrid[currentCell].rotation = 180;
+        //    }
+        //    else if (newCell == currentCell - width) // Up
+        //    {
+        //        if (newCell < 0) return; // Prevent connection beyond top edge
+        //        dungeonGrid[currentCell].status[(int)Direction.Up] = true;
+        //        dungeonGrid[newCell].status[(int)Direction.Down] = true;
+
+        //        dungeonGrid[currentCell].doorSpawnDirection = Direction.Up;
+        //        dungeonGrid[currentCell].rotation = 0;
+        //    }
+        //}
+
         private void ConnectCells(int currentCell, int newCell)
         {
             int width = generationSize;
@@ -178,39 +224,84 @@ namespace WallThrough.Generation
             // Avoid connecting to outside cells
             if (newCell < 0 || newCell >= dungeonGrid.Count) return;
 
-            if (newCell == currentCell + 1) // Right
+            // Get the current cell's rotation
+            float rotation = dungeonGrid[currentCell].rotation;
+
+            // Rotate the directions based on the current cell's rotation
+            Direction newDirection = GetRotatedDirection((int)rotation, currentCell, newCell);
+
+            // Now remove walls and adjust door directions based on the newDirection
+            if (newDirection == Direction.Right)
             {
                 if ((currentCell + 1) % width == 0) return; // Prevent connection at the edge
-                dungeonGrid[currentCell].status[(int)Direction.Right] = true; // Disable Right Wall
-                dungeonGrid[newCell].status[(int)Direction.Left] = true; // Disable Left Wall
+
+                dungeonGrid[currentCell].status[(int)Direction.Right] = true;
+                dungeonGrid[newCell].status[(int)Direction.Left] = true;
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Right;
             }
-            else if (newCell == currentCell - 1) // Left
+            else if (newDirection == Direction.Left)
             {
                 if (currentCell % width == 0) return; // Prevent connection at the edge
-                dungeonGrid[currentCell].status[(int)Direction.Left] = true; // Disable Left Wall
-                dungeonGrid[newCell].status[(int)Direction.Right] = true; // Disable Right Wall
+
+                dungeonGrid[currentCell].status[(int)Direction.Left] = true;
+                dungeonGrid[newCell].status[(int)Direction.Right] = true;
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Left;
             }
-            else if (newCell == currentCell + width) // Down
+            else if (newDirection == Direction.Down)
             {
                 if (newCell >= dungeonGrid.Count) return; // Prevent connection beyond bottom edge
+
                 dungeonGrid[currentCell].status[(int)Direction.Down] = true;
                 dungeonGrid[newCell].status[(int)Direction.Up] = true;
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Down;
             }
-            else if (newCell == currentCell - width) // Up
+            else if (newDirection == Direction.Up)
             {
                 if (newCell < 0) return; // Prevent connection beyond top edge
+
                 dungeonGrid[currentCell].status[(int)Direction.Up] = true;
                 dungeonGrid[newCell].status[(int)Direction.Down] = true;
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Up;
             }
         }
+
+        // Helper method to adjust the direction based on rotation
+        private Direction GetRotatedDirection(int rotation, int currentCell, int newCell)
+        {
+            int width = generationSize;
+
+            if (newCell == currentCell + 1) // Right
+            {
+                return rotation == 90 ? Direction.Down :
+                       rotation == 180 ? Direction.Left :
+                       rotation == 270 ? Direction.Up : Direction.Right;
+            }
+            else if (newCell == currentCell - 1) // Left
+            {
+                return rotation == 90 ? Direction.Up :
+                       rotation == 180 ? Direction.Right :
+                       rotation == 270 ? Direction.Down : Direction.Left;
+            }
+            else if (newCell == currentCell + width) // Down
+            {
+                return rotation == 90 ? Direction.Right :
+                       rotation == 180 ? Direction.Up :
+                       rotation == 270 ? Direction.Left : Direction.Down;
+            }
+            else if (newCell == currentCell - width) // Up
+            {
+                return rotation == 90 ? Direction.Left :
+                       rotation == 180 ? Direction.Down :
+                       rotation == 270 ? Direction.Right : Direction.Up;
+            }
+
+            return Direction.None; // No valid connection
+        }
+
 
         private IEnumerator SpawnRooms()
         {

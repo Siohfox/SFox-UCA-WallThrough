@@ -117,6 +117,37 @@ Transform:
   - {fileID: 5566249537513654936}
   m_Father: {fileID: 4281667783208403448}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &3271353290967193741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1831789631719154388}
+  m_Layer: 0
+  m_Name: pointofRotation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1831789631719154388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3271353290967193741}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6, y: 0, z: -6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8919443276895828394}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3782317902778904063
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +331,7 @@ Transform:
   - {fileID: 4281667783208403448}
   - {fileID: 174620738915802380}
   - {fileID: 5848326910911207626}
+  - {fileID: 1831789631719154388}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3014261918177505734
@@ -333,6 +365,7 @@ MonoBehaviour:
   exitPortalPrefab: {fileID: 5218913779713568348, guid: 2c76fbf76315f2a4b8bf193f48232591, type: 3}
   collectablePrefab: {fileID: 0}
   roomSize: {x: 24, y: 0, z: 24}
+  centre: {fileID: 3271353290967193741}
 --- !u!1 &7455423742841594162
 GameObject:
   m_ObjectHideFlags: 0
