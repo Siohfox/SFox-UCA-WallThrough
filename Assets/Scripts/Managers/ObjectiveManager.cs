@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using WallThrough.Generation;
 
 namespace WallThrough.Gameplay
 {
@@ -26,16 +27,20 @@ namespace WallThrough.Gameplay
 
         public List<ColourData> colourData; // List of color data
 
+        public static event Action OnObjectivesCounted;
+
         [SerializeField] private Dictionary<Objective, int[]> colourCodes = new(); // Dictionary to store colour codes for each wall-objective
 
         private void OnEnable()
         {
             Objective.OnObjectiveCompleted += HandleObjectiveCompleted;
+            DungeonGenerator.OnDungeonGenerated += CountObjectives;
         }
 
         private void OnDisable()
         {
             Objective.OnObjectiveCompleted -= HandleObjectiveCompleted;
+            DungeonGenerator.OnDungeonGenerated -= CountObjectives;
         }
 
         private void HandleObjectiveCompleted(Objective objective)
@@ -73,7 +78,7 @@ namespace WallThrough.Gameplay
             CountObjectives();
         }
 
-        private void CountObjectives()
+        public void CountObjectives()
         {
             // Correctly assigns this objective manager to all objectives without being a singleton
             objectives = new List<Objective>(FindObjectsOfType<Objective>());
@@ -86,6 +91,8 @@ namespace WallThrough.Gameplay
                     wallObjectiveCount++;
                 }
             }
+
+            OnObjectivesCounted?.Invoke();
         }
 
         /// <summary>
@@ -94,7 +101,11 @@ namespace WallThrough.Gameplay
         /// <returns>True if all objectives are completed; otherwise, false.</returns>
         public bool CheckObjectives()
         {
-            return completedObjectives >= objectives.Count; // Return true if all objectives are completed
+            if (objectives.Count > 0)
+            {
+                return completedObjectives >= objectives.Count; // Return true if all objectives are completed
+            }
+            return false;
         }
 
         /// <summary>

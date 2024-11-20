@@ -57,7 +57,7 @@ namespace WallThrough.Generation
                     float zPos = UnityEngine.Random.Range(transform.position.z - roomSize.z + padding, transform.position.z - padding); // negative z direction
 
                     // Set y position to a fixed height (2 as per your previous code)
-                    Vector3 collectablePosition = new Vector3(xPos, 2, zPos);
+                    Vector3 collectablePosition = new(xPos, 2, zPos);
 
                     // Instantiate the collectable at the random position
                     Instantiate(collectablePrefab, collectablePosition, Quaternion.identity, transform);

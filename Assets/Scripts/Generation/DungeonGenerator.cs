@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WallThrough.Core;
+using WallThrough.Gameplay;
 using WallThrough.Utility;
 
 namespace WallThrough.Generation
@@ -23,6 +24,8 @@ namespace WallThrough.Generation
         private List<int> roomCells;
         private List<int> mainPathCells;
 
+        public static event Action OnDungeonGenerated;
+
         public class Cell
         {
             public bool visited = false;
@@ -34,7 +37,7 @@ namespace WallThrough.Generation
 
         private void Start()
         {
-            GenerateDungeon();
+            GenerateDungeon(); 
         }
 
         private void GenerateDungeon()
@@ -211,7 +214,7 @@ namespace WallThrough.Generation
 
         private IEnumerator SpawnRooms()
         {
-            List<RoomBehaviour> spawnedRooms = new List<RoomBehaviour>(); // Track all spawned rooms
+            List<RoomBehaviour> spawnedRooms = new(); // Track all spawned rooms
             int roomCounter = 0;
 
             foreach (int index in roomCells)
@@ -226,7 +229,7 @@ namespace WallThrough.Generation
                 // Calculate room position
                 int x = index % generationSize;
                 int y = index / generationSize;
-                Vector3 position = new Vector3(x * offset.x, 0, -y * offset.y);
+                Vector3 position = new(x * offset.x, 0, -y * offset.y);
 
                 // Instantiate the room and set its name
                 var roomPrefab = rooms[roomIndex];
@@ -246,8 +249,11 @@ namespace WallThrough.Generation
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.SetCurrentRooms(spawnedRooms);
-                GameManager.Instance.DebugRoomList();
+                //GameManager.Instance.DebugRoomList();
             }
+
+            Debug.Log("Invoking dungeon generated");
+            OnDungeonGenerated?.Invoke();
         }
 
         private Vector2 GetRoomCoordinates(int index)

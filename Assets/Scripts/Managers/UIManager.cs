@@ -39,6 +39,7 @@ namespace WallThrough.UI
             Objective.OnObjectiveCompleted += UpdateObjectiveUI; // Subscribe to objective completion events
             PlayerStats.OnHealthChange += UpdatePlayerStatsHealthUI; //The name Player does not exist in current context
             PlayerStats.OnPlayerDeath += DisplayPlayerDeathUI;
+            ObjectiveManager.OnObjectivesCounted += UpdateObjectiveUIOnStart;
         }
 
         private void OnDisable()
@@ -46,6 +47,7 @@ namespace WallThrough.UI
             Objective.OnObjectiveCompleted -= UpdateObjectiveUI; // Subscribe to objective completion events
             PlayerStats.OnHealthChange -= UpdatePlayerStatsHealthUI; //The name Player does not exist in current context
             PlayerStats.OnPlayerDeath -= DisplayPlayerDeathUI;
+            ObjectiveManager.OnObjectivesCounted -= UpdateObjectiveUIOnStart;
         }
 
         /// <summary>

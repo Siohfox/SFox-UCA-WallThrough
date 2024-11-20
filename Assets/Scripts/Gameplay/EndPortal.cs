@@ -70,6 +70,7 @@ namespace WallThrough.Gameplay
         {
             if (objectiveManager.CheckObjectives())
             {
+                Debug.Log("Setting portal vfx active");
                 portalVFX.SetActive(true);
             }
         }

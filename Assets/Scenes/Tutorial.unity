@@ -5365,7 +5365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1905851807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5378,13 +5378,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2c1054cd00565b46aa103e286f7d923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WASDText: {fileID: 1638786438}
-  findTheColourCodeText: {fileID: 505463991}
-  walkNearDoorText: {fileID: 685946942}
-  collectCollectableText: {fileID: 1759135739}
-  ExitPortalText: {fileID: 1476722394}
   state: 0
   playerMovement: {fileID: 173305001}
+  uiManager: {fileID: 0}
+  WASDText: {fileID: 0}
+  findTheColourCodeText: {fileID: 0}
+  walkNearDoorText: {fileID: 0}
+  collectCollectableText: {fileID: 0}
+  ExitPortalText: {fileID: 0}
 --- !u!4 &1905851808
 Transform:
   m_ObjectHideFlags: 0
