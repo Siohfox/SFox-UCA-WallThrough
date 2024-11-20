@@ -17,7 +17,15 @@ namespace WallThrough.Generation
         public GameObject collectablePrefab;
         public Vector3 roomSize = new(24, 0, 24);
 
-        // Update is called once per frame
+        void Update()
+        {
+            // Calculate the center point in world space
+            Vector3 roomCentre = GetRoomCentre();
+
+            // Rotate the room around its center point
+            transform.RotateAround(roomCentre, Vector3.up, 90 * Time.deltaTime);
+        }
+
         //public void UpdateRoom(bool[] status, Direction doorSpawnDirection)
         public void UpdateRoom(DungeonGenerator.Cell cell)
         {
@@ -69,6 +77,19 @@ namespace WallThrough.Generation
             }
         }
 
-        public Vector3 GetRoomCentre() => new(transform.position.x + roomSize.x / 2, 0, transform.position.z - roomSize.z / 2);
+        public Vector3 GetRoomCentre()
+        {
+            // Create a bounds that will encapsulate all children
+            Bounds roomBounds = new Bounds(transform.position, Vector3.zero);
+
+            // Loop through all child objects to calculate the combined bounds
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            {
+                roomBounds.Encapsulate(renderer.bounds);
+            }
+
+            // Return the center of the combined bounds of all child objects
+            return roomBounds.center;
+        }
     }
 }
