@@ -224,83 +224,111 @@ namespace WallThrough.Generation
             // Avoid connecting to outside cells
             if (newCell < 0 || newCell >= dungeonGrid.Count) return;
 
-            // Get the current cell's rotation
-            float rotation = dungeonGrid[currentCell].rotation;
-
-            // Rotate the directions based on the current cell's rotation
-            Direction newDirection = GetRotatedDirection((int)rotation, currentCell, newCell);
-
-            // Now remove walls and adjust door directions based on the newDirection
-            if (newDirection == Direction.Right)
-            {
-                if ((currentCell + 1) % width == 0) return; // Prevent connection at the edge
-
-                dungeonGrid[currentCell].status[(int)Direction.Right] = true;
-                dungeonGrid[newCell].status[(int)Direction.Left] = true;
-
-                dungeonGrid[currentCell].doorSpawnDirection = Direction.Right;
-            }
-            else if (newDirection == Direction.Left)
-            {
-                if (currentCell % width == 0) return; // Prevent connection at the edge
-
-                dungeonGrid[currentCell].status[(int)Direction.Left] = true;
-                dungeonGrid[newCell].status[(int)Direction.Right] = true;
-
-                dungeonGrid[currentCell].doorSpawnDirection = Direction.Left;
-            }
-            else if (newDirection == Direction.Down)
-            {
-                if (newCell >= dungeonGrid.Count) return; // Prevent connection beyond bottom edge
-
-                dungeonGrid[currentCell].status[(int)Direction.Down] = true;
-                dungeonGrid[newCell].status[(int)Direction.Up] = true;
-
-                dungeonGrid[currentCell].doorSpawnDirection = Direction.Down;
-            }
-            else if (newDirection == Direction.Up)
-            {
-                if (newCell < 0) return; // Prevent connection beyond top edge
-
-                dungeonGrid[currentCell].status[(int)Direction.Up] = true;
-                dungeonGrid[newCell].status[(int)Direction.Down] = true;
-
-                dungeonGrid[currentCell].doorSpawnDirection = Direction.Up;
-            }
-        }
-
-        // Helper method to adjust the direction based on rotation
-        private Direction GetRotatedDirection(int rotation, int currentCell, int newCell)
-        {
-            int width = generationSize;
+            // Step 1: Determine the direction of the connection
+            Direction connectionDirection = Direction.None;
 
             if (newCell == currentCell + 1) // Right
             {
-                return rotation == 90 ? Direction.Down :
-                       rotation == 180 ? Direction.Left :
-                       rotation == 270 ? Direction.Up : Direction.Right;
+                connectionDirection = Direction.Right;
+                dungeonGrid[currentCell].rotation = 90; // Set rotation for the current cell
             }
             else if (newCell == currentCell - 1) // Left
             {
-                return rotation == 90 ? Direction.Up :
-                       rotation == 180 ? Direction.Right :
-                       rotation == 270 ? Direction.Down : Direction.Left;
+                connectionDirection = Direction.Left;
+                dungeonGrid[currentCell].rotation = 270; // Set rotation for the current cell
             }
             else if (newCell == currentCell + width) // Down
             {
-                return rotation == 90 ? Direction.Right :
-                       rotation == 180 ? Direction.Up :
-                       rotation == 270 ? Direction.Left : Direction.Down;
+                connectionDirection = Direction.Down;
+                dungeonGrid[currentCell].rotation = 180; // Set rotation for the current cell
             }
             else if (newCell == currentCell - width) // Up
             {
-                return rotation == 90 ? Direction.Left :
-                       rotation == 180 ? Direction.Down :
-                       rotation == 270 ? Direction.Right : Direction.Up;
+                connectionDirection = Direction.Up;
+                dungeonGrid[currentCell].rotation = 0; // Set rotation for the current cell
             }
 
-            return Direction.None; // No valid connection
+            // Step 2: If no valid connection, return early
+            if (connectionDirection == Direction.None) return;
+
+            // Step 3: Use the rotation to get the adjusted direction for the door
+            Direction newDirection = GetRotatedDirection((int)dungeonGrid[currentCell].rotation, connectionDirection);
+
+            // Step 4: Now, handle the wall removal and door spawning
+            switch (newDirection)
+            {
+                case Direction.Right:
+                    if ((currentCell + 1) % width == 0) return; // Prevent connection at the edge
+                    dungeonGrid[currentCell].status[(int)Direction.Right] = true;
+                    dungeonGrid[newCell].status[(int)Direction.Left] = true;
+                    dungeonGrid[currentCell].doorSpawnDirection = Direction.Right;
+                    break;
+
+                case Direction.Left:
+                    if (currentCell % width == 0) return; // Prevent connection at the edge
+                    dungeonGrid[currentCell].status[(int)Direction.Left] = true;
+                    dungeonGrid[newCell].status[(int)Direction.Right] = true;
+                    dungeonGrid[currentCell].doorSpawnDirection = Direction.Left;
+                    break;
+
+                case Direction.Down:
+                    if (newCell >= dungeonGrid.Count) return; // Prevent connection beyond bottom edge
+                    dungeonGrid[currentCell].status[(int)Direction.Down] = true;
+                    dungeonGrid[newCell].status[(int)Direction.Up] = true;
+                    dungeonGrid[currentCell].doorSpawnDirection = Direction.Down;
+                    break;
+
+                case Direction.Up:
+                    if (newCell < 0) return; // Prevent connection beyond top edge
+                    dungeonGrid[currentCell].status[(int)Direction.Up] = true;
+                    dungeonGrid[newCell].status[(int)Direction.Down] = true;
+                    dungeonGrid[currentCell].doorSpawnDirection = Direction.Up;
+                    break;
+            }
         }
+
+        // Helper method to adjust the direction based on the current rotation
+        private Direction GetRotatedDirection(int rotation, Direction originalDirection)
+        {
+            switch (rotation)
+            {
+                case 90: // 90 degrees clockwise
+                    switch (originalDirection)
+                    {
+                        case Direction.Up: return Direction.Left;
+                        case Direction.Down: return Direction.Right;
+                        case Direction.Left: return Direction.Down;
+                        case Direction.Right: return Direction.Up;
+                    }
+                    break;
+
+                case 180: // 180 degrees clockwise
+                    switch (originalDirection)
+                    {
+                        case Direction.Up: return Direction.Down;
+                        case Direction.Down: return Direction.Up;
+                        case Direction.Left: return Direction.Right;
+                        case Direction.Right: return Direction.Left;
+                    }
+                    break;
+
+                case 270: // 270 degrees clockwise
+                    switch (originalDirection)
+                    {
+                        case Direction.Up: return Direction.Right;
+                        case Direction.Down: return Direction.Left;
+                        case Direction.Left: return Direction.Up;
+                        case Direction.Right: return Direction.Down;
+                    }
+                    break;
+
+                default: // 0 degrees (no rotation)
+                    return originalDirection; // No change
+            }
+
+            return Direction.None; // Default, should not reach here
+        }
+
 
 
         private IEnumerator SpawnRooms()
