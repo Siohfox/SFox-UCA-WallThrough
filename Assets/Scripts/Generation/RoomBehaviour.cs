@@ -11,7 +11,6 @@ namespace WallThrough.Generation
     {
         public GameObject[] walls;
         public GameObject[] doors;
-        public GameObject[] arches;
         public GameObject quickTimeWallPrefab;
         public GameObject exitPortalPrefab;
         public GameObject collectablePrefab;
@@ -19,21 +18,15 @@ namespace WallThrough.Generation
 
         void Update()
         {
-            // Calculate the center point in world space
-            Vector3 roomCentre = GetRoomCentre();
 
-            // Rotate the room around its center point
-            transform.RotateAround(roomCentre, Vector3.up, 90 * Time.deltaTime);
         }
 
-        //public void UpdateRoom(bool[] status, Direction doorSpawnDirection)
         public void UpdateRoom(DungeonGenerator.Cell cell)
         {
             for (int i = 0; i < cell.status.Length; i++)
             {
                 doors[i].SetActive(cell.status[i]);
                 walls[i].SetActive(!cell.status[i]);
-                arches[i].SetActive(cell.status[i]);
 
                 // Check if quick-time wall should be instantiated
                 if (cell.status[i] && cell.doorSpawnDirection == (Direction)i && cell.RoomType != RoomType.Final)  // Check for final room
@@ -80,7 +73,7 @@ namespace WallThrough.Generation
         public Vector3 GetRoomCentre()
         {
             // Create a bounds that will encapsulate all children
-            Bounds roomBounds = new Bounds(transform.position, Vector3.zero);
+            Bounds roomBounds = new(transform.position, Vector3.zero);
 
             // Loop through all child objects to calculate the combined bounds
             foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
