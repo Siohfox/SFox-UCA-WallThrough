@@ -14,12 +14,8 @@ namespace WallThrough.Generation
         public GameObject quickTimeWallPrefab;
         public GameObject exitPortalPrefab;
         public GameObject collectablePrefab;
+        public GameObject puzzleParentObject;
         public Vector3 roomSize = new(24, 0, 24);
-
-        void Update()
-        {
-
-        }
 
         public void UpdateRoom(DungeonGenerator.Cell cell)
         {
