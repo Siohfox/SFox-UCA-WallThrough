@@ -50,7 +50,8 @@ namespace WallThrough.Generation
 
             InitializeDungeonGrid();
             GenerateLinearPathWithBranches();
-            StartCoroutine(SpawnRooms());
+            //StartCoroutine(SpawnRooms());
+            SpawnRooms();
         }
 
         private void InitializeDungeonGrid()
@@ -212,49 +213,50 @@ namespace WallThrough.Generation
             }
         }
 
-        private IEnumerator SpawnRooms()
+        private void SpawnRooms()
         {
             List<RoomBehaviour> spawnedRooms = new(); // Track all spawned rooms
             int roomCounter = 0;
 
-            foreach (int index in roomCells)
+            for (int x = 0; x < generationSize; x++)
             {
-                // Check if this room has already been spawned
-                if (spawnedRooms.Exists(r => r.name.Contains($" {index % generationSize}-{index / generationSize}")))
-                    continue;
+                for (int y = 0; y < generationSize; y++)
+                {
+                    int index = x + y * generationSize;
 
-                Cell cell = dungeonGrid[index];
-                int roomIndex = (int)cell.RoomType;
+                    if (roomCells.Contains(index))
+                    {
+                        Cell cell = dungeonGrid[index];
+                        int roomIndex = (int)cell.RoomType; // Determine the prefab based on the cell's RoomType
 
-                // Calculate room position
-                int x = index % generationSize;
-                int y = index / generationSize;
-                Vector3 position = new(x * offset.x, 0, -y * offset.y);
+                        // Calculate position for the room
+                        Vector3 position = new(x * offset.x, 0, -y * offset.y);
 
-                // Instantiate the room and set its name
-                var roomPrefab = rooms[roomIndex];
-                var room = Instantiate(roomPrefab, position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
-                room.UpdateRoom(cell);
+                        // Instantiate the correct prefab
+                        var roomPrefab = rooms[roomIndex];
+                        var room = Instantiate(roomPrefab, position, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                        room.UpdateRoom(cell);
 
-                room.name = $"{roomPrefab.name}({roomCounter}) {x}-{y}";
-                roomCounter++;
+                        // Name the room appropriately
+                        room.name = $"{roomPrefab.name}({roomCounter}) {x}-{y}";
+                        roomCounter++;
 
-                // Add room to the list
-                spawnedRooms.Add(room);
-
-                yield return new WaitForSeconds(generationDelay);
+                        spawnedRooms.Add(room);
+                    }
+                }
             }
 
             // Pass the list of spawned rooms to the GameManager
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.SetCurrentRooms(spawnedRooms);
-                //GameManager.Instance.DebugRoomList();
+                GameManager.Instance.DebugRoomList();
             }
 
             Debug.Log("Invoking dungeon generated");
             OnDungeonGenerated?.Invoke();
         }
+
 
         private Vector2 GetRoomCoordinates(int index)
         {

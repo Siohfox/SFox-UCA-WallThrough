@@ -50,6 +50,8 @@ namespace WallThrough.Gameplay
                     // If roomBehaviour is found, spawn the pressure plate at the room center
                     Vector3 roomCenter = roomBehaviour.GetRoomCentre();
 
+                    roomCenter.y -= 5f;
+
                     // Spawn the pressure plate at the room center
                     GameObject pressurePlate = Instantiate(pressurePlatePrefab, roomCenter, Quaternion.identity);
                     pressurePlate.transform.SetParent(transform);
@@ -71,8 +73,6 @@ namespace WallThrough.Gameplay
                 pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject); // Pass parentObject
             }
         }
-
-
     }
 
     public class PressurePlate : MonoBehaviour
