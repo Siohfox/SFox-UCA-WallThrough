@@ -30,6 +30,7 @@ namespace WallThrough.Generation
         {
             public bool visited = false;
             public bool isRoom = false;
+            public Quaternion innerRotation;
             public RoomType RoomType = RoomType.Basic;
             public bool[] status = new bool[4]; // Wall status for each direction         
             public Direction doorSpawnDirection;
