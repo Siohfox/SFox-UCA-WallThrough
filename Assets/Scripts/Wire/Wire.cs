@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Wire : MonoBehaviour
 {
+    [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private MeshFilter meshFilter;
+
     [SerializeField] Transform startTransform, endTransform;
 
     [SerializeField] int segmentCount = 10;
@@ -30,13 +33,18 @@ public class Wire : MonoBehaviour
     private float prevAngularDrag;
     private float prevRadius;
 
+    private MeshDataRope meshData;
+
     private Vector3[] vertices;
     private int[,] vertexIndicesMap;
+    private Mesh mesh;
     private bool createTriangles;
 
     private void Start()
     {
-        vertices = new Vector3[segmentCount * sides * 3];
+        segments = new Transform[segmentCount]; // Make sure this is initialized
+        GenerateSegments();  // Make sure segments are generated first
+        vertices = new Vector3[segmentCount * sides * 3];  // Now you can generate the vertices
         GenerateMesh();
     }
 
@@ -102,7 +110,27 @@ public class Wire : MonoBehaviour
 
             if (createTriangles)
             {
+                meshData.AddVertex(pointRotatedAtCenterOfTransform, new(0, 0), vertexIndex);
 
+                bool createThisTriangle = segmentIndex < segmentCount - 1;
+                if (createThisTriangle)
+                {
+                    int currentIncrement = 1;
+                    int a = vertexIndicesMap[segmentIndex, sideIndex];
+                    int b = vertexIndicesMap[segmentIndex + currentIncrement, sideIndex];
+                    int c = vertexIndicesMap[segmentIndex, sideIndex + currentIncrement];
+                    int d = vertexIndicesMap[segmentIndex + currentIncrement, sideIndex + currentIncrement];
+
+                    bool isLastGap = sideIndex == sides - 1; // back to beginning
+                    if (isLastGap)
+                    {
+                        c = vertexIndicesMap[segmentIndex, 0];
+                        d = vertexIndicesMap[segmentIndex + currentIncrement, 0];
+                    }
+
+                    meshData.AddTriangle(a, d, c);
+                    meshData.AddTriangle(d, a, b);
+                }
             }
         }
     }
@@ -118,8 +146,23 @@ public class Wire : MonoBehaviour
     void GenerateMesh()
     {
         createTriangles = true;
+
+        if (meshData == null)
+        {
+            meshData = new MeshDataRope(sides, segmentCount + 1, false);
+        }
+        else
+        {
+            meshData.ResetMesh(sides, segmentCount + 1, false);
+        }
+
         GenerateIndicesMap();
         GenerateVertices();
+        meshData.ProcessMesh();
+        mesh = meshData.CreateMesh();
+
+        meshFilter.sharedMesh = mesh;
+
         createTriangles = false;
     }
 
@@ -198,12 +241,18 @@ public class Wire : MonoBehaviour
     {
         for (int i = 0; i < segments.Length; i++)
         {
-            Gizmos.DrawWireSphere(segments[i].position, radius);
+            if (segments[i] != null)
+            {
+                Gizmos.DrawWireSphere(segments[i].position, radius);
+            }           
         }
 
-        for (int i = 0; i < vertices.Length; i++)
+        for (int i = 0; i < segments.Length; i++)  // Loop over segments instead
         {
-            Gizmos.DrawSphere(vertices[i], 0.1f);
+            if (segments[i] != null)
+            {
+                Gizmos.DrawSphere(vertices[i], 0.1f);
+            }
         }
     }
 
