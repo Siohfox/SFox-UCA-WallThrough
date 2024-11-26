@@ -161,6 +161,9 @@ public class Wire : MonoBehaviour
             rigidbody.mass = totalWeight / segmentCount;
             rigidbody.drag = drag;
             rigidbody.angularDrag = angularDrag;
+
+            rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+            rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
         }
 
         if (usePhysics)
@@ -194,8 +197,8 @@ public class Wire : MonoBehaviour
             joint.yMotion = ConfigurableJointMotion.Locked;
             joint.zMotion = ConfigurableJointMotion.Locked;
 
-            joint.angularXMotion = ConfigurableJointMotion.Free;
-            joint.angularYMotion = ConfigurableJointMotion.Free;
+            joint.angularXDrive = new JointDrive { positionSpring = 10, positionDamper = 1 };
+            joint.angularYZDrive = new JointDrive { positionSpring = 10, positionDamper = 1 };
             joint.angularZMotion = ConfigurableJointMotion.Limited; // Limited so it can rotate a bit but not much, so the rope doesn't get twisted
 
             SoftJointLimit softJointLimit = new();
@@ -207,15 +210,30 @@ public class Wire : MonoBehaviour
             jointDrive.positionSpring = 0;
             joint.angularXDrive = jointDrive;
             joint.angularYZDrive = jointDrive;
+
+            SpringJoint springJoint = current.gameObject.AddComponent<SpringJoint>();
+            springJoint.connectedBody = connectedTransform.GetComponent<Rigidbody>();
+            springJoint.spring = 100;
+            springJoint.damper = 5;
+            springJoint.maxDistance = 0.1f;
         }
     }
 
     private void SetupCollisionAvoidance()
     {
+        // Apply the custom "Segment" layer to all segments
+        int segmentLayer = LayerMask.NameToLayer("Segment");
+
         for (int i = 0; i < segments.Length; i++)
         {
+            // Set the layer for each segment
+            segments[i].gameObject.layer = segmentLayer;
+
+            // Get the SphereCollider attached to the segment
             SphereCollider collider = segments[i].GetComponent<SphereCollider>();
-            if (i - 1 > 0)
+
+            // Ignore collisions between consecutive segments
+            if (i - 1 >= 0)
             {
                 Physics.IgnoreCollision(collider, segments[i - 1].GetComponent<SphereCollider>(), true);
             }
@@ -224,5 +242,8 @@ public class Wire : MonoBehaviour
                 Physics.IgnoreCollision(collider, segments[i + 1].GetComponent<SphereCollider>(), true);
             }
         }
+
+        // Ignore collisions between any two segments (this is done globally for all segments)
+        Physics.IgnoreLayerCollision(segmentLayer, segmentLayer, true);
     }
 }
