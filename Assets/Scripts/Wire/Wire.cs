@@ -26,6 +26,7 @@ public class Wire : MonoBehaviour
     private float prevDrag;
     private float prevTotalWeight;
     private float prevAngularDrag;
+    private float prevRadius;
 
 
     private void Start()
@@ -40,6 +41,7 @@ public class Wire : MonoBehaviour
             RemoveSegments();
             segments = new Transform[segmentCount];
             GenerateSegments();
+            SetupCollisionAvoidance();
             prevSegmentCount = segmentCount;
         }
 
@@ -51,7 +53,27 @@ public class Wire : MonoBehaviour
         prevTotalLength = totalLength;
         prevDrag = drag;
         prevTotalWeight = totalWeight;
-        prevAngularDrag = angularDrag;  
+        prevAngularDrag = angularDrag;
+
+        if (prevRadius != radius && usePhysics)
+        {
+            UpdateRadius();
+        }
+        prevRadius = radius;
+    }
+
+    private void UpdateRadius()
+    {
+        for (int i = 0; i < segments.Length; i++)
+        {
+            SetRadiusOnSegment(segments[i], radius);
+        }
+    }
+
+    private void SetRadiusOnSegment(Transform transform, float radius)
+    {
+        SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
+        sphereCollider.radius = radius;
     }
 
     private void UpdateWire()
@@ -101,7 +123,7 @@ public class Wire : MonoBehaviour
     {
         for (int i = 0; i < segments.Length; i++)
         {
-            Gizmos.DrawWireSphere(segments[i].position, 0.1f);
+            Gizmos.DrawWireSphere(segments[i].position, radius);
         }   
     }
 
@@ -185,6 +207,22 @@ public class Wire : MonoBehaviour
             jointDrive.positionSpring = 0;
             joint.angularXDrive = jointDrive;
             joint.angularYZDrive = jointDrive;
+        }
+    }
+
+    private void SetupCollisionAvoidance()
+    {
+        for (int i = 0; i < segments.Length; i++)
+        {
+            SphereCollider collider = segments[i].GetComponent<SphereCollider>();
+            if (i - 1 > 0)
+            {
+                Physics.IgnoreCollision(collider, segments[i - 1].GetComponent<SphereCollider>(), true);
+            }
+            if (i + 1 < segments.Length)
+            {
+                Physics.IgnoreCollision(collider, segments[i + 1].GetComponent<SphereCollider>(), true);
+            }
         }
     }
 }
