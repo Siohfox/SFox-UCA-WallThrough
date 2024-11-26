@@ -13,6 +13,8 @@ public class Wire : MonoBehaviour
 
     [SerializeField] float radius = 0.5f;
 
+    [SerializeField] int sides = 4;
+
     [SerializeField] float drag = 1;
     [SerializeField] float angularDrag = 1;
 
@@ -28,11 +30,7 @@ public class Wire : MonoBehaviour
     private float prevAngularDrag;
     private float prevRadius;
 
-
-    private void Start()
-    {
-        
-    }
+    List<Vector3> tempVerticies = new();
 
     private void Update()
     {
@@ -60,6 +58,39 @@ public class Wire : MonoBehaviour
             UpdateRadius();
         }
         prevRadius = radius;
+
+        GenerateVertices();
+    }
+
+    private void GenerateVertices()
+    {
+        tempVerticies.Clear();
+        for (int i = 0; i < segments.Length; i++)
+        {
+            GenerateCircleVertices(segments[i], i);
+        }
+    }
+
+    private void GenerateCircleVertices(Transform segmentTransform, int segmentIndex)
+    {
+        float angleDiff = 360 / sides;
+
+        Quaternion diffRotation = Quaternion.FromToRotation(Vector3.forward, segmentTransform.forward);
+
+        for (int sideIndex = 0; sideIndex < sides; sideIndex++)
+        {
+            float angleInRad = sideIndex * angleDiff * Mathf.Deg2Rad;
+            float x = -1 * radius * Mathf.Cos(angleInRad);
+            float y = radius * Mathf.Sin(angleInRad);
+
+            Vector3 pointOffset = new(x, y, 0);
+
+            Vector3 pointRotated = diffRotation * pointOffset;
+
+            Vector3 pointRotatedAtCenterOfTransform = segmentTransform.position + pointRotated;
+
+            tempVerticies.Add(pointRotatedAtCenterOfTransform);
+        }
     }
 
     private void UpdateRadius()
@@ -124,7 +155,12 @@ public class Wire : MonoBehaviour
         for (int i = 0; i < segments.Length; i++)
         {
             Gizmos.DrawWireSphere(segments[i].position, radius);
-        }   
+        }
+
+        for (int i = 0; i < tempVerticies.Count; i++)
+        {
+            Gizmos.DrawSphere(tempVerticies[i], 0.1f);
+        }
     }
 
     private void GenerateSegments()
