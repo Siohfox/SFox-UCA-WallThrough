@@ -21,11 +21,80 @@ public class Wire : MonoBehaviour
     Transform[] segments;
     [SerializeField] Transform segmentParent;
 
+    private int prevSegmentCount;
+    private float prevTotalLength;
+    private float prevDrag;
+    private float prevTotalWeight;
+    private float prevAngularDrag;
+
 
     private void Start()
     {
-        segments = new Transform[segmentCount];
-        GenerateSegments();
+        
+    }
+
+    private void Update()
+    {
+        if (prevSegmentCount != segmentCount)
+        {
+            RemoveSegments();
+            segments = new Transform[segmentCount];
+            GenerateSegments();
+            prevSegmentCount = segmentCount;
+        }
+
+        if (totalLength != prevTotalLength || prevDrag != drag || prevTotalWeight != totalWeight || prevAngularDrag != angularDrag)
+        {
+            UpdateWire();
+        }
+
+        prevTotalLength = totalLength;
+        prevDrag = drag;
+        prevTotalWeight = totalWeight;
+        prevAngularDrag = angularDrag;  
+    }
+
+    private void UpdateWire()
+    {
+        for (int i = 0; i < segments.Length; i++)
+        {
+            if (i != 0) // if it's not the first, only update the length
+            {
+                UpdateLengthOnSegment(segments[i], totalLength / segmentCount);
+            }
+            UpdateWeightOnSegment(segments[i], totalWeight, drag, angularDrag); // for all segments update weight
+        }
+    }
+
+    private void UpdateWeightOnSegment(Transform transform, float totalWeight, float drag, float angularDrag)
+    {
+        Rigidbody rigidbody = transform.GetComponent<Rigidbody>();
+        rigidbody.mass = totalWeight / segmentCount;
+        rigidbody.drag = drag;
+        rigidbody.angularDrag = angularDrag;
+    }
+
+    private void UpdateLengthOnSegment(Transform transform, float v)
+    {
+        ConfigurableJoint joint = transform.GetComponent<ConfigurableJoint>();
+        if (joint != null)
+        {
+            joint.connectedAnchor = Vector3.forward * totalLength / segmentCount;
+        }
+    }
+
+    private void RemoveSegments()
+    {
+        if (segments != null)
+        {
+            for (int i = 0; i < segments.Length; i++)
+            {
+                if (segments[i] != null)
+                {
+                    Destroy(segments[i].gameObject);
+                }
+            }
+        }
     }
 
     void OnDrawGizmos()
@@ -63,11 +132,14 @@ public class Wire : MonoBehaviour
     private void JoinSegment(Transform current, Transform connectedTransform, bool isKinetic = false, bool isCloseConnected = false)
     {
         // Adding rigid body
-        Rigidbody rigidbody = current.gameObject.AddComponent<Rigidbody>();
-        rigidbody.isKinematic = isKinetic;
-        rigidbody.mass = totalWeight / segmentCount;
-        rigidbody.drag = drag;
-        rigidbody.angularDrag = angularDrag;
+        if (current.GetComponent<Rigidbody>() == null)
+        {
+            Rigidbody rigidbody = current.gameObject.AddComponent<Rigidbody>();
+            rigidbody.isKinematic = isKinetic;
+            rigidbody.mass = totalWeight / segmentCount;
+            rigidbody.drag = drag;
+            rigidbody.angularDrag = angularDrag;
+        }
 
         if (usePhysics)
         {
@@ -77,7 +149,11 @@ public class Wire : MonoBehaviour
 
         if (connectedTransform != null)
         {
-            ConfigurableJoint joint = current.gameObject.AddComponent<ConfigurableJoint>();
+            ConfigurableJoint joint = current.gameObject.GetComponent<ConfigurableJoint>();
+            if (joint == null)
+            {
+                joint = current.gameObject.AddComponent<ConfigurableJoint>();
+            }
 
             joint.connectedBody = connectedTransform.GetComponent<Rigidbody>();
 
