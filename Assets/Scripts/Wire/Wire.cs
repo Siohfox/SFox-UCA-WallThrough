@@ -30,7 +30,15 @@ public class Wire : MonoBehaviour
     private float prevAngularDrag;
     private float prevRadius;
 
-    List<Vector3> tempVerticies = new();
+    private Vector3[] vertices;
+    private int[,] vertexIndicesMap;
+    private bool createTriangles;
+
+    private void Start()
+    {
+        vertices = new Vector3[segmentCount * sides * 3];
+        GenerateMesh();
+    }
 
     private void Update()
     {
@@ -41,11 +49,13 @@ public class Wire : MonoBehaviour
             GenerateSegments();
             SetupCollisionAvoidance();
             prevSegmentCount = segmentCount;
+            GenerateMesh();
         }
 
         if (totalLength != prevTotalLength || prevDrag != drag || prevTotalWeight != totalWeight || prevAngularDrag != angularDrag)
         {
             UpdateWire();
+            GenerateMesh();
         }
 
         prevTotalLength = totalLength;
@@ -56,22 +66,20 @@ public class Wire : MonoBehaviour
         if (prevRadius != radius && usePhysics)
         {
             UpdateRadius();
+            GenerateMesh();
         }
         prevRadius = radius;
-
-        GenerateVertices();
     }
 
     private void GenerateVertices()
     {
-        tempVerticies.Clear();
         for (int i = 0; i < segments.Length; i++)
         {
-            GenerateCircleVertices(segments[i], i);
+            GenerateCircleVerticesAndTriangles(segments[i], i);
         }
     }
 
-    private void GenerateCircleVertices(Transform segmentTransform, int segmentIndex)
+    private void GenerateCircleVerticesAndTriangles(Transform segmentTransform, int segmentIndex)
     {
         float angleDiff = 360 / sides;
 
@@ -89,7 +97,13 @@ public class Wire : MonoBehaviour
 
             Vector3 pointRotatedAtCenterOfTransform = segmentTransform.position + pointRotated;
 
-            tempVerticies.Add(pointRotatedAtCenterOfTransform);
+            int vertexIndex = segmentIndex * sides + sideIndex;
+            vertices[vertexIndex] = pointRotatedAtCenterOfTransform;
+
+            if (createTriangles)
+            {
+
+            }
         }
     }
 
@@ -98,6 +112,36 @@ public class Wire : MonoBehaviour
         for (int i = 0; i < segments.Length; i++)
         {
             SetRadiusOnSegment(segments[i], radius);
+        }
+    }
+
+    void GenerateMesh()
+    {
+        createTriangles = true;
+        GenerateIndicesMap();
+        GenerateVertices();
+        createTriangles = false;
+    }
+
+    void UpdateMesh()
+    {
+        GenerateVertices();
+    }
+
+    private void GenerateIndicesMap()
+    {
+        // +1 is for the extra circle of vertices after the last segment, same for sides (need 1 extra after last side)
+        vertexIndicesMap = new int[segmentCount + 1, sides + 1];
+        int meshVertexIndex = 0;
+
+        // Loop through all segments and all sides
+        for (int segmentIndex = 0; segmentIndex < segmentCount; segmentIndex++)
+        {
+            for (int sideIndex = 0; sideIndex < sides; sideIndex++)
+            {
+                vertexIndicesMap[segmentCount, sideIndex] = meshVertexIndex;
+                meshVertexIndex++;
+            }
         }
     }
 
@@ -157,9 +201,9 @@ public class Wire : MonoBehaviour
             Gizmos.DrawWireSphere(segments[i].position, radius);
         }
 
-        for (int i = 0; i < tempVerticies.Count; i++)
+        for (int i = 0; i < vertices.Length; i++)
         {
-            Gizmos.DrawSphere(tempVerticies[i], 0.1f);
+            Gizmos.DrawSphere(vertices[i], 0.1f);
         }
     }
 
