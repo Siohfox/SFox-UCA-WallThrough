@@ -14,28 +14,19 @@ namespace WallThrough.Gameplay
 
         private GameObject parentObject; // Store reference to parentObject for FlashCode
 
+        private void Awake()
+        {
+            if (!colourCodeManager) colourCodeManager = FindObjectOfType<ColourCodeManager>();
+        }
+
         public void Initialize(int[] colourCodes)
         {
-            if (colourCodeManager)
+            if (!colourCodeManager)
             {
-                // Initialize the ColourCodeManager
-                parentObject = colourCodeManager.Initialize(colourCodes);
+                Debug.LogWarning("NO");
+                return;
             }
-            else
-            {
-                try
-                {
-                    colourCodeManager = FindObjectOfType<ColourCodeManager>();
-
-                    parentObject = colourCodeManager.Initialize(colourCodes);
-                }
-                catch
-                {
-                    Debug.LogWarning("Colour code manager not found");
-                }
-            }
-
-            // Spawn the pressure plate
+            parentObject = colourCodeManager.Initialize(colourCodes);
             SpawnPressurePlate();
         }
 

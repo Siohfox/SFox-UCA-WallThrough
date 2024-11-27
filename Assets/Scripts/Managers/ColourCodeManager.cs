@@ -62,9 +62,6 @@ namespace WallThrough.UI
                 image.transform.localPosition = new Vector3(0, 0, i * 1.5f); // Adjust position as needed
             }
 
-            //// Set parentObject inactive initially
-            //parentObject.SetActive(false);
-
             return parentObject;
         }
 

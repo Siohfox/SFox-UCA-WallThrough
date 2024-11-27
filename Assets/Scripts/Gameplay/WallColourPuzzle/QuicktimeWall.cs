@@ -16,7 +16,8 @@ namespace WallThrough.Gameplay
         [SerializeField] private GameObject failCross;
         [SerializeField] private Animator wallAnimator;
         [SerializeField] private AudioClip wallOpenClip, codeSuccess, codeFail;
-        [SerializeField] private MiniPuzzleColourCube associatedMiniPuzzle;
+        //[SerializeField] private MiniPuzzleColourCube associatedMiniPuzzle;
+        [SerializeField] private WirePuzzle associatedMiniPuzzle;
 
         private int[] colourCode;
         private int requiredInputs;
@@ -63,10 +64,7 @@ namespace WallThrough.Gameplay
             if (colourCode.Length > 0)
             {
                 ObjectiveManager.Instance.RegisterObjective(this, colourCode);
-                if (associatedMiniPuzzle)
-                {
-                    associatedMiniPuzzle.Initialize(colourCode);
-                }  
+                if (associatedMiniPuzzle) associatedMiniPuzzle.Initialize(colourCode);  
             }
 
             // DebugColourInfo();

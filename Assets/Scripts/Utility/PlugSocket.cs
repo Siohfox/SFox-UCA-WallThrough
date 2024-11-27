@@ -1,23 +1,30 @@
+using System;
 using UnityEngine;
 
 public class PlugSocket : MonoBehaviour
 {
-    public Transform outlet;  // Reference to the outlet object (the "wall")
+    public Transform outlet;
     public float snapDistance = 0.5f;  // How close the plug needs to be to the outlet to snap
     private bool isPluggedIn = false;
     private Vector3 originalPosition;
-    private Transform plugCube;  // Reference to the plug cube
+    private Transform plugCube;
 
-    // Reference to DragAndDrop script
     public DragAndDrop dragAndDropScript;
+
+    [SerializeField] WirePuzzle wirePuzzle;
 
     void Start()
     {
-        originalPosition = transform.position;  // Store the original position of the plug
-        plugCube = transform;  // This script should be attached to the plug (cube)
+        originalPosition = transform.position;
+        plugCube = transform;
         if (!dragAndDropScript)
         {
             dragAndDropScript = GetComponent<DragAndDrop>();
+        }
+        if (!wirePuzzle)
+        {
+            Debug.LogError("No Wire puzzle script found");
+            return;
         }
     }
 
@@ -38,7 +45,6 @@ public class PlugSocket : MonoBehaviour
         }
     }
 
-    // Make these methods public to be accessible from other scripts
     public void SnapToOutlet()
     {
         // Snap the plug cube to the outlet's position
@@ -47,6 +53,8 @@ public class PlugSocket : MonoBehaviour
 
         // Notify the drag and drop script to update its snapped state
         dragAndDropScript.SetPluggedInState(true);
+
+        wirePuzzle.OnPuzzleComplete();
     }
 
     public void UnSnapPlug()
