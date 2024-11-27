@@ -33,6 +33,7 @@ namespace WallThrough.Generation
             public RoomType RoomType = RoomType.Basic;
             public bool[] status = new bool[4]; // Wall status for each direction         
             public Direction doorSpawnDirection;
+            public float roomRotation;
         }
 
         private void Start()
@@ -186,6 +187,8 @@ namespace WallThrough.Generation
                 dungeonGrid[newCell].status[(int)Direction.Left] = true; // Disable Left Wall
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Right;
+
+                dungeonGrid[currentCell].roomRotation = 90.0f;
             }
             else if (newCell == currentCell - 1) // Left
             {
@@ -194,6 +197,8 @@ namespace WallThrough.Generation
                 dungeonGrid[newCell].status[(int)Direction.Right] = true; // Disable Right Wall
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Left;
+
+                dungeonGrid[currentCell].roomRotation = 270.0f;
             }
             else if (newCell == currentCell + width) // Down
             {
@@ -202,6 +207,8 @@ namespace WallThrough.Generation
                 dungeonGrid[newCell].status[(int)Direction.Up] = true;
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Down;
+
+                dungeonGrid[currentCell].roomRotation = 180.0f;
             }
             else if (newCell == currentCell - width) // Up
             {
@@ -210,6 +217,8 @@ namespace WallThrough.Generation
                 dungeonGrid[newCell].status[(int)Direction.Down] = true;
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Up;
+
+                dungeonGrid[currentCell].roomRotation = 0.0f;
             }
         }
 

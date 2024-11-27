@@ -355,6 +355,9 @@ MonoBehaviour:
   quickTimeWallPrefab: {fileID: 3608613932425727389, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
   exitPortalPrefab: {fileID: 5218913779713568348, guid: 2c76fbf76315f2a4b8bf193f48232591, type: 3}
   collectablePrefab: {fileID: 0}
+  puzzleParentObject: {fileID: 0}
+  rotatableObjects:
+  - {fileID: 2627176122713994628}
   roomSize: {x: 24, y: 0, z: 24}
 --- !u!1001 &7406635290888482
 PrefabInstance:

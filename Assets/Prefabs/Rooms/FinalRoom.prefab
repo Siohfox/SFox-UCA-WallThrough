@@ -169,14 +169,12 @@ MonoBehaviour:
   - {fileID: 3355505973011874471}
   - {fileID: 2410673811455100261}
   - {fileID: 8364315560788763878}
-  arches:
-  - {fileID: 1082832612602281514}
-  - {fileID: 6008113453966454144}
-  - {fileID: 6294152858462005284}
-  - {fileID: 6861874746777060437}
   quickTimeWallPrefab: {fileID: 3608613932425727389, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
   exitPortalPrefab: {fileID: 5218913779713568348, guid: 2c76fbf76315f2a4b8bf193f48232591, type: 3}
   collectablePrefab: {fileID: 0}
+  puzzleParentObject: {fileID: 0}
+  rotatableObjects:
+  - {fileID: 5972386467704023657}
   roomSize: {x: 24, y: 0, z: 24}
 --- !u!1 &3788063604597322106
 GameObject:
