@@ -152,15 +152,18 @@ public class Wire : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        for (int i = 0; i < segments.Length; i++)
+        if (segments != null)
         {
-            Gizmos.DrawWireSphere(segments[i].position, radius);
-        }
+            for (int i = 0; i < segments.Length; i++)
+            {
+                Gizmos.DrawWireSphere(segments[i].position, radius);
+            }
 
-        for (int i = 0; i < tempVerticies.Count; i++)
-        {
-            Gizmos.DrawSphere(tempVerticies[i], 0.1f);
-        }
+            for (int i = 0; i < tempVerticies.Count; i++)
+            {
+                Gizmos.DrawSphere(tempVerticies[i], 0.1f);
+            }
+        }       
     }
 
     private void GenerateSegments()
