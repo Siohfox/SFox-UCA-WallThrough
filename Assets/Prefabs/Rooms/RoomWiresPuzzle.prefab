@@ -325,6 +325,8 @@ MonoBehaviour:
   exitPortalPrefab: {fileID: 5218913779713568348, guid: 2c76fbf76315f2a4b8bf193f48232591, type: 3}
   collectablePrefab: {fileID: 0}
   puzzleParentObject: {fileID: 0}
+  rotatableObjects:
+  - {fileID: 7455423742841594162}
   roomSize: {x: 24, y: 0, z: 24}
   roomMiniPuzzle: {fileID: 0}
 --- !u!1 &7455423742841594162
@@ -4832,7 +4834,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arrow
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2404932211826975505, guid: ac39145e5c6cf974c835bf5e4c49192d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -15,6 +15,7 @@ namespace WallThrough.Generation
         public GameObject exitPortalPrefab;
         public GameObject collectablePrefab;
         public GameObject puzzleParentObject;
+        public List<GameObject> rotatableObjects;
         public Vector3 roomSize = new(24, 0, 24);
         public MiniPuzzle roomMiniPuzzle;
 
@@ -59,6 +60,11 @@ namespace WallThrough.Generation
                         quickTimeWall.transform.SetParent(transform);
                     }
                 }
+            }
+
+            foreach (GameObject rotatableObject in rotatableObjects)
+            {
+                rotatableObject.transform.RotateAround(GetRoomCentre(), Vector3.up, cell.roomRotation);
             }
 
             if (cell.RoomType == RoomType.Collectable)
