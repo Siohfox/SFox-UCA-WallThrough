@@ -154,6 +154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6670487030398507628}
+  - component: {fileID: 4582093426503243738}
   m_Layer: 0
   m_Name: BasicPuzzle
   m_TagString: MiniPuzzle
@@ -176,6 +177,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8919443276895828394}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4582093426503243738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782213523490440713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
+  colourCodeManager: {fileID: 0}
 --- !u!1 &3782317902778904063
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,10 +7,8 @@ namespace WallThrough.Gameplay
     public class MiniPuzzleColourCube : MiniPuzzle
     {
         [Header("Pressure Plates")]
-        [SerializeField] private Transform pressurePlateLocation; // Array of Transforms for pressure plate locations
         [SerializeField] private GameObject pressurePlatePrefab; // Prefab for the pressure plate
-
-        [SerializeField] private ColourCodeManager colourCodeManager; // Reference to the ColourCodeManager
+        private ColourCodeManager colourCodeManager; // Reference to the ColourCodeManager
 
         private GameObject parentObject; // Store reference to parentObject for FlashCode
 
@@ -23,7 +21,7 @@ namespace WallThrough.Gameplay
         {
             if (!colourCodeManager)
             {
-                Debug.LogWarning("NO");
+                Debug.LogWarning("No colourcodemanager found");
                 return;
             }
             parentObject = colourCodeManager.Initialize(colourCodes);
@@ -31,37 +29,24 @@ namespace WallThrough.Gameplay
         }
 
         private void SpawnPressurePlate()
-        {
-            // Check if the parent hierarchy is valid
-            if (transform.parent != null && transform.parent.parent != null)
+        {     
+            // Attempt to get the RoomBehaviour component from the parent object
+            if (transform.parent.TryGetComponent(out RoomBehaviour roomBehaviour))
             {
-                // Attempt to get the RoomBehaviour component from the parent object
-                if (transform.parent.parent.TryGetComponent(out RoomBehaviour roomBehaviour))
-                {
-                    // If roomBehaviour is found, spawn the pressure plate at the room center
-                    Vector3 roomCenter = roomBehaviour.GetRoomCentre();
+                // If roomBehaviour is found, spawn the pressure plate at the room center
+                Vector3 roomCenter = roomBehaviour.GetRoomCentre();
 
-                    roomCenter.y -= 5f;
+                roomCenter.y -= 5f;
 
-                    // Spawn the pressure plate at the room center
-                    GameObject pressurePlate = Instantiate(pressurePlatePrefab, roomCenter, Quaternion.identity);
-                    pressurePlate.transform.SetParent(transform);
-                    pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject); // Pass parentObject
-                }
-                else
-                {
-                    // If no RoomBehaviour found, spawn the pressure plate at (0,0,0)
-                    Debug.LogWarning("RoomBehaviour component not found on parent object.");
-                }
+                // Spawn the pressure plate at the room center
+                GameObject pressurePlate = Instantiate(pressurePlatePrefab, roomCenter, Quaternion.identity);
+                pressurePlate.transform.SetParent(transform);
+                pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject); // Pass parentObject
             }
             else
             {
-                // Log a clear error message if the parent hierarchy is broken
-                Debug.LogWarning("Parent hierarchy is missing. Unable to find RoomBehaviour.");
-
-                GameObject pressurePlate = Instantiate(pressurePlatePrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                pressurePlate.transform.SetParent(transform);
-                pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject); // Pass parentObject
+                // If no RoomBehaviour found, spawn the pressure plate at (0,0,0)
+                Debug.LogWarning("RoomBehaviour component not found on parent object.");
             }
         }
     }

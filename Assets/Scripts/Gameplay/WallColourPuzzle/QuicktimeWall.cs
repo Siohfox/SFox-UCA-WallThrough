@@ -4,6 +4,7 @@ using UnityEngine;
 using WallThrough.Gameplay.Interactable;
 using WallThrough.Audio;
 using WallThrough.Graphics;
+using WallThrough.Generation;
 
 namespace WallThrough.Gameplay
 {
@@ -60,7 +61,9 @@ namespace WallThrough.Gameplay
             failCross.SetActive(false);
             GenerateColourCode();
 
-            if (colourCode.Length > 0)
+            associatedMiniPuzzle = transform.parent.parent.GetComponent<RoomBehaviour>().GetRoomMiniPuzzle();
+
+            if (colourCode.Length > 0 && associatedMiniPuzzle)
             {
                 ObjectiveManager.Instance.RegisterObjective(this, colourCode);
                 if (associatedMiniPuzzle) associatedMiniPuzzle.Initialize(colourCode);  

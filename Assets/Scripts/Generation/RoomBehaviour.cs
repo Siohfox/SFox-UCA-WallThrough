@@ -16,9 +16,9 @@ namespace WallThrough.Generation
         public GameObject collectablePrefab;
         public GameObject puzzleParentObject;
         public Vector3 roomSize = new(24, 0, 24);
-        public GameObject roomMiniPuzzle;
+        public MiniPuzzle roomMiniPuzzle;
 
-        void Start()
+        void Awake()
         {
             // Iterate through all the children of this Room
             foreach (Transform child in transform)
@@ -29,7 +29,7 @@ namespace WallThrough.Generation
                     // Found the child with the tag
                     Debug.Log("Found child with the target tag: " + child.gameObject.name);
 
-                    roomMiniPuzzle = child.gameObject;
+                    roomMiniPuzzle = child.gameObject.GetComponent<MiniPuzzle>();
 
                     return;
                 }
@@ -86,6 +86,8 @@ namespace WallThrough.Generation
                 Debug.LogWarning("No collectable prefab assigned to RoomBehaviour");
             }
         }
+
+        public MiniPuzzle GetRoomMiniPuzzle() => roomMiniPuzzle;
 
         public Vector3 GetRoomCentre()
         {
