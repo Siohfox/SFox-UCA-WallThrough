@@ -1629,8 +1629,8 @@ GameObject:
   m_Component:
   - component: {fileID: 536227708}
   - component: {fileID: 536227709}
-  - component: {fileID: 536227710}
   - component: {fileID: 536227711}
+  - component: {fileID: 536227710}
   m_Layer: 0
   m_Name: Wire_start
   m_TagString: Untagged
@@ -1702,8 +1702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlet: {fileID: 1975262758}
-  snapDistance: 0.5
-  dragAndDropScript: {fileID: 536227709}
+  snapDistance: 1
   wirePuzzle: {fileID: 1928590272}
 --- !u!224 &550209070 stripped
 RectTransform:
