@@ -4,6 +4,7 @@ using UnityEngine;
 using WallThrough.Gameplay.Interactable;
 using WallThrough.Audio;
 using WallThrough.Graphics;
+using WallThrough.Generation;
 
 namespace WallThrough.Gameplay
 {
@@ -16,7 +17,7 @@ namespace WallThrough.Gameplay
         [SerializeField] private GameObject failCross;
         [SerializeField] private Animator wallAnimator;
         [SerializeField] private AudioClip wallOpenClip, codeSuccess, codeFail;
-        [SerializeField] private MiniPuzzleColourCube associatedMiniPuzzle;
+        [SerializeField] private MiniPuzzle associatedMiniPuzzle;
 
         private int[] colourCode;
         private int requiredInputs;
@@ -60,13 +61,12 @@ namespace WallThrough.Gameplay
             failCross.SetActive(false);
             GenerateColourCode();
 
-            if (colourCode.Length > 0)
+            associatedMiniPuzzle = transform.parent.parent.GetComponent<RoomBehaviour>().GetRoomMiniPuzzle();
+
+            if (colourCode.Length > 0 && associatedMiniPuzzle)
             {
                 ObjectiveManager.Instance.RegisterObjective(this, colourCode);
-                if (associatedMiniPuzzle)
-                {
-                    associatedMiniPuzzle.Initialize(colourCode);
-                }  
+                if (associatedMiniPuzzle) associatedMiniPuzzle.Initialize(colourCode);  
             }
 
             // DebugColourInfo();

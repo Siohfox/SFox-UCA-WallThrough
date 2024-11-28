@@ -30,6 +30,7 @@ namespace WallThrough.Generation
         {
             public bool visited = false;
             public bool isRoom = false;
+            public Quaternion innerRotation;
             public RoomType RoomType = RoomType.Basic;
             public bool[] status = new bool[4]; // Wall status for each direction         
             public Direction doorSpawnDirection;
@@ -259,7 +260,7 @@ namespace WallThrough.Generation
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.SetCurrentRooms(spawnedRooms);
-                GameManager.Instance.DebugRoomList();
+                //GameManager.Instance.DebugRoomList();
             }
 
             Debug.Log("Invoking dungeon generated");

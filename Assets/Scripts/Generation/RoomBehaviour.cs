@@ -17,6 +17,32 @@ namespace WallThrough.Generation
         public GameObject puzzleParentObject;
         public List<GameObject> rotatableObjects;
         public Vector3 roomSize = new(24, 0, 24);
+        public MiniPuzzle roomMiniPuzzle;
+
+        void Awake()
+        {
+            // Iterate through all the children of this Room
+            foreach (Transform child in transform)
+            {
+                // Check if the child has the specific tag
+                if (child.CompareTag("MiniPuzzle"))
+                {
+                    // Found the child with the tag
+                    //Debug.Log("Found child with the target tag: " + child.gameObject.name);
+
+                    roomMiniPuzzle = child.gameObject.GetComponent<MiniPuzzle>();
+
+                    return;
+                }
+            }
+
+            //Debug.Log("No child with the target tag found in this Room");
+        }
+
+        private void Start()
+        {
+            if(roomMiniPuzzle) Debug.Log(roomMiniPuzzle.gameObject.name);
+        }
 
         public void UpdateRoom(DungeonGenerator.Cell cell)
         {
@@ -34,6 +60,11 @@ namespace WallThrough.Generation
                         quickTimeWall.transform.SetParent(transform);
                     }
                 }             
+            }
+
+            foreach (GameObject rotatableObject in rotatableObjects)
+            {
+                rotatableObject.transform.RotateAround(GetRoomCentre(), Vector3.up, cell.roomRotation);
             }
 
             foreach (GameObject rotatableObject in rotatableObjects)
@@ -71,6 +102,8 @@ namespace WallThrough.Generation
                 Debug.LogWarning("No collectable prefab assigned to RoomBehaviour");
             }
         }
+
+        public MiniPuzzle GetRoomMiniPuzzle() => roomMiniPuzzle;
 
         public Vector3 GetRoomCentre()
         {
