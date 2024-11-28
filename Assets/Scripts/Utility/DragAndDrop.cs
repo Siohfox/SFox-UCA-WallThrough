@@ -7,7 +7,7 @@ public class DragAndDrop : MonoBehaviour
     private float distanceToCamera;
     private bool isDragging = false;
     private Vector3 offset;
-    private float originalY; // Fixed Y position for dragging
+    private float originalY;
 
     [SerializeField] private PlugSocket plugSocketScript; // Reference to the plug-socket logic
     [SerializeField] private InputActionReference clickAndDragActionReference; // Drag input action
