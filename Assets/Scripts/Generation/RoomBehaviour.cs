@@ -67,11 +67,6 @@ namespace WallThrough.Generation
                 rotatableObject.transform.RotateAround(GetRoomCentre(), Vector3.up, cell.roomRotation);
             }
 
-            foreach (GameObject rotatableObject in rotatableObjects)
-            {
-                rotatableObject.transform.RotateAround(GetRoomCentre(), Vector3.up, cell.roomRotation);
-            }
-
             if (cell.RoomType == RoomType.Collectable)
             {
                 PlaceCollectable(3);
