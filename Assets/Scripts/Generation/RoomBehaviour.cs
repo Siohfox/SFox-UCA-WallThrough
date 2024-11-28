@@ -16,6 +16,27 @@ namespace WallThrough.Generation
         public GameObject collectablePrefab;
         public GameObject puzzleParentObject;
         public Vector3 roomSize = new(24, 0, 24);
+        public GameObject roomMiniPuzzle;
+
+        void Start()
+        {
+            // Iterate through all the children of this Room
+            foreach (Transform child in transform)
+            {
+                // Check if the child has the specific tag
+                if (child.CompareTag("MiniPuzzle"))
+                {
+                    // Found the child with the tag
+                    Debug.Log("Found child with the target tag: " + child.gameObject.name);
+
+                    roomMiniPuzzle = child.gameObject;
+
+                    return;
+                }
+            }
+
+            Debug.Log("No child with the target tag found in this Room");
+        }
 
         public void UpdateRoom(DungeonGenerator.Cell cell)
         {

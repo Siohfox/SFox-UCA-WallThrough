@@ -251,7 +251,7 @@ namespace WallThrough.Generation
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.SetCurrentRooms(spawnedRooms);
-                GameManager.Instance.DebugRoomList();
+                //GameManager.Instance.DebugRoomList();
             }
 
             Debug.Log("Invoking dungeon generated");

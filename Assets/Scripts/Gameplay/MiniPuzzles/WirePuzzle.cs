@@ -5,17 +5,16 @@ using Unity.VisualScripting;
 using UnityEngine;
 using WallThrough.UI;
 
-public class WirePuzzle : MonoBehaviour
+public class WirePuzzle : MiniPuzzle
 {
     [SerializeField] private ColourCodeManager colourCodeManager; // Reference to the ColourCodeManager
     private GameObject parentObject; // Store reference to parentObject for FlashCode
-    private GameObject socket;
     private void Awake()
     {
         if (!colourCodeManager) colourCodeManager = FindObjectOfType<ColourCodeManager>();
     }
 
-    public void Initialize(int[] colourCodes)
+    public override void Initialize(int[] colourCodes)
     {
         if (!colourCodeManager)
         {

@@ -4,7 +4,7 @@ using WallThrough.Generation;
 
 namespace WallThrough.Gameplay
 {
-    public class MiniPuzzleColourCube : MonoBehaviour
+    public class MiniPuzzleColourCube : MiniPuzzle
     {
         [Header("Pressure Plates")]
         [SerializeField] private Transform pressurePlateLocation; // Array of Transforms for pressure plate locations
@@ -19,7 +19,7 @@ namespace WallThrough.Gameplay
             if (!colourCodeManager) colourCodeManager = FindObjectOfType<ColourCodeManager>();
         }
 
-        public void Initialize(int[] colourCodes)
+        public override void Initialize(int[] colourCodes)
         {
             if (!colourCodeManager)
             {

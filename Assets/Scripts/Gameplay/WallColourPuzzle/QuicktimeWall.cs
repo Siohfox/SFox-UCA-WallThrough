@@ -16,8 +16,7 @@ namespace WallThrough.Gameplay
         [SerializeField] private GameObject failCross;
         [SerializeField] private Animator wallAnimator;
         [SerializeField] private AudioClip wallOpenClip, codeSuccess, codeFail;
-        //[SerializeField] private MiniPuzzleColourCube associatedMiniPuzzle;
-        [SerializeField] private WirePuzzle associatedMiniPuzzle;
+        [SerializeField] private MiniPuzzle associatedMiniPuzzle;
 
         private int[] colourCode;
         private int requiredInputs;
