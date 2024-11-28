@@ -12,10 +12,7 @@ public class PlugSocket : MonoBehaviour
 
     void Start()
     {
-        if (wirePuzzle == null)
-        {
-            Debug.LogError("WirePuzzle script is not assigned.");
-        }
+        if (!wirePuzzle) Debug.LogError("WirePuzzle script is not assigned.");
     }
 
     public void CheckSnap(Vector3 currentPosition)
@@ -39,7 +36,7 @@ public class PlugSocket : MonoBehaviour
         isPluggedIn = true;
 
         // Notify the wire puzzle that the plug is snapped in place
-        //wirePuzzle?.OnPuzzleComplete();
+        if (wirePuzzle) wirePuzzle?.OnPuzzleComplete();
     }
 
     private void UnSnapPlug()

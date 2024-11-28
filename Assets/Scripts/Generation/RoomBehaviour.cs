@@ -27,7 +27,7 @@ namespace WallThrough.Generation
                 if (child.CompareTag("MiniPuzzle"))
                 {
                     // Found the child with the tag
-                    Debug.Log("Found child with the target tag: " + child.gameObject.name);
+                    //Debug.Log("Found child with the target tag: " + child.gameObject.name);
 
                     roomMiniPuzzle = child.gameObject.GetComponent<MiniPuzzle>();
 
@@ -35,7 +35,12 @@ namespace WallThrough.Generation
                 }
             }
 
-            Debug.Log("No child with the target tag found in this Room");
+            //Debug.Log("No child with the target tag found in this Room");
+        }
+
+        private void Start()
+        {
+            if(roomMiniPuzzle) Debug.Log(roomMiniPuzzle.gameObject.name);
         }
 
         public void UpdateRoom(DungeonGenerator.Cell cell)
