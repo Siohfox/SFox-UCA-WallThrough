@@ -62,10 +62,13 @@ namespace WallThrough.Generation
                 }             
             }
 
-            foreach (GameObject rotatableObject in rotatableObjects)
+            if (rotatableObjects.Count > 0)
             {
-                rotatableObject.transform.RotateAround(GetRoomCentre(), Vector3.up, cell.roomRotation);
-            }
+                foreach (GameObject rotatableObject in rotatableObjects)
+                {
+                    rotatableObject.transform.RotateAround(GetRoomCentre(), Vector3.up, cell.roomRotation);
+                }
+            }         
 
             if (cell.RoomType == RoomType.Collectable)
             {
