@@ -19,8 +19,6 @@ namespace WallThrough.Gameplay
         private ObjectiveManager objectiveManager; // Reference to the ObjectiveManager
         [SerializeField] private GameObject portalVFX;
 
-        [SerializeField] private string sceneToLoadName;
-
         private void Start()
         {
             // Find and assign the ObjectiveManager in the scene
@@ -102,14 +100,21 @@ namespace WallThrough.Gameplay
             // Get the current scene index
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
-            // Get the path of the next scene by build index
-            string nextScenePath = SceneUtility.GetScenePathByBuildIndex(currentSceneIndex + 1);
+            if (currentSceneIndex + 1 >= SceneManager.sceneCountInBuildSettings) // if scene index is overflow
+            {
+                LevelManager.Instance.LoadScene("Menu");
+            }
+            else
+            {
+                // Get the path of the next scene by build index
+                string nextScenePath = SceneUtility.GetScenePathByBuildIndex(currentSceneIndex + 1);
 
-            // Extract the scene name from the path
-            string nextSceneName = Path.GetFileNameWithoutExtension(nextScenePath);
+                // Extract the scene name from the path
+                string nextSceneName = Path.GetFileNameWithoutExtension(nextScenePath);
 
-            // Load the next scene by name
-            LevelManager.Instance.LoadScene(nextSceneName);
+                // Load the next scene by name
+                LevelManager.Instance.LoadScene(nextSceneName);
+            } 
         }
     }
 }

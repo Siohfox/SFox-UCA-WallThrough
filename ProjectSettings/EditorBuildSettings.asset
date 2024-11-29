@@ -9,12 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: e20fb7524623dad4482032f53607b2eb
   - enabled: 1
-    path: Assets/Scenes/TutorialRemade.unity
-    guid: 0b8ed88b563a1f74a937ed5e1d0f1d81
-  - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: b917c9a374ba9564a82bfee98755d0f5
   - enabled: 1
     path: Assets/Scenes/LevelOne.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    guid: 0b8ed88b563a1f74a937ed5e1d0f1d81
   m_configObjects: {}
