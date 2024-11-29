@@ -1,6 +1,7 @@
 using UnityEngine;
 using WallThrough.UI;
 using WallThrough.Generation;
+using System;
 
 namespace WallThrough.Gameplay
 {
@@ -11,6 +12,8 @@ namespace WallThrough.Gameplay
         private ColourCodeManager colourCodeManager; // Reference to the ColourCodeManager
 
         private GameObject parentObject; // Store reference to parentObject for FlashCode
+
+        [SerializeField] private bool tutorialState = false;
 
         private void Awake()
         {
@@ -41,7 +44,7 @@ namespace WallThrough.Gameplay
                 // Spawn the pressure plate at the room center
                 GameObject pressurePlate = Instantiate(pressurePlatePrefab, roomCenter, Quaternion.identity);
                 pressurePlate.transform.SetParent(transform);
-                pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject); // Pass parentObject
+                pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject, tutorialState); // Pass parentObject
             }
             else
             {
@@ -52,7 +55,7 @@ namespace WallThrough.Gameplay
                 // Spawn the pressure plate at the room center
                 GameObject pressurePlate = Instantiate(pressurePlatePrefab, spawnLocation.position + new Vector3(0,0.2f,0), Quaternion.identity);
                 pressurePlate.transform.SetParent(transform);
-                pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject); // Pass parentObject
+                pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject, tutorialState); // Pass parentObject
             }
         }
     }
@@ -61,13 +64,20 @@ namespace WallThrough.Gameplay
     {
         private ColourCodeManager colourCodeManager;
         private GameObject parentObject; // Reference to the parent object
+        bool tutorialMode = false;      
 
-        public void Initialize(ColourCodeManager colourCodeManager, GameObject parentObject)
+        public void Initialize(ColourCodeManager colourCodeManager, GameObject parentObject, bool tutorialMode)
         {
             this.colourCodeManager = colourCodeManager;
             this.parentObject = parentObject; // Set the reference to parentObject
+            this.tutorialMode = tutorialMode;
 
             parentObject.SetActive(false);
+
+            if (tutorialMode)
+            {
+                transform.gameObject.AddComponent<TutorialHelper>();
+            }
         }
 
         private void OnTriggerEnter(Collider other)

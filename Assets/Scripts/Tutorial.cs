@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using WallThrough.Gameplay.Pawn;
 using WallThrough.UI;
+using WallThrough.Gameplay;
 
 public class Tutorial : MonoBehaviour
 {
@@ -28,6 +29,11 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private GameObject walkNearDoorText;
     [SerializeField] private GameObject collectCollectableText;
     [SerializeField] private GameObject ExitPortalText;
+
+    private void OnEnable()
+    {
+        TutorialHelper.OnColourCodeFind += UpdateState;
+    }
 
     private void Start()
     {
@@ -63,7 +69,7 @@ public class Tutorial : MonoBehaviour
                 state = TutorialState.Neutral;
                 break;
             case TutorialState.WalkNearDoor:
-                uiManager.DisplayTextGameObject(findTheColourCodeText, true, 2f);
+                uiManager.DisplayTextGameObject(walkNearDoorText, true, 2f);
                 state = TutorialState.Neutral;
                 break;
             case TutorialState.CollectCollectables:
