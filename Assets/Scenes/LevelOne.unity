@@ -884,9 +884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressurePlateLocation: {fileID: 0}
   pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
-  colourCodeManager: {fileID: 1603217756}
 --- !u!1 &397411106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1359,6 +1357,10 @@ PrefabInstance:
       propertyPath: associatedMiniPuzzle
       value: 
       objectReference: {fileID: 788965241}
+    - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
+      propertyPath: usingProceduralGeneration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5751477536067604463, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -2353,9 +2355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressurePlateLocation: {fileID: 0}
   pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
-  colourCodeManager: {fileID: 1603217756}
 --- !u!1 &794967395
 GameObject:
   m_ObjectHideFlags: 0
@@ -2572,6 +2572,10 @@ PrefabInstance:
       propertyPath: associatedMiniPuzzle
       value: 
       objectReference: {fileID: 1959664652}
+    - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
+      propertyPath: usingProceduralGeneration
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4016,17 +4020,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
---- !u!114 &1603217756 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6271954231661373758, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
-  m_PrefabInstance: {fileID: 1603217755}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a87d50ba34478149a782ee52440d95d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1603217757 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1388899933541824347, guid: 9abcbd47825bf0043931e76970dadae0, type: 3}
@@ -4801,9 +4794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc399fcbeb6fa84d91bcfb22b38d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressurePlateLocation: {fileID: 0}
   pressurePlatePrefab: {fileID: 8046282297677625210, guid: c587872cd898aec48ac0c4cea4464b6c, type: 3}
-  colourCodeManager: {fileID: 1603217756}
 --- !u!1 &1967398064
 GameObject:
   m_ObjectHideFlags: 0
@@ -8915,6 +8906,10 @@ PrefabInstance:
       propertyPath: associatedMiniPuzzle
       value: 
       objectReference: {fileID: 314024947}
+    - target: {fileID: 3744843214460871977, guid: 0fe24a93a2464d84cad521b800bf4520, type: 3}
+      propertyPath: usingProceduralGeneration
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

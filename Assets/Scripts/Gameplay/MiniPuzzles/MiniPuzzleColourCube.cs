@@ -45,8 +45,14 @@ namespace WallThrough.Gameplay
             }
             else
             {
-                // If no RoomBehaviour found, spawn the pressure plate at (0,0,0)
                 Debug.LogWarning("RoomBehaviour component not found on parent object.");
+
+                Transform spawnLocation = transform.GetChild(0).transform;
+
+                // Spawn the pressure plate at the room center
+                GameObject pressurePlate = Instantiate(pressurePlatePrefab, spawnLocation.position + new Vector3(0,0.2f,0), Quaternion.identity);
+                pressurePlate.transform.SetParent(transform);
+                pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject); // Pass parentObject
             }
         }
     }

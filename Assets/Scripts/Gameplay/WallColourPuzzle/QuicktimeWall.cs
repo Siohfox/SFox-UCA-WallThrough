@@ -18,6 +18,7 @@ namespace WallThrough.Gameplay
         [SerializeField] private Animator wallAnimator;
         [SerializeField] private AudioClip wallOpenClip, codeSuccess, codeFail;
         [SerializeField] private MiniPuzzle associatedMiniPuzzle;
+        [SerializeField] private bool usingProceduralGeneration = true;
 
         private int[] colourCode;
         private int requiredInputs;
@@ -61,7 +62,7 @@ namespace WallThrough.Gameplay
             failCross.SetActive(false);
             GenerateColourCode();
 
-            associatedMiniPuzzle = transform.parent.parent.GetComponent<RoomBehaviour>().GetRoomMiniPuzzle();
+            if (usingProceduralGeneration) associatedMiniPuzzle = transform.parent.parent.GetComponent<RoomBehaviour>().GetRoomMiniPuzzle();
 
             if (colourCode.Length > 0 && associatedMiniPuzzle)
             {
