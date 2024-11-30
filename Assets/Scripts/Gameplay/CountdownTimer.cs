@@ -33,7 +33,7 @@ namespace WallThrough.Gameplay
             if (startStopTimer && countdownTimer > countdownTimerMin)
             {
                 countdownTimer -= Time.deltaTime;
-                uiManager?.UpdateTimer(countdownTimer);
+                if(uiManager) uiManager.UpdateTimer(countdownTimer);
             }
             else if (countdownTimer <= countdownTimerMin)
             {

@@ -21,6 +21,29 @@ namespace WallThrough.Utility
             double num = Convert.ToDouble(numberToSquare);
             return (T)Convert.ChangeType(num * num, typeof(T));  // Convert back to original type.
         }
+
+        /// <summary>
+        /// Attempts to find a given object, else debugs an error to console.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="caller"></param>
+        /// <param name="reference"></param>
+        /// <param name="message"></param>
+        /// <returns>Reference to found object, or a debug error if no found object.</returns>
+        public static T FindOrLogError<T>(MonoBehaviour caller, ref T reference, string message = null) where T : MonoBehaviour
+        {
+            if (reference == null)
+            {
+                reference = UnityEngine.Object.FindObjectOfType<T>();
+
+                if (reference == null && caller != null)
+                {
+                    Debug.LogError($"[{caller.GetType().Name}] {message ?? $"Could not find {typeof(T).Name} in the scene."}");
+                }
+            }
+            return reference;
+        }
+
     }
 }
 
