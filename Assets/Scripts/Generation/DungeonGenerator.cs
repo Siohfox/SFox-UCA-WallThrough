@@ -14,7 +14,7 @@ namespace WallThrough.Generation
     {
         public int generationSize;
         public int startPos = 0;
-        public Vector2 offset;
+        public Vector2 offset; // The amount of space that the room takes up
         public GameObject[] rooms;  // First room for main path, second room for branches, third for final room, needs to be expandable
         public float generationDelay = 0.3f;
         public int maxBranchLength = 3;  // Max length of branches
@@ -32,7 +32,7 @@ namespace WallThrough.Generation
             public bool isRoom = false;
             public Quaternion innerRotation;
             public RoomType RoomType = RoomType.Basic;
-            public bool[] status = new bool[4]; // Wall status for each direction         
+            public bool[] doorOpenStatus = new bool[4]; // Door open status: Up, Down, Left, Right       
             public Direction doorSpawnDirection;
             public float roomRotation;
         }
@@ -52,7 +52,6 @@ namespace WallThrough.Generation
 
             InitializeDungeonGrid();
             GenerateLinearPathWithBranches();
-            //StartCoroutine(SpawnRooms());
             SpawnRooms();
         }
 
@@ -184,8 +183,8 @@ namespace WallThrough.Generation
             if (newCell == currentCell + 1) // Right
             {
                 if ((currentCell + 1) % width == 0) return; // Prevent connection at the edge
-                dungeonGrid[currentCell].status[(int)Direction.Right] = true; // Disable Right Wall
-                dungeonGrid[newCell].status[(int)Direction.Left] = true; // Disable Left Wall
+                dungeonGrid[currentCell].doorOpenStatus[(int)Direction.Right] = true; // Disable Right Wall
+                dungeonGrid[newCell].doorOpenStatus[(int)Direction.Left] = true; // Disable Left Wall
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Right;
 
@@ -194,8 +193,8 @@ namespace WallThrough.Generation
             else if (newCell == currentCell - 1) // Left
             {
                 if (currentCell % width == 0) return; // Prevent connection at the edge
-                dungeonGrid[currentCell].status[(int)Direction.Left] = true; // Disable Left Wall
-                dungeonGrid[newCell].status[(int)Direction.Right] = true; // Disable Right Wall
+                dungeonGrid[currentCell].doorOpenStatus[(int)Direction.Left] = true; // Disable Left Wall
+                dungeonGrid[newCell].doorOpenStatus[(int)Direction.Right] = true; // Disable Right Wall
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Left;
 
@@ -204,8 +203,8 @@ namespace WallThrough.Generation
             else if (newCell == currentCell + width) // Down
             {
                 if (newCell >= dungeonGrid.Count) return; // Prevent connection beyond bottom edge
-                dungeonGrid[currentCell].status[(int)Direction.Down] = true;
-                dungeonGrid[newCell].status[(int)Direction.Up] = true;
+                dungeonGrid[currentCell].doorOpenStatus[(int)Direction.Down] = true;
+                dungeonGrid[newCell].doorOpenStatus[(int)Direction.Up] = true;
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Down;
 
@@ -214,8 +213,8 @@ namespace WallThrough.Generation
             else if (newCell == currentCell - width) // Up
             {
                 if (newCell < 0) return; // Prevent connection beyond top edge
-                dungeonGrid[currentCell].status[(int)Direction.Up] = true;
-                dungeonGrid[newCell].status[(int)Direction.Down] = true;
+                dungeonGrid[currentCell].doorOpenStatus[(int)Direction.Up] = true;
+                dungeonGrid[newCell].doorOpenStatus[(int)Direction.Down] = true;
 
                 dungeonGrid[currentCell].doorSpawnDirection = Direction.Up;
 
@@ -260,7 +259,7 @@ namespace WallThrough.Generation
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.SetCurrentRooms(spawnedRooms);
-                //GameManager.Instance.DebugRoomList();
+                // GameManager.Instance.DebugRoomList();
             }
 
             Debug.Log("Invoking dungeon generated");

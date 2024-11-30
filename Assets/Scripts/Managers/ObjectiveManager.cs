@@ -49,7 +49,6 @@ namespace WallThrough.Gameplay
             if(objective.GetObjectiveType() == ObjectiveType.WallPuzzle)
             {
                 completedWallObjectives++;
-                Debug.Log($"Completed wall objectives count = {completedWallObjectives}");
             }
         }
 

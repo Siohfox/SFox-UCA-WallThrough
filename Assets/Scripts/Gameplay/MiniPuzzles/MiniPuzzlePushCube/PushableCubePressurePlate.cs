@@ -19,7 +19,6 @@ public class PushableCubePressurePlate : MonoBehaviour
         {
             if (miniPuzzlePushPuzzle)
             {
-                Debug.Log("Cube");
                 renderer.material = pushedMaterial;
                 miniPuzzlePushPuzzle.AddPushedPlate();
             }

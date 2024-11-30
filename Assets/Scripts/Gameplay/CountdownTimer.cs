@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using WallThrough.UI;
 
@@ -9,51 +6,38 @@ namespace WallThrough.Gameplay
 {
     public class CountdownTimer : MonoBehaviour
     {
+        [SerializeField] private float countdownTimerMax = 60f;
+        [SerializeField] private float countdownTimerMin = 0f;
+        [SerializeField] private bool startStopTimer = false;
+        [SerializeField] private UIManager uiManager;
         [SerializeField] private float countdownTimer;
-        [SerializeField] private float countdownTimerMax = 60.0f;
-        [SerializeField] private float countdownTimerMin = 0.0f;
-        [SerializeField] private bool startStopTimer;
-
-        [SerializeField] UIManager uiManager;
 
         public static event Action OnTimerReachedMinimum;
-        
-        void Start()
+
+        private void Start()
         {
             countdownTimer = countdownTimerMax;
 
             if (!uiManager)
             {
-                try
+                uiManager = FindObjectOfType<UIManager>();
+                if (!uiManager)
                 {
-                    uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-                }
-                catch 
-                {
-                    Debug.Log("CountdownTimer cannot find UIManager");
+                    Debug.LogError("CountdownTimer: UIManager not found.");
                 }
             }
         }
 
         private void Update()
         {
-            if (countdownTimer > countdownTimerMin)
-            {
-                CountDownTimer(startStopTimer);
-            }
-            else
-            {
-                OnTimerReachedMinimum?.Invoke();
-            }
-        }
-
-        private void CountDownTimer(bool startstop)
-        {
-            if (startstop)
+            if (startStopTimer && countdownTimer > countdownTimerMin)
             {
                 countdownTimer -= Time.deltaTime;
-
-                uiManager.UpdateTimer(countdownTimer);
+                uiManager?.UpdateTimer(countdownTimer);
+            }
+            else if (countdownTimer <= countdownTimerMin)
+            {
+                OnTimerReachedMinimum?.Invoke();
             }
         }
     }

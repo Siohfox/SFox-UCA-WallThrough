@@ -4,10 +4,7 @@ using WallThrough.UI;
 
 public class WirePuzzle : MiniPuzzle
 {
-    [SerializeField] private ColourCodeManager colourCodeManager; // Reference to ColourCodeManager
     private GameObject parentObject; // Parent object for FlashCode
-
-    private void Awake() => colourCodeManager ??= FindObjectOfType<ColourCodeManager>();
 
     public override void Initialize(int[] colourCodes)
     {

@@ -9,16 +9,10 @@ namespace WallThrough.Gameplay
     {
         [Header("Pressure Plates")]
         [SerializeField] private GameObject pressurePlatePrefab; // Prefab for the pressure plate
-        private ColourCodeManager colourCodeManager; // Reference to the ColourCodeManager
 
         private GameObject parentObject; // Store reference to parentObject for FlashCode
 
         [SerializeField] private bool tutorialState = false;
-
-        private void Awake()
-        {
-            if (!colourCodeManager) colourCodeManager = FindObjectOfType<ColourCodeManager>();
-        }
 
         public override void Initialize(int[] colourCodes)
         {

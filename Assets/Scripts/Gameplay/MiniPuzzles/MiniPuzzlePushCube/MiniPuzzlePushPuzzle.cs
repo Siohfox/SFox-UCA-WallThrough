@@ -5,14 +5,11 @@ using WallThrough.UI;
 
 public class MiniPuzzlePushPuzzle : MiniPuzzle
 {
-    [SerializeField] private ColourCodeManager colourCodeManager; // Reference to ColourCodeManager
     private GameObject parentObject; // Parent object for FlashCode
 
     [SerializeField] private GameObject[] pushableCubePressurePlates;
     private int currentlyPushedPressurePlates = 0;
     private bool complete;
-
-    private void Awake() => colourCodeManager ??= FindObjectOfType<ColourCodeManager>();
 
     public override void Initialize(int[] colourCodes)
     {

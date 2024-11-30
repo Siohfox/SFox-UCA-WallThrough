@@ -12,39 +12,64 @@ namespace WallThrough.Gameplay
     /// </summary>
     public class EndPortal : MonoBehaviour, IInteractable
     {
-        [SerializeField]
-        private GameObject winText; // Text to display when objectives are complete
-        [SerializeField]
-        private GameObject adviceText; // Text to provide advice when objectives are incomplete
+        [SerializeField] private GameObject winText; // Text displayed when objectives are complete
+        [SerializeField] private GameObject adviceText; // Text displayed when objectives are incomplete
+        [SerializeField] private GameObject portalVFX; // Visual effect for the portal
         private ObjectiveManager objectiveManager; // Reference to the ObjectiveManager
-        [SerializeField] private GameObject portalVFX;
 
         private void Start()
         {
-            // Find and assign the ObjectiveManager in the scene
-            objectiveManager = FindObjectOfType<ObjectiveManager>();
+            AssignUndeclaredVariables();
+        }
 
-            if (!winText)
+        private void AssignUndeclaredVariables()
+        {
+            // Assign ObjectiveManager from the scene
+            objectiveManager = FindObjectOfType<ObjectiveManager>();
+            if (objectiveManager == null)
+                Debug.LogError("ObjectiveManager not found in the scene.");
+
+            // Assign winText if not already set
+            if (winText == null)
             {
-                try
+                var canvas = GameObject.Find("GameplayCanvas");
+                if (canvas != null)
                 {
-                    winText = GameObject.Find("GameplayCanvas").transform.Find("YouWinText").gameObject;
+                    var winTextObj = canvas.transform.Find("YouWinText");
+                    if (winTextObj != null)
+                    {
+                        winText = winTextObj.gameObject;
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Could not find the 'YouWinText' GameObject. Is the name changed?");
+                    }
                 }
-                catch
+                else
                 {
-                    Debug.LogWarning("Could not find the YouWinText gameobject, is the name changed?");
+                    Debug.LogWarning("GameplayCanvas not found in the scene.");
                 }
             }
 
-            if (!adviceText)
+            // Assign adviceText if not already set
+            if (adviceText == null)
             {
-                try
+                var canvas = GameObject.Find("GameplayCanvas");
+                if (canvas != null)
                 {
-                    adviceText = GameObject.Find("GameplayCanvas").transform.Find("AdviceText").gameObject;
+                    var adviceTextObj = canvas.transform.Find("AdviceText");
+                    if (adviceTextObj != null)
+                    {
+                        adviceText = adviceTextObj.gameObject;
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Could not find the 'AdviceText' GameObject. Is the name changed?");
+                    }
                 }
-                catch
+                else
                 {
-                    Debug.LogWarning("Could not find the AdviceText gameobject, is the name changed?");
+                    Debug.LogWarning("GameplayCanvas not found in the scene.");
                 }
             }
         }
@@ -54,67 +79,69 @@ namespace WallThrough.Gameplay
         /// </summary>
         public void InteractionStart()
         {
-            if (objectiveManager.CheckObjectives())
-            {
+            if (objectiveManager != null && objectiveManager.CheckObjectives())
                 StartCoroutine(WaitForEnd());
-            }
             else
-            {
-                StartCoroutine(GiveAdvice()); // Provide advice if objectives are incomplete
-            }
+                StartCoroutine(GiveAdvice());
         }
 
         private void Update()
         {
-            if (objectiveManager.CheckObjectives())
-            {
-                Debug.Log("Setting portal vfx active");
+            // Activate portal VFX if objectives are complete
+            if (objectiveManager != null && objectiveManager.CheckObjectives() && portalVFX != null)
                 portalVFX.SetActive(true);
+        }
+
+        /// <summary>
+        /// Ends the interaction with the end portal. Currently not implemented.
+        /// </summary>
+        public void InteractionEnd()
+        {
+            // Placeholder for future functionality
+        }
+
+        /// <summary>
+        /// Displays advice text for a brief period.
+        /// </summary>
+        private IEnumerator GiveAdvice()
+        {
+            if (adviceText != null)
+            {
+                adviceText.SetActive(true);
+                yield return new WaitForSeconds(2f);
+                adviceText.SetActive(false);
+            }
+            else
+            {
+                Debug.LogWarning("AdviceText is not assigned.");
             }
         }
 
         /// <summary>
-        /// Ends the interaction with the end portal.
+        /// Displays the win text and transitions to the next scene or menu.
         /// </summary>
-        public void InteractionEnd()
-        {
-            // Additional functionality can be added here if needed
-        }
-
-        /// <summary>
-        /// Displays advice for a brief period.
-        /// </summary>
-        /// <returns>An enumerator for coroutine functionality.</returns>
-        private IEnumerator GiveAdvice()
-        {
-            adviceText.SetActive(true); // Show advice text
-            yield return new WaitForSeconds(2f); // Wait for 2 seconds
-            adviceText.SetActive(false); // Hide advice text
-        }
-
         private IEnumerator WaitForEnd()
         {
-            winText.SetActive(true); // Show win text if objectives are completed (until portal object made)
+            if (winText != null)
+                winText.SetActive(true);
+            else
+                Debug.LogWarning("WinText is not assigned.");
+
             yield return new WaitForSeconds(2f);
 
-            // Get the current scene index
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
-            if (currentSceneIndex + 1 >= SceneManager.sceneCountInBuildSettings) // if scene index is overflow
+            // Determine if there's another scene or return to the menu
+            if (currentSceneIndex + 1 >= SceneManager.sceneCountInBuildSettings)
             {
                 LevelManager.Instance.LoadScene("Menu");
             }
             else
             {
-                // Get the path of the next scene by build index
                 string nextScenePath = SceneUtility.GetScenePathByBuildIndex(currentSceneIndex + 1);
-
-                // Extract the scene name from the path
                 string nextSceneName = Path.GetFileNameWithoutExtension(nextScenePath);
-
-                // Load the next scene by name
                 LevelManager.Instance.LoadScene(nextSceneName);
-            } 
+            }
         }
     }
 }

@@ -57,7 +57,7 @@ namespace WallThrough.Gameplay
                 colourNames.Add(colourData.colourName);
             }
 
-            Debug.Log("Your input: " + string.Join(" ", colourNames));
+            // Debug.Log("Your input: " + string.Join(" ", colourNames)); // For input logging
             quickTimeWallScript.CompareCodes(codeInput);
             ClearInput();
         }
