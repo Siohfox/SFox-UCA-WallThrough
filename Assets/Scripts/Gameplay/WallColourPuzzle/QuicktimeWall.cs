@@ -20,6 +20,8 @@ namespace WallThrough.Gameplay
         [SerializeField] private MiniPuzzle associatedMiniPuzzle;
         [SerializeField] private bool usingProceduralGeneration = true;
 
+        private UI.ColourCodeManager colourCodeManager;
+
         private int[] colourCode;
         private int requiredInputs;
 
@@ -51,6 +53,11 @@ namespace WallThrough.Gameplay
                 {
                     Debug.LogError("No failCross found");
                 }
+            }
+
+            if (!colourCodeManager)
+            {
+                colourCodeManager = FindObjectOfType<UI.ColourCodeManager>();
             }
         }
 
@@ -109,6 +116,7 @@ namespace WallThrough.Gameplay
             if (!IsCompleted) base.CompleteObjective();
             PlaySuccessSounds();
             CameraShake.Instance.ShakeCamera(4f, 2f, "SixDShake");
+            StartCoroutine(colourCodeManager.ClearHeldCode());
         }
 
         private void PlaySuccessSounds()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,9 +14,7 @@ namespace WallThrough.UI
         [SerializeField] private GameObject imagePrefab; // Prefab for the colored images (UI)
 
         [Header("Settings")]
-        [SerializeField] private float showCodeTime = 1f; // Time to show the code
-
-        private GameObject parentObject; // Reference to the instantiated parent object
+        [SerializeField] private float showCodeTime = 1f; // Time to show the code  
 
         private void Awake()
         {
@@ -24,6 +23,8 @@ namespace WallThrough.UI
 
         public GameObject Initialize(int[] colourCodes)
         {
+            GameObject parentObject; // Reference to the instantiated parent object
+
             // Check for null references
             if (!parentPrefabHolder)
             {
@@ -70,6 +71,7 @@ namespace WallThrough.UI
             parentObject.SetActive(true);
             Animator[] animArray = parentObject.GetComponentsInChildren<Animator>();
             Image[] imageArray = parentObject.GetComponentsInChildren<Image>();
+            Animator parentAnimator = parentObject.GetComponent<Animator>();
 
             foreach (Image image in imageArray)
             {
@@ -90,11 +92,39 @@ namespace WallThrough.UI
                 }
 
                 yield return new WaitForSeconds(GetAnimationDuration(animator) / animArray.Length);
-                animator.SetBool("Activated", false);
             }
 
             yield return new WaitForSeconds(showCodeTime);
-            parentObject.SetActive(false);
+
+            parentAnimator.SetTrigger("Sweep");
+        }
+
+        public IEnumerator ClearHeldCode()
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                // Check if the child is active
+                if (child.gameObject.activeSelf)
+                {
+                    // Get the Animator component of the active child
+                    Animator parentAnimator = child.GetComponent<Animator>();
+                    if (parentAnimator != null)
+                    {
+                        // Trigger the dismiss animation
+                        parentAnimator.SetTrigger("Dismiss");
+
+                        // Wait for the animation to finish, adding some padding
+                        float paddedWaitTime = 0.2f;
+                        yield return new WaitForSeconds(GetAnimationDuration(parentAnimator) + paddedWaitTime);
+
+                        // Deactivate the child object
+                        child.gameObject.SetActive(false);
+                    }
+
+                    // Exit the loop as we only expect one active child
+                    yield break;
+                }
+            }
         }
 
         private float GetAnimationDuration(Animator animator)
