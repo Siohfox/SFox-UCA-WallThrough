@@ -1,25 +1,31 @@
-# [TASK NAME]
+# Game Project (Wallthrough)
 
-[Module Name]
+FGCT7010: Game Engine Programming and Development
 
-[Student Name]
+Ross Bates
 
-[Student ID]
+SID: 1911666
+## Week 1
 
-## Research
+### Research
 
-### What sources or references have you identified as relevant to this task?
-
-- What type of sources did you identity and want to explore? How would you justify it in reference to the brief set? Think about the focus of the brief.
-- What type of sources do you want to avoid? How could these kinds of sources be detrimental to the user experience, immersion or implementation?
-
+#### Identified resources
 
 ```Markdown
-# Example
+# Identified resources
 
-As I have done research regarding the audio identity and developing audio assets for this project in previous formative assignments. I wanted to look into specific Unreal and Wwise systems that will help create a more immersive experience. I wanted to focus on official documentation to improve my ability to learn new techniques without explicit instructions.
+For the task I decided to focus on doing a top down puzzle game for PC and mobile. To achieve this, i needed to research how to implement games on Android. I wanted to look at specific ways that controls and other factors that might be changed when it comes to making a joint game for both PC and Android Mobile. This research is justified because game design architechture changes when designing for multiple platforms.
 
-I also wanted a creative source to help develop the parachute audio assets and learn how it should function within the game’s narrative.
+Additionally, I needed to decide on which engine I wanted to implement my game in. I had a clear choice between Unity 3D and Unreal Engine.
+
+Unreal:
+Unreal engine provides good 3D graphics and implementations. It provides simple ways to implement games using their Blueprints coding system as well as a choice of implementing C++ classes.
+On the downside, I am less experienced with Unreal Engine, so it would take mroe time to research how to use the engine properly to achieve the design of my game.
+
+Unity is an engine I am confident in and have been taught fluently. Additionally, the intuitive C# makes it easier than Unreal's blueprints and c++ logic to write the code for code breaking and animations in Unity.
+
+I wanted to avoid sources that led to conviluted game design, or options that involved heavy change to the engine or runtime. Sources like these could be detrimental to the implementation of the project, as it would make it more difficult to design and create a game if the design of the controls and structure for mobile and pc is not fluent and easy. 
+
 ```
 
 #### Sources
@@ -29,31 +35,37 @@ I also wanted a creative source to help develop the parachute audio assets and l
 - An ending paragraph stating what you enjoyed or disliked, what you agreed with or not agree with.
 
 ```Markdown
-# Example Documentation
+# Documentation
 
-I wanted to create an emitter which takes advantage of spread and focus, which was a technique I learned from a previous assignment where the spatialisation of an object changes depending on distance. I also wanted to work specifically with a `Spline Component` to encapsulate the entire ship with an “Ocean Emitter”. This led me to read the Unreal Blueprints API References and Wwise 3D Positioning documentation (Unreal Engine Blueprint API Reference | Unreal Engine 5.4 Documentation | Epic Developer Community, s.d., AudioKinetic Inc, s.d.).
+I wanted to create a dungeon type game where the player must traverse through rooms, finding a 'colour code' to enter into a door and enter the next room, until they reach the end. To do this, i applied techniques I have already learnt about the Unity engine such as the implimentation of simple codebreaking mechanics applied with mobile controls.
 
-I found a Blueprint node called “Find Location Closest to World Location" which returns a `Vector3` on the spline position closest to another `Vector3`, I believe this can help move the emitter towards the player(Finding time of given results from (Find Location Closest to World Location) from Splines - Programming & Scripting / Blueprint, 2023).
+I created a simple 
 
-I found the Unreal documentation clear and easy to navigate, however it was much harder to find specific nodes unless you are familiar with the naming conventions used by Unreal, such as “World Location” and the API documentation is separated from the property references. The Wwise documentation on the other hand is much easier to navigate as they have core topics such as “Using Sounds and Motion to Enhance Gameplay” and examples of how they can be applied, which the unreal documentation lacked. 
+# Example Game Source of Top Down dungeon traversing Game
 
-# Example Game Source
+Binding of Isaac is a top down view dungeon traversing game known as a Roguelike(What is a Roguelike? The Beginner's Guide, LifeWire.com, May 28, 2020) by independent developers Edmund McMillen and Florian Himsl. The game features a character who traverses through a basement setting, a structure of rooms separated by walls. The player has to defeat enemies in the room before being able to move to the next. The dungeon is generated procedurally. (The Binding of Isaac, 2011).
 
-Just Cause 3 is an action-adventure game developed by Avalanche Studios, it features a mechanic where the player can navigate the open world with the use of a parachute and a wingsuit(Just Cause 3, 2015).
-
-The wind becomes more prominent in the mix and its volume and speed is based on the player's velocity when using the wingsuit or parachute. It is not too overwhelming during action sequences to ensure audio responses can be clearly heard.
-
-I found their implementation and choice great for the context of their narrative and game mechanics. However, for the sequences featured in the assignment, it is more “cinematic” allowing for a different approach for the mix and can be “exaggerated” to drive its narrative function.
-
-
+I found the implementation of this top down view game where the player traverses a dungeon inspirational and similar in mechanics to what I want to achieve. I didn't want to focus on procedural generation yet, as I wasn't sure if it would help achieve the vision of the game I wanted to make.
 ```
 
 ## Implementation
 
-### What was the process of completing the task? What influenced your decision making?
+### Task: Implement simple movement with a third person controller
 
 - What was the process of completing the task at hand? Did you do any initial planning?
 - Did you receive any feedback from users, peers or lecturers? How did you react to it?
+
+#### Task 1 - Implement Camera
+```Markdown
+I needed a third person controller for my player. I decided to use my knowledge of creating controllers to implement my own third person controller.
+
+I used an asset called Cinemachine to create a third person camera. Using the asset, I added a 'CinemachineBrain' to the Main Camera to allow Cinemachine to implement its own Camera system to override Unity's main camera using their Documentation. (Cinemachine Documenation, https://docs.unity3d.com/Packages/com.unity.cinemachine@2.3/manual/index.html, Accessed 2024)
+Additionally, I added a virtual camera which would be the camera that follows the player. This Camera was given a Transposer method for following the Body with a binding mode of World Space.
+I added the Aim to be Composer, allowing the Camera to aim at the Player no matter where it is moving.
+
+Utilizing the functions built in to the asset to create a camera that smoothly follows the player from afar.
+
+```
 
 <br>
 
@@ -67,6 +79,8 @@ public class HelloWorld : MonoBehaviour
     }
 }
 ```
+
+
 *Figure 1. An example of using a script as a figure. This script has a `Start()` method!*
 
 ### What creative or technical approaches did you use or try, and how did this contribute to the outcome?
