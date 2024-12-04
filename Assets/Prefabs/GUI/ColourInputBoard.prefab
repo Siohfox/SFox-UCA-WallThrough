@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 1324911583988491725}
   - component: {fileID: 9114359344187947537}
   m_Layer: 5
-  m_Name: 'LargeBoard '
+  m_Name: ColourInputBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

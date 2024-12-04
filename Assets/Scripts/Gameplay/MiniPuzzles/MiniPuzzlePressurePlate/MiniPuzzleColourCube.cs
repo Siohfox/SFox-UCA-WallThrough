@@ -42,7 +42,7 @@ namespace WallThrough.Gameplay
             }
             else
             {
-                Debug.LogWarning("RoomBehaviour component not found on parent object.");
+                Debug.LogWarning("RoomBehaviour component not found on parent object. Generating a default...");
 
                 Transform spawnLocation = transform.GetChild(0).transform;
 

@@ -45,12 +45,11 @@ namespace WallThrough.Core
 
             string json = JsonUtility.ToJson(data);
             File.WriteAllText(saveFilePath, json);
-            Debug.Log("Game Saved");
+            Debug.Log("...Ding! Game Saved.");
         }
 
         public void SaveOptionsData(OptionsData optionsData)
         {
-            Debug.Log("Saving options data");
             string json = JsonUtility.ToJson(optionsData);
             File.WriteAllText(optionsFilePath, json);
         }

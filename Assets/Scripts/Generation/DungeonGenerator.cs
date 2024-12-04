@@ -262,7 +262,7 @@ namespace WallThrough.Generation
                 // GameManager.Instance.DebugRoomList();
             }
 
-            Debug.Log("Invoking dungeon generated");
+            // Tell anything waiting that the dungeon is finished generating
             OnDungeonGenerated?.Invoke();
         }
 
