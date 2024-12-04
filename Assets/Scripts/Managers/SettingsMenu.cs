@@ -16,7 +16,7 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private Toggle fullscreenCheckbox;
     [SerializeField] private TMP_Dropdown resolutionDropdown;
 
-    private OptionsManager optionsManager;
+    [SerializeField] private OptionsManager optionsManager;
     Resolution[] resolutions;
 
     private void OnEnable()
