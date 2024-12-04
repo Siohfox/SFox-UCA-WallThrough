@@ -53,6 +53,8 @@ namespace WallThrough.Core
         private void Start()
         {
             InitializeGame();
+
+            Debug.Log(saveManager.LoadOptionsData().volume);
         }
 
         private void InitializeGame()

@@ -76,10 +76,14 @@ namespace WallThrough.Gameplay
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
-            {
-                StartCoroutine(colourCodeManager.FlashCode(parentObject)); // Pass parentObject to FlashCode
-            }
+            OnPuzzleComplete();
+        }
+
+        public void OnPuzzleComplete()
+        {
+            if (!parentObject) Debug.LogWarning("No parent object");
+            else if (!colourCodeManager) Debug.LogWarning("No ColourCodeManager");
+            else StartCoroutine(colourCodeManager.FlashCode(parentObject));
         }
     }
 }

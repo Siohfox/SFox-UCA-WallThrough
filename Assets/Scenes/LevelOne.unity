@@ -1663,11 +1663,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc1e857f93cdf94bbcde8f70f4301d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTimer: 0
   countdownTimerMax: 60
   countdownTimerMin: 0
   startStopTimer: 1
   uiManager: {fileID: 2073089754}
+  countdownTimer: 0
 --- !u!1 &624449726
 GameObject:
   m_ObjectHideFlags: 0
@@ -2336,7 +2336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8917067346128757066, guid: 642c8d2777d135844b555774c6db0d44, type: 3}
       propertyPath: generationSize
-      value: 3
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 8917067346128757066, guid: 642c8d2777d135844b555774c6db0d44, type: 3}
       propertyPath: generationDelay

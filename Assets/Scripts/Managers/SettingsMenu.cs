@@ -4,6 +4,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using TMPro;
 using WallThrough.Core;
+using System;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -18,9 +19,15 @@ public class SettingsMenu : MonoBehaviour
     private OptionsManager optionsManager;
     Resolution[] resolutions;
 
-    private void Start()
+    private void OnEnable()
+    {
+        OptionsManager.OnOptionsDataLoaded += Initialize;
+    }
+
+    private void Initialize()
     {
         optionsManager = FindObjectOfType<OptionsManager>();
+        //subscribe to onIntitialized here on optionsManager
         resolutions = Screen.resolutions;
 
         // Populate resolution dropdown
@@ -40,6 +47,11 @@ public class SettingsMenu : MonoBehaviour
 
         // Initialize sliders and dropdowns
         LoadSettings();
+    }
+
+    private void Update()
+    {
+        //LoadSettings();
     }
 
     private void LoadSettings()

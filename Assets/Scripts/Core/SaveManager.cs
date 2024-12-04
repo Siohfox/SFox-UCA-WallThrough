@@ -50,6 +50,7 @@ namespace WallThrough.Core
 
         public void SaveOptionsData(OptionsData optionsData)
         {
+            Debug.Log("Saving options data");
             string json = JsonUtility.ToJson(optionsData);
             File.WriteAllText(optionsFilePath, json);
         }

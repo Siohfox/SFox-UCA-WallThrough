@@ -1,33 +1,38 @@
+using System;
 using UnityEngine;
 
 namespace WallThrough.Core
 {
     public class OptionsManager : MonoBehaviour
     {
+
+
         [SerializeField] private SaveManager saveManager;
         private OptionsData optionsData;
+        public static event Action OnOptionsDataLoaded;
 
-        private void Awake()
+        private void Start()
         {
             optionsData = saveManager.LoadOptionsData();
-            InitializeDefaults();
+            if (optionsData == null)
+            {
+                Debug.Log("Initializing defaults");
+                InitializeDefaults();
+            }
+            OnOptionsDataLoaded?.Invoke();
         }
 
         private void InitializeDefaults()
         {
-            // Initialize defaults if not set
-            if (optionsData == null)
+            optionsData = new OptionsData
             {
-                optionsData = new OptionsData
-                {
-                    volume = 0.35f,
-                    sfxVolume = 0.35f,
-                    musicVolume = 0.35f,
-                    quality = 5,
-                    fullscreen = false,
-                    resolutionIndex = 0
-                };
-            }
+                volume = 0.35f,
+                sfxVolume = 0.35f,
+                musicVolume = 0.35f,
+                quality = 5,
+                fullscreen = false,
+                resolutionIndex = 0
+            };
         }
 
         public void SetVolume(float volume) => UpdateOption(ref optionsData.volume, volume, "volume");
@@ -37,7 +42,7 @@ namespace WallThrough.Core
         public void SetFullScreen(bool isFullscreen)
         {
             optionsData.fullscreen = isFullscreen;  // Directly set the value
-            PlayerPrefs.SetInt("fullscreen", isFullscreen ? 1 : 0);
+            PlayerPrefs.SetInt("fullscreen", isFullscreen ? 1 : 0); //TODO : Remove as everything is in JSON
             saveManager.SaveOptionsData(optionsData);
         }
 
