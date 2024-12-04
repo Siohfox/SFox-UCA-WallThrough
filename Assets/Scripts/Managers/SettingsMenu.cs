@@ -24,10 +24,26 @@ public class SettingsMenu : MonoBehaviour
         OptionsManager.OnOptionsDataLoaded += Initialize;
     }
 
+    private void OnDisable()
+    {
+        OptionsManager.OnOptionsDataLoaded -= Initialize;
+    }
+
     private void Initialize()
     {
         optionsManager = FindObjectOfType<OptionsManager>();
-        //subscribe to onIntitialized here on optionsManager
+
+        // Initialize sliders and dropdowns
+        LoadSettings();
+    }
+
+    private void Update()
+    {
+        //LoadSettings();
+    }
+
+    private void LoadSettings()
+    {
         resolutions = Screen.resolutions;
 
         // Populate resolution dropdown
@@ -45,17 +61,7 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 
-        // Initialize sliders and dropdowns
-        LoadSettings();
-    }
-
-    private void Update()
-    {
-        //LoadSettings();
-    }
-
-    private void LoadSettings()
-    {
+        // Set other settings
         audioSlider.value = optionsManager.GetVolume();
         audioSFXSlider.value = optionsManager.GetSFXVolume();
         audioMusicSlider.value = optionsManager.GetMusicVolume();
