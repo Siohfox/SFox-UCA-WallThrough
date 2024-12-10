@@ -55,6 +55,7 @@ public class DragAndDrop : MonoBehaviour
     {
         Vector3 currentPosition = transform.position;
         Vector3 pointerPos = GetPointerPosition();
+        
 
         offset = currentPosition - pointerPos;
         isDragging = true;

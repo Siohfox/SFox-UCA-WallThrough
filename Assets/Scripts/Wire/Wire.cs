@@ -23,6 +23,8 @@ public class Wire : MonoBehaviour
     Transform[] segments;
     [SerializeField] Transform segmentParent;
 
+    List<GameObject> segmentSpheres = new List<GameObject>(); // List to store spheres
+
     private int prevSegmentCount;
     private float prevTotalLength;
     private float prevDrag;
@@ -33,6 +35,12 @@ public class Wire : MonoBehaviour
     List<Vector3> tempVerticies = new();
 
     private void Update()
+    {
+        UpdateSegmentData();
+        GenerateVertices();
+    }
+
+    private void UpdateSegmentData()
     {
         if (prevSegmentCount != segmentCount)
         {
@@ -58,8 +66,6 @@ public class Wire : MonoBehaviour
             UpdateRadius();
         }
         prevRadius = radius;
-
-        GenerateVertices();
     }
 
     private void GenerateVertices()
@@ -148,6 +154,13 @@ public class Wire : MonoBehaviour
                 }
             }
         }
+
+        // Remove sphere objects if any
+        foreach (var sphere in segmentSpheres)
+        {
+            Destroy(sphere);
+        }
+        segmentSpheres.Clear(); // Clear the sphere list
     }
 
     void OnDrawGizmos()
@@ -163,7 +176,7 @@ public class Wire : MonoBehaviour
             {
                 Gizmos.DrawSphere(tempVerticies[i], 0.1f);
             }
-        }       
+        }
     }
 
     private void GenerateSegments()
@@ -181,6 +194,13 @@ public class Wire : MonoBehaviour
 
             Vector3 pos = prevTransform.position + (direction / segmentCount);
             segment.transform.position = pos;
+
+            // Create a sphere for the segment
+            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            sphere.transform.position = segment.transform.position;
+            sphere.transform.localScale = new Vector3(radius * 2, radius * 2, radius * 2); // Scale the sphere to match the segment radius
+            sphere.transform.SetParent(segment.transform); // Set the sphere as a child of the segment
+            segmentSpheres.Add(sphere); // Store the sphere in the list
 
             JoinSegment(segment.transform, prevTransform);
 
