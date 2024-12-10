@@ -17,7 +17,7 @@ namespace WallThrough.Generation
         public GameObject collectablePrefab;
         public GameObject puzzleParentObject;
         public List<GameObject> rotatableObjects;
-        public Vector3 roomSize = new(24, 0, 24);
+        public Vector3 roomSize = new(48, 0, 48);
         public MiniPuzzle roomMiniPuzzle;
 
         // Assign MiniPuzzle component if it exists in child objects

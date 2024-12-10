@@ -44,12 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce5b60c24c74f343bd0dc128216277f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generationSize: 12
+  generationSize: 49
   startPos: 0
-  finalBoss: {fileID: 5218913779713568348, guid: 2c76fbf76315f2a4b8bf193f48232591, type: 3}
-  offset: {x: 24, y: 24}
+  offset: {x: 48, y: 48}
   rooms:
   - {fileID: 6975798216667006765, guid: 173c050145933d8459fe385926ed0994, type: 3}
+  - {fileID: 6975798216667006765, guid: 91b062e961dba934bbd2672dd73bb8ba, type: 3}
+  - {fileID: 6975798216667006765, guid: fa419b472f5a70040a5844a10a8e58dd, type: 3}
   - {fileID: 6451114561706508905, guid: 799dce338c49f3848bb3c16cde06929d, type: 3}
-  generationDelay: 0.0005
+  - {fileID: 6975798216667006765, guid: 53e9663e3817f1f4babb01b877dd2547, type: 3}
+  - {fileID: 3697325593405220398, guid: 15a52021faba109459ee11ab264a3edd, type: 3}
+  generationDelay: 0.05
   maxBranchLength: 4
+  generateBranches: 1

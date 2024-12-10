@@ -63,7 +63,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1713781417436014262}
@@ -204,7 +204,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2016257933472593841}
@@ -240,7 +240,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 842086663190451126}
@@ -281,7 +281,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4014470479564015935}
@@ -312,15 +312,13 @@ MonoBehaviour:
   - {fileID: 407571991613984656}
   - {fileID: 2100572639708957764}
   - {fileID: 9129658913135178294}
-  arches:
-  - {fileID: 1021013493040372085}
-  - {fileID: 829371230122457533}
-  - {fileID: 5482221924109717291}
-  - {fileID: 8010448464318322560}
   quickTimeWallPrefab: {fileID: 0}
   exitPortalPrefab: {fileID: 0}
   collectablePrefab: {fileID: 8488766852617563107, guid: d9b3ef622078236468378b38f3033029, type: 3}
-  roomSize: {x: 24, y: 0, z: 24}
+  puzzleParentObject: {fileID: 0}
+  rotatableObjects: []
+  roomSize: {x: 36, y: 0, z: 36}
+  roomMiniPuzzle: {fileID: 0}
 --- !u!1 &7684075209079686458
 GameObject:
   m_ObjectHideFlags: 0

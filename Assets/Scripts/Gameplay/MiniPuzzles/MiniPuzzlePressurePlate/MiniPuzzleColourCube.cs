@@ -47,7 +47,7 @@ namespace WallThrough.Gameplay
                 Transform spawnLocation = transform.GetChild(0).transform;
 
                 // Spawn the pressure plate at the room center
-                GameObject pressurePlate = Instantiate(pressurePlatePrefab, spawnLocation.position + new Vector3(0,0.2f,0), Quaternion.identity);
+                GameObject pressurePlate = Instantiate(pressurePlatePrefab, spawnLocation.position + new Vector3(0,0.5f,0), Quaternion.identity);
                 pressurePlate.transform.SetParent(transform);
                 pressurePlate.AddComponent<PressurePlate>().Initialize(colourCodeManager, parentObject, tutorialState); // Pass parentObject
             }
