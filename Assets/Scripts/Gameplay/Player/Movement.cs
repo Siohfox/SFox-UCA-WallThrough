@@ -11,6 +11,7 @@ namespace WallThrough.Gameplay.Pawn
 
         public float moveSpeed = 5f;
         public float rotationSpeed = 720f; // Degrees per second
+        public Transform cameraTransform; // Reference to the camera transform
 
         private void Start()
         {
@@ -27,8 +28,17 @@ namespace WallThrough.Gameplay.Pawn
                 return;
             }
 
-            // Calculate the target direction based on input
-            Vector3 targetDirection = new Vector3(moveDir.x, 0, moveDir.y).normalized;
+            // Get the camera's forward and right vectors (projected to the XZ plane)
+            Vector3 cameraForward = cameraTransform.forward;
+            cameraForward.y = 0; // Ignore the vertical component (we don't want to move up/down)
+            cameraForward.Normalize();
+
+            Vector3 cameraRight = cameraTransform.right;
+            cameraRight.y = 0; // Ignore the vertical component
+            cameraRight.Normalize();
+
+            // Calculate the movement direction relative to the camera's orientation
+            Vector3 targetDirection = cameraForward * moveDir.y + cameraRight * moveDir.x;
 
             // Rotate towards the target direction
             RotateTowards(targetDirection);
@@ -37,7 +47,6 @@ namespace WallThrough.Gameplay.Pawn
             Vector3 forward = transform.forward;
             _rb.velocity = new Vector3(forward.x * moveSpeed, _rb.velocity.y, forward.z * moveSpeed);
         }
-
 
         private void RotateTowards(Vector3 direction)
         {
@@ -51,7 +60,6 @@ namespace WallThrough.Gameplay.Pawn
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
             }
         }
-
 
         public Vector3 GetCurrentVelocity() => _rb.velocity;
     }
