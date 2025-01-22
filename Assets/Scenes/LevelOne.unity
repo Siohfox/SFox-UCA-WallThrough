@@ -3400,6 +3400,10 @@ PrefabInstance:
       propertyPath: optionsMenu
       value: 
       objectReference: {fileID: 2057682167}
+    - target: {fileID: 8527947282266816568, guid: 654a70b5baa36fd48ba7aebe2e52e724, type: 3}
+      propertyPath: virtualJoystick
+      value: 
+      objectReference: {fileID: 1431898013}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
