@@ -10,12 +10,9 @@ public class SettingsMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
     [SerializeField] private Slider audioSlider;
-    [SerializeField] private Slider audioSFXSlider;
-    [SerializeField] private Slider audioMusicSlider;
     [SerializeField] private TMP_Dropdown dropdownQuality;
     [SerializeField] private Toggle fullscreenCheckbox;
     [SerializeField] private TMP_Dropdown resolutionDropdown;
-
     [SerializeField] private OptionsManager optionsManager;
     Resolution[] resolutions;
 
@@ -33,13 +30,8 @@ public class SettingsMenu : MonoBehaviour
     {
         optionsManager = FindObjectOfType<OptionsManager>();
 
-        // Initialize sliders and dropdowns
+        // Initialize sliders and dropdowns (UI elements)
         LoadSettings();
-    }
-
-    private void Update()
-    {
-        //LoadSettings();
     }
 
     private void LoadSettings()
@@ -63,15 +55,11 @@ public class SettingsMenu : MonoBehaviour
 
         // Set other settings
         audioSlider.value = optionsManager.GetVolume();
-        audioSFXSlider.value = optionsManager.GetSFXVolume();
-        audioMusicSlider.value = optionsManager.GetMusicVolume();
         dropdownQuality.value = optionsManager.GetQuality();
         fullscreenCheckbox.isOn = optionsManager.IsFullScreen();
     }
 
     public void SetVolume(float volume) => optionsManager.SetVolume(volume);
-    public void SetSFXVolume(float volume) => optionsManager.SetSFXVolume(volume);
-    public void SetMusicVolume(float volume) => optionsManager.SetMusicVolume(volume);
     public void SetQuality(int qualityIndex) => optionsManager.SetQuality(qualityIndex);
     public void SetFullScreen(bool isFullscreen) => optionsManager.SetFullScreen(isFullscreen);
     public void SetResolution(int resolutionIndex) => optionsManager.SetResolution(resolutionIndex);

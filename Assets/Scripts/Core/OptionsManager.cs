@@ -1,24 +1,39 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace WallThrough.Core
 {
     public class OptionsManager : MonoBehaviour
     {
-
-
         [SerializeField] private SaveManager saveManager;
         private OptionsData optionsData;
         public static event Action OnOptionsDataLoaded;
+
+        [SerializeField] private AudioMixer audioMixer;
 
         private void Start()
         {
             optionsData = saveManager.LoadOptionsData();
             if (optionsData == null)
             {
-                Debug.Log("Initializing defaults");
+                Debug.Log("No saved options data found, initializing default settings for options");
                 InitializeDefaults();
             }
+            if (!audioMixer)
+            {
+                Debug.LogWarning("No audio mixer found");
+            }
+            else
+            {
+                audioMixer.SetFloat("volume", Mathf.Log10(optionsData.volume) * 20);
+            }
+
+            // Init settings from current options data
+            QualitySettings.SetQualityLevel(optionsData.quality);
+            Screen.fullScreen = optionsData.fullscreen;
+
+
             OnOptionsDataLoaded?.Invoke();
         }
 
@@ -35,23 +50,41 @@ namespace WallThrough.Core
             };
         }
 
-        public void SetVolume(float volume) => UpdateOption(ref optionsData.volume, volume, "volume");
-        public void SetSFXVolume(float volume) => UpdateOption(ref optionsData.sfxVolume, volume, "sfxVolume");
-        public void SetMusicVolume(float volume) => UpdateOption(ref optionsData.musicVolume, volume, "musicVolume");
-        public void SetQuality(int qualityIndex) => UpdateOption(ref optionsData.quality, qualityIndex, "quality");
-        public void SetFullScreen(bool isFullscreen)
-        {
-            optionsData.fullscreen = isFullscreen;  // Directly set the value
-            PlayerPrefs.SetInt("fullscreen", isFullscreen ? 1 : 0); //TODO : Remove as everything is in JSON
-            saveManager.SaveOptionsData(optionsData);
-        }
-
-        public void SetResolution(int resolutionIndex) => UpdateOption(ref optionsData.resolutionIndex, resolutionIndex, "resolution");
-
         private void UpdateOption<T>(ref T field, T value, string key)
         {
             field = value;
             PlayerPrefs.SetString(key, JsonUtility.ToJson(field));
+            saveManager.SaveOptionsData(optionsData);
+        }
+
+        public void SetVolume(float volume)
+        {
+            UpdateOption(ref optionsData.volume, volume, "volume");
+
+            // Update the AudioMixer volume (using decibels, where 1.0f corresponds to 0 dB)
+            if(audioMixer)
+                audioMixer.SetFloat("volume", Mathf.Log10(volume) * 20);  // Convert to decibels
+        }
+
+        public void SetQuality(int qualityIndex)
+        {
+            UpdateOption(ref optionsData.quality, qualityIndex, "quality");
+
+            QualitySettings.SetQualityLevel(qualityIndex);
+        }
+
+        public void SetResolution(int resolutionIndex) 
+        {
+            UpdateOption(ref optionsData.resolutionIndex, resolutionIndex, "resolution");
+            Resolution resolution = Screen.resolutions[resolutionIndex];
+
+            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        }
+
+        public void SetFullScreen(bool isFullscreen)
+        {
+            optionsData.fullscreen = isFullscreen;
+            Screen.fullScreen = isFullscreen;
             saveManager.SaveOptionsData(optionsData);
         }
 

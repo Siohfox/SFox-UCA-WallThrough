@@ -28,7 +28,7 @@ namespace WallThrough.Audio
 
         private void Start()
         {
-            musicSource = gameObject.AddComponent<AudioSource>();
+            musicSource = gameObject.GetComponent<AudioSource>();
             musicSource.volume = PlayerPrefs.GetFloat("musicVolume", 0.35f);
         }
 

@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveManager: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 44e23822f4686864eb086152118c10ea, type: 2}

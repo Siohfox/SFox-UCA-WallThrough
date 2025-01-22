@@ -3392,6 +3392,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2749515067744146008, guid: 654a70b5baa36fd48ba7aebe2e52e724, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749515067744146008, guid: 654a70b5baa36fd48ba7aebe2e52e724, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 44e23822f4686864eb086152118c10ea, type: 2}
     - target: {fileID: 3601818987285764771, guid: 654a70b5baa36fd48ba7aebe2e52e724, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3489,7 +3497,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1877650910
 RectTransform:
