@@ -20,14 +20,8 @@ namespace WallThrough.Core
                 Debug.Log("No saved options data found, initializing default settings for options");
                 InitializeDefaults();
             }
-            if (!audioMixer)
-            {
-                Debug.LogWarning("No audio mixer found");
-            }
-            else
-            {
-                audioMixer.SetFloat("volume", Mathf.Log10(optionsData.volume) * 20);
-            }
+            if (!audioMixer) Debug.LogWarning("No audio mixer found");
+                else audioMixer.SetFloat("volume", Mathf.Log10(optionsData.volume) * 20);
 
             // Init settings from current options data
             QualitySettings.SetQualityLevel(optionsData.quality);

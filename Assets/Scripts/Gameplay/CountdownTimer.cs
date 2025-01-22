@@ -44,7 +44,6 @@ namespace WallThrough.Gameplay
         public void AddTime(float addedTime)
         {
             countdownTimer += addedTime;
-            Debug.Log("Adding time" + addedTime);
         }
     }
 }
