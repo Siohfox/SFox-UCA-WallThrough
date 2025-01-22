@@ -1615,6 +1615,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3326510548919843966, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4886863890327806954, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
       propertyPath: m_Name
       value: PushPuzzle
