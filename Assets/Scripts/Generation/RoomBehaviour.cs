@@ -63,7 +63,7 @@ namespace WallThrough.Generation
         // Expose the room's MiniPuzzle component
         public MiniPuzzle GetRoomMiniPuzzle() => roomMiniPuzzle;
 
-        // Helper method to encapsulate child bounds into a room's total bounds
+        // Helper method to encapsulate child bounds into a room's total bounds - necessary because of unity's terrible rotation around center
         private Bounds CalculateRoomBounds()
         {
             Bounds bounds = new(transform.position, Vector3.zero);
@@ -125,7 +125,7 @@ namespace WallThrough.Generation
         // Instantiate a quick-time wall at the specified door position
         private void InstantiateQuickTimeWallAtDoor(GameObject door)
         {
-            Vector3 wallPosition = door.transform.position + new Vector3(0, 2, 0);
+            Vector3 wallPosition = door.transform.position;
             GameObject quickTimeWall = Instantiate(quickTimeWallPrefab, wallPosition, door.transform.rotation);
             quickTimeWall.transform.SetParent(transform);
         }

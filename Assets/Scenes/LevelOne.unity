@@ -2205,7 +2205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8917067346128757066, guid: 642c8d2777d135844b555774c6db0d44, type: 3}
       propertyPath: generationSize
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5436,6 +5436,10 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 2073089754}
+    - target: {fileID: 2891620122595528952, guid: b922141fe2cb8194192b752b7ad6a74c, type: 3}
+      propertyPath: startStopTimer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7963262608155624840, guid: b922141fe2cb8194192b752b7ad6a74c, type: 3}
       propertyPath: m_Pivot.x
       value: 1
