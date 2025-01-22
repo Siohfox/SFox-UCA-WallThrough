@@ -1,26 +1,24 @@
 # SFox-UCA-WallThrough
 ### Wallthrough
- ```
-A puzzle game about removing walls via quicktime events 
 ```
-
-
-![alt text](<Screenshot 2024-10-01 155641.png>)
-
-### Pitch
-The game will be a 3D topdown-puzzle game where the player must find clues and move around to get the right combination of colours to open doors. To make the game more interesting, the room will be filling with water/lava(not sure yet)
+A puzzle game about removing walls via colour codes
+```
+![alt text](<Screenshots/GameScreenshotMenu_3.jpg>)
+![alt text](<Screenshots/GameScreenshot_1.jpg>)
+![alt text](<Screenshots/GameScreenshot_2.jpg>)
 
 ### List of Mechanics
 
-- Playable on windows and android
-- Quick time colour match puzzles that increase danger levels if failed
-- Lava/water filling mechanic to motivate the player to be fast
-- Highscore displayed in corner
-- Easy WASD controls or point and click or mobile moving stick
-- Multiple linear non procedural levels
-- 
+- Playable on windows
+- Multiple linear procedural levels
+- Puzzles
+- Timed escape
+- Easy WASD controls or point and click or mobile virtual joystick
+- Settings and music saving
+
 
 ### Thematics
 - Low poly
 - Simple art
+- Dungeon style
 - Non-intrusive UI
