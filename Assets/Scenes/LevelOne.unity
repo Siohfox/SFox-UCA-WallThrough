@@ -5348,7 +5348,7 @@ PrefabInstance:
       objectReference: {fileID: 2073089754}
     - target: {fileID: 2891620122595528952, guid: b922141fe2cb8194192b752b7ad6a74c, type: 3}
       propertyPath: startStopTimer
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7963262608155624840, guid: b922141fe2cb8194192b752b7ad6a74c, type: 3}
       propertyPath: m_Pivot.x

@@ -19,6 +19,8 @@ namespace WallThrough.Gameplay
         [SerializeField] private AudioClip wallOpenClip, codeSuccess, codeFail;
         [SerializeField] private MiniPuzzle associatedMiniPuzzle;
         [SerializeField] private bool usingProceduralGeneration = true;
+        [SerializeField] private CountdownTimer countdownTimer;
+        public float doorTimeWorth = 20.0f;
 
         private UI.ColourCodeManager colourCodeManager;
 
@@ -27,6 +29,8 @@ namespace WallThrough.Gameplay
 
         private void Awake()
         {
+            doorTimeWorth = 20.0f;
+
             if (!GetComponent<AudioSource>())
                 Debug.LogWarning("No audio source found");
             SetObjectiveType(ObjectiveType.WallPuzzle);
@@ -58,6 +62,11 @@ namespace WallThrough.Gameplay
             if (!colourCodeManager)
             {
                 colourCodeManager = FindObjectOfType<UI.ColourCodeManager>();
+            }
+
+            if (!countdownTimer)
+            {
+                countdownTimer = FindObjectOfType<CountdownTimer>();
             }
         }
 
@@ -118,6 +127,7 @@ namespace WallThrough.Gameplay
             if (!IsCompleted) base.CompleteObjective();
             PlaySuccessSounds();
             CameraShake.Instance.ShakeCamera(4f, 2f, "SixDShake");
+            if(countdownTimer) countdownTimer.AddTime(doorTimeWorth);
             StartCoroutine(colourCodeManager.ClearHeldCode());
         }
 

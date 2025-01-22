@@ -127,6 +127,7 @@ namespace WallThrough.Generation
         {
             Vector3 wallPosition = door.transform.position;
             GameObject quickTimeWall = Instantiate(quickTimeWallPrefab, wallPosition, door.transform.rotation);
+            //quickTimeWall.GetComponent<Gameplay.QuickTimeWall>().doorTimeWorth = 15.0f;
             quickTimeWall.transform.SetParent(transform);
         }
 

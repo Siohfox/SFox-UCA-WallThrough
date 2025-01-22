@@ -14,7 +14,7 @@ namespace WallThrough.Gameplay.Pawn
         [SerializeField] private AudioClip damageTakenClip, deathClip, deathTune;
         private AudioSource src;
 
-        private int previousHealth, previousBreath;
+        private int previousHealth;
 
         public static event Action<int> OnHealthChange;
         public static event Action OnPlayerDeath;
