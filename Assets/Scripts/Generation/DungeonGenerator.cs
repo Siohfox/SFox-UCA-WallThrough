@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WallThrough.Core;
-using WallThrough.Gameplay;
 using WallThrough.Utility;
 
 namespace WallThrough.Generation
