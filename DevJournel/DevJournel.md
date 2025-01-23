@@ -32,8 +32,8 @@ Unity is an engine I am confident in and have been taught fluently. Additionally
 I wanted to avoid sources that led to conviluted game design, or options that involved heavy change to the engine or runtime. Sources like these could be detrimental to the implementation of the project, as it would make it more difficult to design and create a game if the design of the controls and structure for most devices is not fluent and easy. 
 
 I wanted to create a birds eye view top down style as pictured below in my intial draft art:
+
 <img src="https://raw.githubusercontent.com/Siohfox/SFox-UCA-WallThrough/refs/heads/main/Screenshots/IntialDesign.png" alt="drawing" width="1000"/>
-[![A video](https://img.youtube.com/vi/Nb62z3J4A_A/0.jpg)](https://www.youtube.com/watch?v=Nb62z3J4A_A)
 
 Given all this, the clear resources I need to identify and research were:
 - Unity's new Input system
