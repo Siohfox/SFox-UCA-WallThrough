@@ -20,7 +20,9 @@ namespace WallThrough.Gameplay.Pawn
 
         public void Move(Vector2 moveDir)
         {
-            // Use a threshold to prevent very small inputs from affecting movement
+            // Use a threshold to prevent very small
+            //
+            // s from affecting movement
             if (moveDir.magnitude < 0.1f)
             {
                 // Stop the player's movement when there is no input
