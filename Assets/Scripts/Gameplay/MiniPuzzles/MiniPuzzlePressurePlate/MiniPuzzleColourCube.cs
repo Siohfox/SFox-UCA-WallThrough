@@ -58,7 +58,8 @@ namespace WallThrough.Gameplay
     {
         private ColourCodeManager colourCodeManager;
         private GameObject parentObject; // Reference to the parent object
-        bool tutorialMode = false;      
+        private bool tutorialMode = false;
+        private bool complete = false;
 
         public void Initialize(ColourCodeManager colourCodeManager, GameObject parentObject, bool tutorialMode)
         {
@@ -83,7 +84,11 @@ namespace WallThrough.Gameplay
         {
             if (!parentObject) Debug.LogWarning("No parent object");
             else if (!colourCodeManager) Debug.LogWarning("No ColourCodeManager");
-            else StartCoroutine(colourCodeManager.FlashCode(parentObject));
+            else if (!complete)
+            {
+                StartCoroutine(colourCodeManager.FlashCode(parentObject));
+                complete = true;
+            }
         }
     }
 }

@@ -32,14 +32,12 @@ namespace WallThrough.Audio
             musicSource.volume = PlayerPrefs.GetFloat("musicVolume", 0.35f);
         }
 
-        /// <summary>
-        /// Toggles playback of the music. Stops if playing, plays if stopped.
-        /// </summary>
+        // Toggles playing of music
         public void StopPlayMusic()
         {
             if (musicSource.isPlaying)
             {
-                musicSource.Stop();
+                musicSource.Stop();   
             }
             else
             {
@@ -47,24 +45,16 @@ namespace WallThrough.Audio
             }
         }
 
-        /// <summary>
-        /// Plays the specified music clip at the given volume.
-        /// </summary>
-        /// <param name="clip">The music clip to play.</param>
-        /// <param name="volume">The volume at which to play the clip.</param>
+        // Plays music track
         public void PlayMusic(AudioClip clip, float volume)
         {
             musicSource.clip = clip;
             musicSource.volume = volume;
+            musicSource.loop = true;
             musicSource.Play();
         }
 
-        /// <summary>
-        /// Plays a sound effect using the provided AudioSource at the specified volume.
-        /// </summary>
-        /// <param name="clip">The sound effect clip to play.</param>
-        /// <param name="volume">The volume at which to play the clip.</param>
-        /// <param name="source">The AudioSource to play the sound effect from.</param>
+        // Plays a sound at camera
         public void PlaySound(AudioClip clip, float volume, AudioSource source)
         {
             if (source && clip)
@@ -78,12 +68,7 @@ namespace WallThrough.Audio
             }
         }
 
-        /// <summary>
-        /// Plays a sound effect at a specific position in the world.
-        /// </summary>
-        /// <param name="clip">The sound effect clip to play.</param>
-        /// <param name="volume">The volume at which to play the clip.</param>
-        /// <param name="position">The position at which to play the sound effect.</param>
+        // Plays a sound at a 3D position
         public void PlaySoundAtPosition(AudioClip clip, float volume, Vector3 position)
         {
             GameObject soundEffectInstance = Instantiate(soundEffectPrefab, position, Quaternion.identity);

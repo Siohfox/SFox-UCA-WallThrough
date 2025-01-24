@@ -9,7 +9,7 @@ public class MiniPuzzlePushPuzzle : MiniPuzzle
 
     [SerializeField] private GameObject[] pushableCubePressurePlates;
     private int currentlyPushedPressurePlates = 0;
-    private bool complete;
+    private bool complete = false;
 
     public override void Initialize(int[] colourCodes)
     {

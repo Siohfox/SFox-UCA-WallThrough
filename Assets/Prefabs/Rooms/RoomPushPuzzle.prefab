@@ -1551,18 +1551,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8919443276895828394}
     m_Modifications:
-    - target: {fileID: 1180040444211502125, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1180040444211502125, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1180040444211502125, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2310900894119742407, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1603,41 +1591,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2563751785749356116, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2563751785749356116, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2563751785749356116, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3326510548919843966, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4886863890327806954, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
       propertyPath: m_Name
       value: PushPuzzle
-      objectReference: {fileID: 0}
-    - target: {fileID: 7797682996328721583, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
-      propertyPath: m_Name
-      value: PushableCube
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404392879006276435, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404392879006276435, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404392879006276435, guid: 579a660e3b5fd0b4ea7b0a26ab273198, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -5,6 +5,7 @@ using WallThrough.UI;
 public class WirePuzzle : MiniPuzzle
 {
     private GameObject parentObject; // Parent object for FlashCode
+    bool complete = false;
 
     public override void Initialize(int[] colourCodes)
     {
@@ -21,6 +22,10 @@ public class WirePuzzle : MiniPuzzle
     {
         if (!parentObject) Debug.LogWarning("No parent object");
         else if (!colourCodeManager) Debug.LogWarning("No ColourCodeManager");
-        else StartCoroutine(colourCodeManager.FlashCode(parentObject));
+        else if (!complete)
+        {
+            StartCoroutine(colourCodeManager.FlashCode(parentObject));
+            complete = true;
+        }
     }
 }

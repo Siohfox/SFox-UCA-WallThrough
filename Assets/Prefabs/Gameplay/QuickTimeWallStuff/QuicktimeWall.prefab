@@ -110,6 +110,8 @@ MonoBehaviour:
   codeFail: {fileID: 8300000, guid: 8370da23ed15c8e4fba895753d360e23, type: 3}
   associatedMiniPuzzle: {fileID: 0}
   usingProceduralGeneration: 1
+  countdownTimer: {fileID: 0}
+  doorTimeWorth: 20
 --- !u!82 &8456661566952355492
 AudioSource:
   m_ObjectHideFlags: 0
@@ -119,7 +121,7 @@ AudioSource:
   m_GameObject: {fileID: 3697241060343980774}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 44e23822f4686864eb086152118c10ea, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
