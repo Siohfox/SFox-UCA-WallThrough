@@ -8,9 +8,9 @@ SID: 1911666
 
 # Major Sources
 
-- Game URL: 
-- Github: https://github.com/Siohfox/SFox-UCA-WallThrough
-- Gameplay video:
+- Game URL: https://rossb2k.itch.io/puzzlecrypt
+- Github: https: //github.com/Siohfox/SFox-UCA-WallThrough
+- Gameplay video: https://youtu.be/zrWTK9pZsRc
 
 # Introduction
 PuzzleCrypt, previously known as 'Wallthrough' is a bird's-eye-view 3D puzzle solving game where the player must traverse through a procedurally generated dungeon like environment, solving puzzles to unlock a code of colours to input into the randomly generated colour code which will open the door into the next room, until they reach the exit portal at the end of the dungeon. The puzzles at the time of release are limited but can easily be expanded and improved due to the ease of the creation of the puzzles.
@@ -688,10 +688,13 @@ In summary, these scripts coordinate the creation of QuickTimeWalls in rooms by 
 
 ![Initial Image](https://raw.githubusercontent.com/Siohfox/SFox-UCA-WallThrough/refs/heads/main/Screenshots/QuickTimeWallLogicWithPuzzles.jpg)
 
-### Additional Feedback
+### Additional Implemented/Unimplemented Feedback
 
 Some extra feedback included that the game was too dark. I attempted to make the game lighter and introduced some post processing. I cannot say it was too successful, but it was improved a bit.
-Some people asked for colour-blindness accessibility options, however I ran out of time before implementing this change.
+Feedback given about the damage system included taking damage when inputting the code wrong, which was swiftly implemented and I believe it is a nice change, allowing the player health to have a use and the development time not to be wasted.
+Someone also suggested having a sprint key, as they didn't like how slow the character was, so this was implemented too.
+Some people asked for colour-blindness accessibility options, however I ran out of time before implementing this change, I would add it if I had more time.
+Finally, feedback was given about the push puzzle, where two people suggested one of the cubes be a sphere for more difficultness. This was added.
 
 ## Critical Reflection
 
