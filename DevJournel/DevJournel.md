@@ -9,7 +9,7 @@ SID: 1911666
 # Major Sources
 
 - Game URL: https://rossb2k.itch.io/puzzlecrypt
-- Github: https: //github.com/Siohfox/SFox-UCA-WallThrough
+- Github: https://github.com/Siohfox/SFox-UCA-WallThrough
 - Gameplay video: https://youtu.be/zrWTK9pZsRc
 
 # Introduction
