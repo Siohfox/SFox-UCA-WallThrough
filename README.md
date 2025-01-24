@@ -1,5 +1,4 @@
-# SFox-UCA-WallThrough
-### Wallthrough
+# PuzzleCrypt
 ```
 A puzzle game about removing walls via colour codes
 ```
