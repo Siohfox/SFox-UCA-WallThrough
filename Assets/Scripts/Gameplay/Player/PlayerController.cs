@@ -16,7 +16,9 @@ namespace WallThrough.Gameplay.Pawn
         [SerializeField] private InputActionReference moveActionToUse;
         [SerializeField] private InputActionReference escapeAction;
         [SerializeField] private InputActionReference anyKey;
+        [SerializeField] private InputActionReference shiftKey;
         [SerializeField] private bool debugControls;
+        [SerializeField] private bool isSprinting;
         [SerializeField] private GameObject virtualJoystick;
 
         private void Start()
@@ -37,6 +39,9 @@ namespace WallThrough.Gameplay.Pawn
             anyKey.action.performed += RestartGame;
             anyKey.action.Enable();
 
+            shiftKey.action.started += OnSprintStarted;
+            shiftKey.action.canceled += OnSprintStopped;
+            shiftKey.action.Enable();
         }
 
         private void OnDisable()
@@ -45,6 +50,10 @@ namespace WallThrough.Gameplay.Pawn
             escapeAction.action.Disable();
             anyKey.action.performed -= RestartGame;
             anyKey.action.Disable();
+
+            shiftKey.action.started -= OnSprintStarted;
+            shiftKey.action.canceled -= OnSprintStopped;
+            shiftKey.action.Disable();
         }
 
         private void FixedUpdate()
@@ -80,7 +89,7 @@ namespace WallThrough.Gameplay.Pawn
 
             if(playerStats.AliveState == true)
             {
-                _movement.Move(moveDirection);
+                _movement.Move(moveDirection, isSprinting);
             }
         }
 
@@ -114,6 +123,18 @@ namespace WallThrough.Gameplay.Pawn
             {
                 LevelManager.Instance.ReloadCurrentScene();
             }
+        }
+
+        // Called when Shift is pressed down (start sprinting)
+        private void OnSprintStarted(InputAction.CallbackContext context)
+        {
+            isSprinting = true;
+        }
+
+        // Called when Shift is released (stop sprinting)
+        private void OnSprintStopped(InputAction.CallbackContext context)
+        {
+            isSprinting = false;
         }
     }
 }

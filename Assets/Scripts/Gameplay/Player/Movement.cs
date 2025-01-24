@@ -9,7 +9,8 @@ namespace WallThrough.Gameplay.Pawn
     {
         private Rigidbody _rb;
 
-        public float moveSpeed = 5f;
+        public float walkSpeed = 10f;    // Walking speed
+        public float sprintSpeed = 20f; // Sprinting speed
         public float rotationSpeed = 720f; // Degrees per second
         public Transform cameraTransform; // Reference to the camera transform
 
@@ -18,11 +19,9 @@ namespace WallThrough.Gameplay.Pawn
             _rb = GetComponent<Rigidbody>();
         }
 
-        public void Move(Vector2 moveDir)
+        public void Move(Vector2 moveDir, bool isSprinting)
         {
-            // Use a threshold to prevent very small
-            //
-            // s from affecting movement
+            // IF magnitude is too small, don't move
             if (moveDir.magnitude < 0.1f)
             {
                 // Stop the player's movement when there is no input
@@ -45,9 +44,12 @@ namespace WallThrough.Gameplay.Pawn
             // Rotate towards the target direction
             RotateTowards(targetDirection);
 
-            // Move in the direction the player is facing
+            // Set the speed based on whether we're sprinting or walking
+            float currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
+
+            // Move in the direction the player is facing with the correct speed
             Vector3 forward = transform.forward;
-            _rb.velocity = new Vector3(forward.x * moveSpeed, _rb.velocity.y, forward.z * moveSpeed);
+            _rb.velocity = new Vector3(forward.x * currentSpeed, _rb.velocity.y, forward.z * currentSpeed);
         }
 
         private void RotateTowards(Vector3 direction)

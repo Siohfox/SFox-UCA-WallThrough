@@ -402,7 +402,7 @@ Transform:
   m_GameObject: {fileID: 3185615351340129245}
   serializedVersion: 2
   m_LocalRotation: {x: 0.50717086, y: 0.00000004292962, z: -0.000000025262821, w: 0.86184555}
-  m_LocalPosition: {x: 0, y: 17.74206, z: -9.8555565}
+  m_LocalPosition: {x: 0, y: 18.482063, z: -9.8555565}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -649,7 +649,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ef3a14309d7ae4f97f33bda9db85e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  walkSpeed: 10
+  sprintSpeed: 20
   rotationSpeed: 360
   cameraTransform: {fileID: 7903085156705375449}
 --- !u!114 &8527947282266816568
@@ -668,7 +669,9 @@ MonoBehaviour:
   moveActionToUse: {fileID: -2227494494570478164, guid: 65acfc835083fdf4a863892db1cdc781, type: 3}
   escapeAction: {fileID: -7692450464684374610, guid: 65acfc835083fdf4a863892db1cdc781, type: 3}
   anyKey: {fileID: 8966144463789099847, guid: 65acfc835083fdf4a863892db1cdc781, type: 3}
+  shiftKey: {fileID: 4591401681442746732, guid: 65acfc835083fdf4a863892db1cdc781, type: 3}
   debugControls: 0
+  isSprinting: 0
   virtualJoystick: {fileID: 0}
 --- !u!114 &4187633942117894534
 MonoBehaviour:
