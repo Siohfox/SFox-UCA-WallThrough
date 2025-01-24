@@ -141,6 +141,7 @@ namespace WallThrough.Gameplay
         private void WallFail()
         {
             if (failCross) StartCoroutine(FailCrossShow());
+            FindObjectOfType<Pawn.PlayerStats>().TakeDamage(1);
             // Debug.Log("Input was incorrect, correct input should've been: " + colourString);
         }
 
